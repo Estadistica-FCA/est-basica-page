@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="08_datos_categóricos_files/libs/clipboard/clipboard.min.js"></script>
+<script src="08_datos_categóricos_files/libs/quarto-html/tabby.min.js"></script>
+<script src="08_datos_categóricos_files/libs/quarto-html/popper.min.js"></script>
+<script src="08_datos_categóricos_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="08_datos_categóricos_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="08_datos_categóricos_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="08_datos_categóricos_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Dr.&nbsp;Agustín Alesso">
+  <title>Análisis de datos categóricos</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="08_datos_categóricos_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="08_datos_categóricos_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="08_datos_categóricos_files/libs/revealjs/dist/theme/quarto-1ad5a9907099d28fe079d78058a80c7e.css">
+  <link href="08_datos_categóricos_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="08_datos_categóricos_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="08_datos_categóricos_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="08_datos_categóricos_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="08_datos_categóricos_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="08_datos_categóricos_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Análisis de datos categóricos</h1>
+  <p class="subtitle">Estadística Básica | 2026</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Agustín Alesso
+</div>
+</div>
+</div>
+
+</section>
+<section id="hoja-de-ruta" class="slide level2">
+<h2>Hoja de ruta</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Pruebas paramétricas vs no paramétricas</li>
+<li>Tabla de contingencia</li>
+<li>Prueba de independencia</li>
+<li>Prueba de homogeneidad
+<ul>
+<li>Tablas 2x2 y corrección de Yates</li>
+</ul></li>
+<li>Prueba de bondad de ajuste</li>
+</ul>
+</div><div class="column fragment" style="width:50%;">
+<div title="Preparando R/RStudio">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Preparando R/RStudio</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li><p>Abrir proyecto en <strong>RStudio</strong></p></li>
+<li><p>Cargar los paquetes a usar usando <code>library()</code></p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-label="1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># manejo general de datos y graficos</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="fu">library</span>(rio)        <span class="co"># importacion de datos</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Si no están instalados instalarlo previamente con <code>pak</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-label="1"></a><span class="co"># install.packages("pak")</span></span>
+<span id="cb2-2"><a href="" aria-label="2"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"rio"</span>)</span>
+<span id="cb2-3"><a href="" aria-label="3"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(pkgs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Si <code>pak</code> no esta instalado instalarlo antes</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-label="1"></a><span class="fu">install.packages</span>(<span class="st">"pak"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section>
+<section id="introducción" class="title-slide slide level1 center">
+<h1>Introducción</h1>
+<aside class="notes">
+<p>En las clases anteriores vimos una serie de pruebas de hipótesis para evaluar si la evidencia de una muestra aleatoria sustentaba una hipótesis sobre uno o más parámetros de la población, asumiendo una distribución conocida (generalmente Normal) para la población o el estadístico muestral.</p>
+<p>Ahora vamos a ver un conjunto de técnicas que se aplican a variables categóricas, donde no se establece ninguna hipótesis acerca del valor de un parámetro poblacional ni supuestos acerca de la distribución de la población de origen. Por eso se llaman <strong>no paramétricas</strong> o de <strong>distribución libre</strong>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pruebas-no-paramétricas" class="slide level2">
+<h2>Pruebas no paramétricas</h2>
+<p>Las <strong>pruebas no paramétricas</strong> no hacen supuestos sobre el valor de un parámetro poblacional ni sobre la distribución de la población de origen (<strong>distribución libre</strong>). Se aplican cuando esos supuestos no se cumplen, o cuando la variable respuesta es categórica.</p>
+<div class="columns">
+<div class="column fragment" style="width:45%;">
+<p><strong>Pruebas chi-cuadrado</strong></p>
+<ul>
+<li><strong>Independencia</strong>: ¿dos atributos de una población están asociados?</li>
+<li><strong>Homogeneidad</strong>: ¿dos o más poblaciones tienen igual distribución de un atributo?</li>
+<li><strong>Bondad de ajuste</strong>: ¿una muestra se ajusta a una distribución teórica dada?</li>
+</ul>
+</div><div class="column fragment" style="width:55%;">
+<p>Procedimiento similar en las tres (comparar frecuencias observadas vs esperadas)</p>
+<p><span class="math display">\[\chi^2 = \sum\sum { \dfrac{ \left( o_{ij} - e_{ij} \right)^2}{e_{ij}} }\]</span></p>
+<p>varía el <strong>muestreo</strong> y el razonamiento para calcular las <strong>frecuencias esperadas</strong></p>
+</div></div>
+<aside class="notes">
+<p>Este conjunto de técnicas se basa en la distribución <span class="math inline">\(\chi^2\)</span> que ya vimos, siendo el estadístico de prueba similar en todos los casos: una función de los valores observados y esperados según <span class="math inline">\(H_0\)</span>. La diferencia entre las pruebas radica en cómo se realiza el muestreo y cómo se calculan las frecuencias esperadas.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="tabla-de-contingencia-r-times-c" class="slide level2">
+<h2>Tabla de contingencia (<span class="math inline">\(r \times c\)</span>)</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 12%">
+<col style="width: 18%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(A / B\)</span></th>
+<th><span class="math inline">\(B_1\)</span></th>
+<th><span class="math inline">\(B_2\)</span></th>
+<th><span class="math inline">\(\dots\)</span></th>
+<th><span class="math inline">\(B_c\)</span></th>
+<th><span class="math inline">\(\sum\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(A_1\)</span></td>
+<td><span class="math inline">\(n_{11}\)</span></td>
+<td><span class="math inline">\(n_{12}\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(n_{1c}\)</span></td>
+<td><span class="math inline">\(n_{1\cdot}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(A_2\)</span></td>
+<td><span class="math inline">\(n_{21}\)</span></td>
+<td><span class="math inline">\(n_{22}\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(n_{2c}\)</span></td>
+<td><span class="math inline">\(n_{2\cdot}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\cdots\)</span></td>
+<td><span class="math inline">\(\cdots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\cdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(A_r\)</span></td>
+<td><span class="math inline">\(n_{r1}\)</span></td>
+<td><span class="math inline">\(n_{r2}\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(n_{rc}\)</span></td>
+<td><span class="math inline">\(n_{r\cdot}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sum\)</span></td>
+<td><span class="math inline">\(n_{\cdot1}\)</span></td>
+<td><span class="math inline">\(n_{\cdot2}\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(n_{\cdot c}\)</span></td>
+<td><span class="math inline">\(n_{\cdot\cdot}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<ul>
+<li><strong>Frecuencias de celda</strong>: intersección de un nivel de <span class="math inline">\(A\)</span> y uno de <span class="math inline">\(B\)</span> (e.g.&nbsp;<span class="math inline">\(n_{24}\)</span>: fila 2, columna 4)</li>
+<li><strong>Frecuencias marginales</strong>: totales de fila o columna (el punto reemplaza al índice que se suma)</li>
+</ul>
+</div>
+<aside class="notes">
+<p>En estos problemas trabajamos con tablas de contingencia para tabular las frecuencias de las distintas categorías, con dos dimensiones: filas (<span class="math inline">\(r\)</span>) y columnas (<span class="math inline">\(c\)</span>).</p>
+<p>Las frecuencias de celda son las que se encuentran en la intersección de dos niveles cualesquiera de <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>. Las frecuencias marginales se llaman así porque están en los márgenes: son los totales de fila, de columna, o el total general. Como no importa el otro índice (por ser un total), se reemplaza por un punto.</p>
+<p>Veamos ahora cómo se aplican estas pruebas.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="independencia" class="title-slide slide level1 center">
+<h1>Independencia</h1>
+<aside class="notes">
+<p>Esta prueba permite testear si dos atributos categóricos están asociados o no. Es el equivalente al análisis de correlación pero para datos categóricos. Veamos cómo se aplica con un ejemplo.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="características" class="slide level2">
+<h2>Características</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>Prueba si dos atributos (variables) de una población están <strong>relacionados</strong> o no</p></li>
+<li><p>Los datos provienen de <strong>una muestra</strong> simple al azar de tamaño <span class="math inline">\(n\)</span> extraída de la población</p></li>
+<li><p>Las observaciones se clasifican en forma cruzada según dos criterios, en una tabla de contingencia <span class="math inline">\(r \times c\)</span></p></li>
+</ul>
+</div><div class="column fragment" style="width:50%;">
+<div title="Ejemplo (partos)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (partos)</strong></p>
+</div>
+<div class="callout-content">
+<p>Para estudiar la relación entre el tipo de parto y el clima en vacas lecheras, se tomó una muestra de 300 vacas y se las clasificó según dichos atributos.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>         Clima
+Tipo      cálido frío templado Sum
+  anormal     28  130       50 208
+  normal      20   42       30  92
+  Sum         48  172       80 300</code></pre>
+</div>
+</div>
+<p>¿Se puede afirmar con un 5% de significancia que existe <strong>relación</strong> entre el tipo de parto y las condiciones climáticas?</p>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+<aside class="notes">
+<p>(leer características)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="hipótesis-y-estadístico-de-prueba" class="slide level2">
+<h2>Hipótesis y estadístico de prueba</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Hipótesis</strong></p>
+<p><span class="math inline">\(H_0:\)</span> los atributos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes</p>
+<p><span class="math inline">\(H_1:\)</span> los atributos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> no son independientes</p>
+<p>o bien:</p>
+<p><span class="math display">\[H_0: p_{ij} = p_{i\cdot} p_{\cdot j} \\ H_1: p_{ij} \neq p_{i\cdot} p_{\cdot j} \text{ para algún } i,j\]</span></p>
+</div><div class="column fragment" style="width:50%;">
+<p><strong>Estadístico de prueba</strong></p>
+<p>Las frecuencias esperadas se calculan asumiendo <strong>independencia</strong> (<span class="math inline">\(H_0\)</span>): <span class="math inline">\(P(A \cap B) = P(A) P(B)\)</span>, por lo que cada <span class="math inline">\(e_{ij}\)</span> es el producto de las probabilidades marginales</p>
+<p><span class="math display">\[e_{ij} = n \left[ \dfrac{n_{i \cdot}}{n} \dfrac{n_{\cdot j}}{n} \right] = \dfrac{n_{i \cdot} n_{\cdot j}}{n}\]</span></p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^r \sum_{j=1}^c \dfrac{ \left( o_{ij} - e_{ij} \right)^2}{e_{ij}} \sim \chi^2_{(r-1)(c-1)}\]</span></p>
+<p>Si no hay independencia, las diferencias <span class="math inline">\(o_{ij} - e_{ij}\)</span> son mayores y <span class="math inline">\(\chi^2\)</span> aumenta</p>
+</div></div>
+<aside class="notes">
+<p>Se rechaza <span class="math inline">\(H_0\)</span> si <span class="math inline">\(\chi^2_{\text{calc}} &gt; \chi^2_{(r-1)(c-1);\alpha}\)</span>, o equivalentemente si el valor p es menor a <span class="math inline">\(\alpha\)</span>. El razonamiento y la regla de decisión son los mismos que en las pruebas de hipótesis ya vistas.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ejemplo-cont.-valores-esperados" class="slide level2">
+<h2>Ejemplo (cont.) — valores esperados</h2>
+<div title="Ejemplo (partos, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (partos, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<p>Entonces las hipótesis son:</p>
+<p><span class="math inline">\(H_0:\)</span> el tipo de parto <strong>es independiente</strong> del clima<br>
+<span class="math inline">\(H_1:\)</span> el tipo de parto <strong>no es independiente</strong> del clima</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Partimos de la tabla de frecuencias observadas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-label="1"></a>obs_ind <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(partos <span class="sc">~</span> Tipo <span class="sc">+</span> Clima, ind)</span>
+<span id="cb5-2"><a href="" aria-label="2"></a><span class="fu">addmargins</span>(obs_ind)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Clima
+Tipo      cálido frío templado Sum
+  anormal     28  130       50 208
+  normal      20   42       30  92
+  Sum         48  172       80 300</code></pre>
+</div>
+</div>
+<p>Cada valor esperado es el producto de las probabilidades marginales:</p>
+<p><span class="math inline">\(e_{ij} = \dfrac{n_{i \cdot} \, n_{\cdot j}}{n}\)</span></p>
+</div><div class="column fragment" style="width:45%;">
+<p>Por ejemplo, para <em>anormal</em> y clima <em>cálido</em>:</p>
+<p><span class="math display">\[e_{\text{anormal, cálido}} = \dfrac{208 \times 48}{300} = 33.28\]</span> Y así se completa la matriz de esperados:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">cálido</th>
+<th style="text-align: right;">frío</th>
+<th style="text-align: right;">templado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>anormal</td>
+<td style="text-align: right;">33.28</td>
+<td style="text-align: right;">119.25</td>
+<td style="text-align: right;">55.47</td>
+</tr>
+<tr class="even">
+<td>normal</td>
+<td style="text-align: right;">14.72</td>
+<td style="text-align: right;">52.75</td>
+<td style="text-align: right;">24.53</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-cont.-estadístico-de-prueba" class="slide level2">
+<h2>Ejemplo (cont.) — estadístico de prueba</h2>
+<div title="Ejemplo (partos, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (partos, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Con los valores observados y esperados, se desarrolla la sumatoria</p>
+<p><span class="math display">\[\begin{align}
+\chi^2 &amp;= \dfrac{(28-33.28)^2}{33.28} + \dfrac{(130-119.25)^2}{119.25} \\
+&amp;+ \dots + \dfrac{(30-24.53)^2}{24.53} \\
+&amp;= 7.65
+\end{align}\]</span></p>
+</div><div class="column fragment" style="width:45%;">
+<p>Usamos R para obtener el valor crítico (de tabla) y el valor p</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-label="1"></a>alfa_ind <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a>rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(obs_ind)</span>
+<span id="cb7-3"><a href="" aria-label="3"></a>cols <span class="ot">&lt;-</span> <span class="fu">ncol</span>(obs_ind)</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>df_ind <span class="ot">&lt;-</span> (rows<span class="dv">-1</span>) <span class="sc">*</span> (cols <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="" aria-label="5"></a></span>
+<span id="cb7-6"><a href="" aria-label="6"></a><span class="co"># Valor crítico</span></span>
+<span id="cb7-7"><a href="" aria-label="7"></a><span class="fu">qchisq</span>(alfa_ind, df_ind, <span class="at">lower.tail =</span> F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.991465</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># Valor p</span></span>
+<span id="cb9-2"><a href="" aria-label="2"></a><span class="fu">pchisq</span>(chi_calc_ind, df_ind, <span class="at">lower.tail =</span> F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02185675</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="08_datos_categóricos_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: dado que <span class="math inline">\(\chi^2_{\text{calc}} = 7.65 &gt; \chi^2_{2;0.05} = 5.99\)</span>, se rechaza <span class="math inline">\(H_0\)</span> (P = 0.0219). El tipo de parto y el clima <strong>no son independientes</strong>: hay relación entre ambos atributos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-r" class="slide level2">
+<h2>Ejemplo con R</h2>
+<div title="Ejemplo (partos, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (partos, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>En R, con la función lista</strong>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Tabla de contingencia</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a>obs_ind <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(partos <span class="sc">~</span> Tipo <span class="sc">+</span> Clima, ind)</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>obs_ind</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Clima
+Tipo      cálido frío templado
+  anormal     28  130       50
+  normal      20   42       30</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Prueba de independencia</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a><span class="fu">chisq.test</span>(obs_ind)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  obs_ind
+X-squared = 7.6465, df = 2, p-value = 0.02186</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: se rechaza <span class="math inline">\(H_0\)</span> (P = 0.0219), consistente con el cálculo manual; el tipo de parto y el clima no son independientes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="homogeneidad" class="title-slide slide level1 center">
+<h1>Homogeneidad</h1>
+<aside class="notes">
+<p>Esta prueba permite comparar si dos o más poblaciones tienen la misma distribución respecto de un atributo categórico. A diferencia de independencia, acá el muestreo se hace por separado dentro de cada población (cada fila es una muestra propia).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="características-1" class="slide level2">
+<h2>Características</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>Prueba si dos o más <strong>poblaciones</strong> son iguales respecto de un atributo</p></li>
+<li><p>Los datos provienen de <span class="math inline">\(r\)</span> <strong>muestras</strong> simples al azar, de tamaño <span class="math inline">\(n_i\)</span>, extraídas de <span class="math inline">\(r\)</span> poblaciones distintas</p></li>
+<li><p>Las observaciones se clasifican según un criterio de interés, en una tabla de contingencia <span class="math inline">\(r \times c\)</span></p></li>
+</ul>
+</div><div class="column fragment" style="width:50%;">
+<div title="Ejemplo (semillas de maíz)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (semillas de maíz)</strong></p>
+</div>
+<div class="callout-content">
+<p>Se quiere saber si la proporción de tamaños de semilla de maíz es similar en 3 partidas. De cada partida se toma una muestra y se clasifica la semilla según su tamaño en chico, normal y grande.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       Tamaño
+Partida chico grande normal  Sum
+    A      90     70    290  450
+    B     110     80    300  490
+    C      60     20    140  220
+    Sum   260    170    730 1160</code></pre>
+</div>
+</div>
+<p>¿Se puede afirmar con un 1% de significancia que la proporción de semillas chicas, normales y grandes es similar entre las partidas?</p>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="hipótesis-y-estadístico-de-prueba-1" class="slide level2">
+<h2>Hipótesis y estadístico de prueba</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Hipótesis</strong></p>
+<p><span class="math inline">\(H_0:\)</span> las poblaciones son homogéneas respecto al atributo <span class="math inline">\(X\)</span></p>
+<p><span class="math inline">\(H_1:\)</span> las poblaciones no son homogéneas respecto al atributo <span class="math inline">\(X\)</span></p>
+<p>o bien:</p>
+<p><span class="math display">\[H_0: p_{1j} = p_{2j} = \cdots = p_{rj} \\ H_1: \text{al menos una difiere}\]</span></p>
+</div><div class="column fragment" style="width:50%;">
+<p><strong>Estadístico de prueba</strong></p>
+<p>Las frecuencias esperadas se calculan asumiendo <strong>homogeneidad</strong> (<span class="math inline">\(H_0\)</span>): <span class="math inline">\(P(B_j) = p_{\cdot j} = \dfrac{n_{\cdot j}}{n}\)</span>, por lo que cada <span class="math inline">\(e_{ij}\)</span> se calcula usando el mejor estimador de <span class="math inline">\(p_{\cdot j}\)</span></p>
+<p><span class="math display">\[e_{ij} = n_{i \cdot} \, p_{\cdot j} = n_{i \cdot} \left[ \dfrac{n_{\cdot j}}{n} \right]\]</span></p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^r \sum_{j=1}^c \dfrac{ \left( o_{ij} - e_{ij} \right)^2}{e_{ij}} \sim \chi^2_{(r-1)(c-1)}\]</span></p>
+<p>Si no hay homogeneidad, las diferencias <span class="math inline">\(o_{ij} - e_{ij}\)</span> son mayores y <span class="math inline">\(\chi^2\)</span> aumenta</p>
+</div></div>
+</section>
+<section id="ejemplo-cont.-valores-esperados-1" class="slide level2">
+<h2>Ejemplo (cont.) — valores esperados</h2>
+<div title="Ejemplo (semillas, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (semillas, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<p>Entonces las hipótesis son:</p>
+<p><span class="math inline">\(H_0:\)</span> proporción de tamaños es <strong>homogenea</strong> entre partidas <span class="math inline">\(H_1:\)</span> proporción de tamaños es <strong>no son homogéneas</strong> entre partidas</p>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Partimos de la tabla de frecuencias observadas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-label="1"></a>obs_homog <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(semillas <span class="sc">~</span> Partida <span class="sc">+</span> Tamaño, homog)</span>
+<span id="cb16-2"><a href="" aria-label="2"></a><span class="fu">addmargins</span>(obs_homog)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Tamaño
+Partida chico grande normal  Sum
+    A      90     70    290  450
+    B     110     80    300  490
+    C      60     20    140  220
+    Sum   260    170    730 1160</code></pre>
+</div>
+</div>
+<p>Cada valor esperado es el producto de las probabilidades marginales:</p>
+<p><span class="math inline">\(e_{ij} = n_{i \cdot} \left[ \dfrac{n_{\cdot j}}{n} \right]\)</span>.</p>
+</div><div class="column fragment" style="width:45%;">
+<p>Por ejemplo, para la partida <em>A</em> y tamaño <em>chico</em>:</p>
+<p><span class="math display">\[e_{\text{A, chico}} = 450 \times \dfrac{260}{1160} = 100.86\]</span> Y así se completa la matriz de esperados:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">chico</th>
+<th style="text-align: right;">grande</th>
+<th style="text-align: right;">normal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">100.86</td>
+<td style="text-align: right;">65.95</td>
+<td style="text-align: right;">283.19</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">109.83</td>
+<td style="text-align: right;">71.81</td>
+<td style="text-align: right;">308.36</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">49.31</td>
+<td style="text-align: right;">32.24</td>
+<td style="text-align: right;">138.45</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-cont.-estadístico-de-prueba-1" class="slide level2">
+<h2>Ejemplo (cont.) — estadístico de prueba</h2>
+<div title="Ejemplo (semillas, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (semillas, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Con los valores observados y esperados, se desarrolla la sumatoria</p>
+<p><span class="math display">\[\begin{align}
+\chi^2 &amp;= \dfrac{(90-100.86)^2}{100.86} + \dfrac{(70-65.95)^2}{65.95} \\
+&amp;+ \dots + \dfrac{(140-138.45)^2}{138.45} \\
+&amp;= 9.73
+\end{align}\]</span></p>
+</div><div class="column fragment" style="width:45%;">
+<p>Usamos R para obtener el valor crítico (de tabla) y el valor p</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-label="1"></a>alfa_homog <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb18-2"><a href="" aria-label="2"></a>rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(obs_homog)</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>cols <span class="ot">&lt;-</span> <span class="fu">ncol</span>(obs_homog)</span>
+<span id="cb18-4"><a href="" aria-label="4"></a>df_homog <span class="ot">&lt;-</span> (rows <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> (cols <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb18-5"><a href="" aria-label="5"></a></span>
+<span id="cb18-6"><a href="" aria-label="6"></a><span class="co"># Valor crítico</span></span>
+<span id="cb18-7"><a href="" aria-label="7"></a><span class="fu">qchisq</span>(alfa_homog, df_homog, <span class="at">lower.tail =</span> F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13.2767</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Valor p</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a><span class="fu">pchisq</span>(chi_calc_homog, df_homog, <span class="at">lower.tail =</span> F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04530456</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="08_datos_categóricos_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: dado que <span class="math inline">\(\chi^2_{\text{calc}} = 9.73 &lt; \chi^2_{4;0.01} = 13.28\)</span>, no se rechaza <span class="math inline">\(H_0\)</span>: la proporción de tamaños de semilla <strong>es homogénea</strong> entre las tres partidas.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-r-1" class="slide level2">
+<h2>Ejemplo con R</h2>
+<div title="Ejemplo (semillas, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (semillas, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>En R, con la función lista</strong>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># Tabla de contingencia</span></span>
+<span id="cb22-2"><a href="" aria-label="2"></a>obs_homog <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(semillas <span class="sc">~</span> Partida <span class="sc">+</span> Tamaño, homog)</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>obs_homog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Tamaño
+Partida chico grande normal
+      A    90     70    290
+      B   110     80    300
+      C    60     20    140</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-label="1"></a><span class="co"># Prueba de homogeneidad</span></span>
+<span id="cb24-2"><a href="" aria-label="2"></a>p_homog <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(<span class="fu">prop.table</span>(obs_homog), <span class="at">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb24-3"><a href="" aria-label="3"></a><span class="fu">chisq.test</span>(obs_homog, <span class="at">p =</span> p_homog)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  obs_homog
+X-squared = 9.726, df = 4, p-value = 0.0453</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: no se rechaza <span class="math inline">\(H_0\)</span> (P = 0.0453), consistente con el cálculo manual; la proporción de tamaños de semilla es homogénea entre partidas.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tablas-2x2" class="slide level2">
+<h2>Tablas 2x2</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(A / B\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(B_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(B_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\sum\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(A_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a + b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(A_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c + d\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\sum\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a + c\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(b + d\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\chi^2 = \dfrac{n(ad -bc)^2}{(a+c)(b+d)(a+b)(c+d)} \sim \chi^2_{1;\alpha}\]</span></p>
+</div><div class="column fragment" style="width:50%;">
+<p><strong>Corrección por continuidad (Yates)</strong></p>
+<p>Al aproximar una distribución discreta con una continua (<span class="math inline">\(\chi^2\)</span>), se corrige restando 0.5<span class="math inline">\(n\)</span> al valor absoluto de la diferencia</p>
+<p><span class="math display">\[\chi^2 = \dfrac{n\left[|ad -bc|-0{,}5n \right]^2}{(a+c)(b+d)(a+b)(c+d)} \sim \chi^2_{1;\alpha}\]</span></p>
+</div></div>
+<aside class="notes">
+<p>Para tablas de <span class="math inline">\(2\times 2\)</span> el estadístico se puede calcular de forma directa a partir de las celdas <span class="math inline">\(a,b,c,d\)</span>. Yates propuso restar 0.5<span class="math inline">\(n\)</span> para corregir el hecho de que se está aproximando una variable discreta con una distribución continua.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ejemplo-corrección-por-continuidad" class="slide level2">
+<h2>Ejemplo: corrección por continuidad</h2>
+<div title="Ejemplo (cáncer y tabaquismo)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (cáncer y tabaquismo)</strong></p>
+</div>
+<div class="callout-content">
+<p>Se relevó el hábito de fumar y el diagnóstico de cáncer de pulmón en una muestra de 66 pacientes de un hospital.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      Fumador
+Cancer no si Sum
+   no  17  8  25
+   si  18 23  41
+   Sum 35 31  66</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:60%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-label="1"></a><span class="co"># Sin corrección</span></span>
+<span id="cb27-2"><a href="" aria-label="2"></a><span class="fu">chisq.test</span>(obs_yates, <span class="at">correct =</span> F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  obs_yates
+X-squared = 3.6206, df = 1, p-value = 0.05707</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># Con corrección de Yates</span></span>
+<span id="cb29-2"><a href="" aria-label="2"></a><span class="fu">chisq.test</span>(obs_yates, <span class="at">correct =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  obs_yates
+X-squared = 2.7178, df = 1, p-value = 0.09923</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: con y sin corrección, el valor p (0.0571 y 0.0992 respectivamente) es mayor a 0.05: no se rechaza <span class="math inline">\(H_0\)</span>, no hay evidencia suficiente de asociación entre tabaquismo y cáncer en esta muestra.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="bondad-de-ajuste" class="title-slide slide level1 center">
+<h1>Bondad de Ajuste</h1>
+<aside class="notes">
+<p>Esta prueba permite evaluar si una muestra de una variable categórica se ajusta a una distribución de probabilidades teórica dada (por ejemplo, proporciones esperadas por un modelo genético).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="características-2" class="slide level2">
+<h2>Características</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>Prueba si una muestra <span class="math inline">\(x_1, x_2, \dots, x_n\)</span> de una VA <span class="math inline">\(X\)</span> tiene una función de distribución <span class="math inline">\(F(X)\)</span> dada</p></li>
+<li><p>El alejamiento entre lo observado y lo teórico puede deberse al azar (muestreo) o a que la distribución teórica es otra</p></li>
+<li><p><span class="math inline">\(X\)</span> se agrupa en <span class="math inline">\(r\)</span> clases mutuamente excluyentes</p></li>
+</ul>
+</div><div class="column fragment" style="width:50%;">
+<div title="Ejemplo (herencia mendeliana)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (herencia mendeliana)</strong></p>
+</div>
+<div class="callout-content">
+<p>En una variedad de arvejas, la textura y el color de la semilla se rigen por caracteres mendelianos: “lisa” y “amarilla” son fenotipos dominantes, “rugosa” y “verde” son recesivos. La proporción teórica de LA, LV, RA y RV es 9:3:3:1. Se clasificaron 556 arvejas según textura (L/R) y color (A/V):</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> LA  LV  RA  RV Sum 
+315 108 101  32 556 </code></pre>
+</div>
+</div>
+<p>¿Con un 5% de significancia, estos datos se ajustan a la distribución teórica 9:3:3:1?</p>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="hipótesis-y-estadístico-de-prueba-2" class="slide level2">
+<h2>Hipótesis y estadístico de prueba</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Hipótesis</strong></p>
+<p><span class="math inline">\(H_0:\)</span> la distribución teórica se ajusta a los datos <span class="math inline">\(H_1:\)</span> la distribución teórica no se ajusta a los datos</p>
+<p>o bien:</p>
+<p><span class="math display">\[H_0: p_1 = \hat{p}_1;\ \dots;\ p_r = \hat{p}_r \\ H_1: \text{al menos una difiere}\]</span></p>
+</div><div class="column fragment" style="width:50%;">
+<p><strong>Estadístico de prueba</strong></p>
+<p>Los valores esperados se calculan con la distribución hipotética (<span class="math inline">\(H_0\)</span>): <span class="math inline">\(e_i = n \cdot p_i\)</span></p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^r \dfrac{(o_i - e_i)^2}{e_i} \sim \chi^2_{r-g-1}\]</span></p>
+<p>donde <span class="math inline">\(g\)</span> es el número de parámetros de la distribución teórica</p>
+</div></div>
+</section>
+<section id="ejemplo-cont.-valores-esperados-2" class="slide level2">
+<h2>Ejemplo (cont.) — valores esperados</h2>
+<div title="Ejemplo (arvejas, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (arvejas, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<p>Entonces las hipótesis son:</p>
+<p><span class="math inline">\(H_0:\)</span> la distribución teórica 9:3:3:1 <strong>se ajusta</strong> a los datos</p>
+<p><span class="math inline">\(H_1:\)</span> la distribución teórica 9:3:3:1 <strong>no se ajusta</strong> a los datos</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Partimos de la tabla de frecuencias observadas</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-label="1"></a>obs_ajuste <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">LA =</span> <span class="dv">315</span>, <span class="at">LV =</span> <span class="dv">108</span>, <span class="at">RA =</span> <span class="dv">101</span>, <span class="at">RV =</span> <span class="dv">32</span>)</span>
+<span id="cb32-2"><a href="" aria-label="2"></a>obs_ajuste <span class="ot">&lt;-</span> <span class="fu">as.table</span>(obs_ajuste)</span>
+<span id="cb32-3"><a href="" aria-label="3"></a>obs_ajuste</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> LA  LV  RA  RV 
+315 108 101  32 </code></pre>
+</div>
+</div>
+<p>Cada valor esperado es el producto del total de observaciones por su probabilidad:</p>
+<p><span class="math inline">\(e_i = n \cdot p_i\)</span>.</p>
+</div><div class="column fragment" style="width:55%;">
+<p>Por ejemplo, para el fenotipo <em>LA</em> (liso-amarillo), con <span class="math inline">\(p_{LA} = 9/16\)</span>:</p>
+<p><span class="math display">\[e_{LA} = 556 \times \dfrac{9}{16} = 312.75\]</span> Y así se completa el vector de esperados:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">LA</th>
+<th style="text-align: right;">LV</th>
+<th style="text-align: right;">RA</th>
+<th style="text-align: right;">RV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">312.75</td>
+<td style="text-align: right;">104.25</td>
+<td style="text-align: right;">104.25</td>
+<td style="text-align: right;">34.75</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-cont.-estadístico-de-prueba-2" class="slide level2">
+<h2>Ejemplo (cont.) — estadístico de prueba</h2>
+<div title="Ejemplo (arvejas, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (arvejas, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Con los valores observados y esperados, se desarrolla la sumatoria</p>
+<p><span class="math display">\[\begin{align}
+\chi^2 &amp;= \dfrac{(315-312.75)^2}{312.75} + \dfrac{(108-104.25)^2}{104.25} \\
+&amp;+ \dots + \dfrac{(32-34.75)^2}{34.75} \\
+&amp;= 0.47
+\end{align}\]</span></p>
+</div><div class="column fragment" style="width:45%;">
+<p>Usamos R para obtener el valor crítico (de tabla) y el valor p</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-label="1"></a>alfa_ajuste <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb34-2"><a href="" aria-label="2"></a>r_clases <span class="ot">&lt;-</span> <span class="fu">length</span>(obs_ajuste)</span>
+<span id="cb34-3"><a href="" aria-label="3"></a>g <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb34-4"><a href="" aria-label="4"></a>df_ajuste <span class="ot">&lt;-</span> r_clases <span class="sc">-</span> g <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb34-5"><a href="" aria-label="5"></a></span>
+<span id="cb34-6"><a href="" aria-label="6"></a><span class="co"># Valor crítico</span></span>
+<span id="cb34-7"><a href="" aria-label="7"></a><span class="fu">qchisq</span>(<span class="dv">1</span> <span class="sc">-</span> alfa_ajuste, df_ajuste)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.814728</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-label="1"></a><span class="co"># Valor p</span></span>
+<span id="cb36-2"><a href="" aria-label="2"></a><span class="fu">pchisq</span>(chi_calc_ajuste, df_ajuste, <span class="at">lower.tail =</span> F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9254259</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="08_datos_categóricos_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: dado que <span class="math inline">\(\chi^2_{\text{calc}} = 0.47 &lt; \chi^2_{3;0.05} = 7.81\)</span>, no se rechaza <span class="math inline">\(H_0\)</span>: los fenotipos observados <strong>se ajustan</strong> a la distribución teórica 9:3:3:1.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-r-2" class="slide level2">
+<h2>Ejemplo con R</h2>
+<div title="Ejemplo (arvejas, cont.)">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ejemplo (arvejas, cont.)</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>En R, con la función lista</strong>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-label="1"></a><span class="co"># Frecuencias observadas</span></span>
+<span id="cb38-2"><a href="" aria-label="2"></a>obs_ajuste <span class="ot">&lt;-</span> <span class="fu">as.table</span>(<span class="fu">c</span>(<span class="at">LA =</span> <span class="dv">315</span>, <span class="at">LV =</span> <span class="dv">108</span>, <span class="at">RA =</span> <span class="dv">101</span>, <span class="at">RV =</span> <span class="dv">32</span>))</span>
+<span id="cb38-3"><a href="" aria-label="3"></a>obs_ajuste</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> LA  LV  RA  RV 
+315 108 101  32 </code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co"># Prueba de bondad de ajuste</span></span>
+<span id="cb40-2"><a href="" aria-label="2"></a>prob_ajuste <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">LA =</span> <span class="dv">9</span><span class="sc">/</span><span class="dv">16</span>, <span class="at">LV =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">16</span>, <span class="at">RA =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">16</span>, <span class="at">RV =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">16</span>)</span>
+<span id="cb40-3"><a href="" aria-label="3"></a><span class="fu">chisq.test</span>(obs_ajuste, <span class="at">p =</span> prob_ajuste)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  obs_ajuste
+X-squared = 0.47002, df = 3, p-value = 0.9254</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<p><strong>Conclusión</strong>: no se rechaza <span class="math inline">\(H_0\)</span> (P = 0.9254), consistente con el cálculo manual; los fenotipos observados se ajustan a la distribución teórica 9:3:3:1.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="resumen" class="slide level2">
+<h2>Resumen</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prueba</th>
+<th>Compara</th>
+<th>Muestreo</th>
+<th><code>chisq.test()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Independencia</td>
+<td>asociación entre 2 atributos de <strong>una</strong> población</td>
+<td>1 muestra, clasificada por 2 criterios</td>
+<td><code>chisq.test(tabla)</code></td>
+</tr>
+<tr class="even">
+<td>Homogeneidad</td>
+<td>distribución de 1 atributo entre <span class="math inline">\(r\)</span> <strong>poblaciones</strong></td>
+<td><span class="math inline">\(r\)</span> muestras, clasificadas por 1 criterio</td>
+<td><code>chisq.test(tabla, p = proporciones)</code></td>
+</tr>
+<tr class="odd">
+<td>Bondad de ajuste</td>
+<td>distribución muestral vs.&nbsp;una <strong>teórica</strong></td>
+<td>1 muestra, clasificada en <span class="math inline">\(r\)</span> clases</td>
+<td><code>chisq.test(x, p = probabilidades)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>En tablas <span class="math inline">\(2\times 2\)</span>, <code>chisq.test(..., correct = TRUE)</code> (por defecto) aplica la corrección de Yates</p>
+</div>
+<aside class="notes">
+<p>En los tres casos el razonamiento es el mismo: comparar frecuencias observadas contra esperadas mediante el estadístico <span class="math inline">\(\chi^2\)</span>. Lo que cambia es cómo se obtuvo la muestra y, en consecuencia, cómo se calculan las frecuencias esperadas bajo <span class="math inline">\(H_0\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="assets/logo_FCA.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="08_datos_categóricos_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="08_datos_categóricos_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1300,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

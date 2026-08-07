@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="280.7251mm"
+   height="464.44876mm"
+   viewBox="0 0 280.72509 464.44876"
+   version="1.1"
+   id="svg8"
+   inkscape:export-filename="/home/agustin/documents/docencia/stats/ESTADISTICA/Est1/clases/images/venn_prob_elementos.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   sodipodi:docname="venn_probabilidad3_long.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="876.81242"
+     inkscape:cy="973.78707"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1866"
+     inkscape:window-height="1047"
+     inkscape:window-x="54"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-202.00668,-25.657048)">
+    <rect
+       style="fill:none;fill-opacity:0.995455;stroke:#000000;stroke-width:0.543154;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815"
+       width="133.64572"
+       height="178.19662"
+       x="202.27826"
+       y="46.119122" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="214.16829"
+       y="33.700356"
+       id="text911"><tspan
+         sodipodi:role="line"
+         id="tspan909"
+         x="214.16829"
+         y="33.700356"
+         style="stroke-width:0.264583">E = pesar un animal</tspan></text>
+    <ellipse
+       style="fill:#000000;fill-opacity:0.336634;stroke:#000000;stroke-width:0.435139;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path913"
+       cx="270.21808"
+       cy="102.34693"
+       rx="55.709232"
+       ry="27.056829" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 217.10245,195.75044 h 6.68173"
+       id="path951"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="243.76877"
+       y="102.94367"
+       id="text1000-8"><tspan
+         sodipodi:role="line"
+         x="243.76877"
+         y="102.94367"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043">Peso &gt; 40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="214.74873"
+       y="68.971191"
+       id="text911-6"><tspan
+         sodipodi:role="line"
+         id="tspan909-5"
+         x="214.74873"
+         y="68.971191"
+         style="stroke-width:0.264583">S = pesa &gt; 40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="217.15945"
+       y="205.04263"
+       id="text911-6-6"><tspan
+         sodipodi:role="line"
+         id="tspan909-5-5"
+         x="217.15945"
+         y="205.04263"
+         style="stroke-width:0.264583">S = pesa &lt;= 40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="244.806"
+       y="161.36372"
+       id="text1000-8-8-8"><tspan
+         sodipodi:role="line"
+         x="244.806"
+         y="161.36372"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-2-8">Peso &lt;= 40 kg</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:0.995455;stroke:#000000;stroke-width:0.543154;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815-7"
+       width="133.64572"
+       height="178.19664"
+       x="348.81448"
+       y="46.11911" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="363.50168"
+       y="34.726131"
+       id="text911-0"><tspan
+         sodipodi:role="line"
+         id="tspan909-6"
+         x="363.50168"
+         y="34.726131"
+         style="stroke-width:0.264583">E = sexo del animal</tspan></text>
+    <ellipse
+       style="fill:#000000;fill-opacity:0.336634;stroke:#000000;stroke-width:0.315849;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path913-2"
+       cx="439.81085"
+       cy="95.890327"
+       rx="32.712326"
+       ry="24.276995" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 363.63867,192.88929 h 6.68173"
+       id="path951-2"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="408.15399"
+       y="65.35408"
+       id="text911-6-1"><tspan
+         sodipodi:role="line"
+         id="tspan909-5-4"
+         x="408.15399"
+         y="65.35408"
+         style="stroke-width:0.264583">S = hembra</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="364.4516"
+       y="204.44934"
+       id="text911-6-6-3"><tspan
+         sodipodi:role="line"
+         id="tspan909-5-5-6"
+         x="364.4516"
+         y="204.44934"
+         style="stroke-width:0.264583">S = macho</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="424.83182"
+       y="93.490677"
+       id="text1000-8-6-3"><tspan
+         sodipodi:role="line"
+         x="424.83182"
+         y="93.490677"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-3-9">Hembra</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="382.27078"
+       y="159.25854"
+       id="text1000-8-8-8-6"><tspan
+         sodipodi:role="line"
+         x="382.27078"
+         y="159.25854"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-2-8-1">Machos</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:0.995455;stroke:#000000;stroke-width:0.652215;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815-7-4"
+       width="192.78482"
+       height="178.12218"
+       x="240.63318"
+       y="290.97525" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="262.336"
+       y="278.51926"
+       id="text911-0-9"><tspan
+         sodipodi:role="line"
+         id="tspan909-6-5"
+         x="262.336"
+         y="278.51926"
+         style="stroke-width:0.264583">E = peso y sexo del animal</tspan></text>
+    <ellipse
+       style="fill:#000000;fill-opacity:0.336634;stroke:#000000;stroke-width:0.332522;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path913-2-2"
+       cx="347.79211"
+       cy="364.2193"
+       rx="32.703991"
+       ry="26.914492" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="269.56006"
+       y="354.42636"
+       id="text1000-8-2-9"><tspan
+         sodipodi:role="line"
+         id="tspan998-6-9-0"
+         x="269.56006"
+         y="354.42636"
+         style="font-size:7.76111px;stroke-width:0.264583">Machos</tspan><tspan
+         sodipodi:role="line"
+         x="269.56006"
+         y="367.65549"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-6-2">&gt; 40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="395.4032"
+       y="325.74561"
+       id="text911-6-1-9"><tspan
+         sodipodi:role="line"
+         id="tspan909-5-4-9"
+         x="395.4032"
+         y="325.74561"
+         style="text-align:center;text-anchor:middle;stroke-width:0.264583">S = hembra</tspan><tspan
+         sodipodi:role="line"
+         x="395.4032"
+         y="338.97473"
+         style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+         id="tspan1294">&gt;40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="332.81311"
+       y="359.17383"
+       id="text1000-8-6-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan998-6-3-0-7"
+         x="332.81311"
+         y="359.17383"
+         style="font-size:7.76111px;stroke-width:0.264583">Hembras</tspan><tspan
+         sodipodi:role="line"
+         x="332.81311"
+         y="372.40295"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-3-9-9">&gt; 40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="328.27734"
+       y="408.38626"
+       id="text1000-8-8-81-3"><tspan
+         sodipodi:role="line"
+         id="tspan998-6-6-8-3"
+         x="328.27734"
+         y="408.38626"
+         style="font-size:7.76111px;stroke-width:0.264583">Hembras</tspan><tspan
+         sodipodi:role="line"
+         x="328.27734"
+         y="421.61539"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-2-4-1">&lt;= 40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="273.62109"
+       y="407.55453"
+       id="text1000-8-8-8-6-7"><tspan
+         sodipodi:role="line"
+         id="tspan998-6-6-7-6-8"
+         x="273.62109"
+         y="407.55453"
+         style="font-size:7.76111px;stroke-width:0.264583">Machos</tspan><tspan
+         sodipodi:role="line"
+         x="273.62109"
+         y="420.78366"
+         style="font-size:7.76111px;stroke-width:0.264583"
+         id="tspan1043-2-8-1-9">&lt;= 40 kg</tspan></text>
+    <ellipse
+       style="fill:#000000;fill-opacity:0.336634;stroke:#000000;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1296"
+       cx="318.3269"
+       cy="361.97269"
+       rx="59.720234"
+       ry="27.970238" />
+    <ellipse
+       style="fill:#000000;fill-opacity:0.336634;stroke:#000000;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1298"
+       cx="348.94299"
+       cy="386.54102"
+       rx="32.883926"
+       ry="45.735119" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="290.49103"
+       y="325.01599"
+       id="text911-6-1-9-2"><tspan
+         sodipodi:role="line"
+         x="290.49103"
+         y="325.01599"
+         style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+         id="tspan1294-1">S1 = peso&gt;40 kg</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="371.37543"
+       y="454.09457"
+       id="text911-6-1-9-2-0"><tspan
+         sodipodi:role="line"
+         x="371.37543"
+         y="454.09457"
+         style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+         id="tspan1294-1-1">S2 = hembra</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="293.01831"
+       y="489.99997"
+       id="text911-6-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan909-5-4-4"
+         x="293.01831"
+         y="489.99997"
+         style="stroke-width:0.264583">S = S1 + S2</tspan></text>
+  </g>
+</svg>
