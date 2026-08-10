@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Docentes: Patricia Acetta y Agustin Alesso" />
 
 
-<title>Guía de Trabajos Prácticos de Estadística I</title>
+<title>TP N° 3: Distribución de Probabilidades de Variables Aleatorias Discretas</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1574,93 +1573,905 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">Guía de Trabajos Prácticos de Estadística
-I</h1>
-<h4 class="author">Docentes: Patricia Acetta y Agustin Alesso</h4>
+<h1 class="title toc-ignore">TP N° 3: Distribución de Probabilidades de
+Variables Aleatorias Discretas</h1>
 
 </div>
 
 
-<p><em>Bienvenido/a a la Guía de trabajos prácticos de Estadística I.
-</em></p>
-<p><br></p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Licencia Creative Commons" style="border-width:0" src="data:image/png;base64,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" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Guía de TP
-Estadística I</span> por <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Agustín Alesso - Acetta Patricia </span>
-se distribuye bajo una
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licencia
-Creative Commons Atribución-NoComercial-SinDerivadas 4.0
-Internacional</a>.</p>
-<p>Al finalizar el cursado, aprenderán conceptos fundamentales del
-pensamiento estadístico y reconocerán componentes biológicos
-sistemáticos y aleatorios. Podrán usar métodos descriptivos para
-organizar datos, calcular probabilidades de fenómenos aleatorios y
-aplicar técnicas de inferencia estadística. Además, entenderán la
-diferencia entre significancia estadística y práctica, podrán determinar
-la correlación entre variables y evaluarán los supuestos y limitaciones
-de los métodos estadísticos. También adquirirán habilidades en el manejo
-del software estadístico R y RStudio y aprenderán a comunicar los
-resultados de manera efectiva. Se fomentará una actitud crítica hacia la
-información publicada, centrándose en la metodología, validez y
-generalización de las conclusiones.</p>
-<p><br></p>
-<p>Esta guía incluye los siguientes Trabajos Prácticos:</p>
-<ul>
-<li>Trabajo Práctico Nº 1: Introducción a R y RStudio. Estadística
-descriptiva</li>
-<li>Trabajo Práctico Nº 2: Probabilidades</li>
-<li>Trabajo Práctico Nº 3: Cálculo de probabilidades utilizando
-distribuciones de tipo Discreta</li>
-<li>Trabajo Práctico Nº 4: Cálculo de probabilidades utilizando
-distribuciones de tipo Continua</li>
-<li>Trabajo Práctico Nº 5: Inferencia estadística a partir de una
-muestra</li>
-<li>Trabajo Práctico Nº 6: Inferencia estadística a partir de dos
-muestras</li>
-<li>Trabajo Práctico Nº 7: Análisis de datos categóricos</li>
-<li>Trabajo Práctico Nº 8: Análisis de correlación y regresión lineal
-simple.</li>
-</ul>
-<p><br></p>
-<p><strong>Configuración de RStudio:</strong></p>
-<p>Al iniciar la sesión de RStudio, es fundamental preparar el entorno
-adecuadamente. Asegúrate de leer e implementar los paquetes necesarios y
-configurar los contrastes de la siguiente manera:</p>
 <pre class="r"><code># Paquetes requeridos
 library(rio)
-library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.2.1     ✔ readr     2.2.0
-## ✔ forcats   1.0.1     ✔ stringr   1.6.0
-## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-## ✔ purrr     1.2.2     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>library(emmeans) </code></pre>
-<pre><code>## Welcome to emmeans.
-## Caution: You lose important information if you filter this package&#39;s results.
-## See &#39;? untidy&#39;</code></pre>
-<pre class="r"><code># Contrastes
-options(contrasts = c(&#39;contr.sum&#39;, &#39;contr.poly&#39;))</code></pre>
-<p><br></p>
-<p><strong>Descarga de Archivos:</strong></p>
-<p>Para descargar los archivos
-<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
-hacer click sobre el nombre del archivo con el botón derecho,
-seleccionar <strong>Guardar enlace como…</strong> e indicar el
-directorio de trabajo.</p>
-<p><br></p>
-<p><strong>Descarga de Plantillas:</strong></p>
-<p>Las plantillas con las consignas del TP puede descargarse del
-siguiente <code>plantilla_TP.Rmd</code>
-<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
-desde el aula virtual en la sección de cada unidad temática.</p>
-<p><br></p>
-<p><strong>Acceso al Aula Virtual:</strong></p>
-<p>Para acceder al aula virtual y encontrar los recursos necesarios,
-visita el siguiente enlace: Aula Virtual FCA <a href="https://servicios.unl.edu.ar/aulavirtual/fca/" class="uri">https://servicios.unl.edu.ar/aulavirtual/fca/</a></p>
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)</code></pre>
+<div id="ejercicios-sugeridos" class="section level1">
+<h1>Ejercicios sugeridos</h1>
+<div id="ejercicio-1" class="section level2">
+<h2>Ejercicio 1</h2>
+<p>Un criadero de semillas afirma que el poder germinativo de las
+semillas de una nueva variedad de soja es del 85%. Para verificarlo, un
+técnico realiza un ensayo de germinación tomando 200 semillas al azar y
+colocándolas en bandejas de germinación.</p>
+<p><strong>Responder:</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que de esas 200 semillas, germine el 85%
+de las semillas que indica el semillero?</li>
+<li>¿Cuál es la probabilidad de que al sembrar 500 semillas germinen el
+80% o más de ellas?</li>
+<li>¿Cuál es la probabilidad de que si se siembran las 500 semillas del
+item anterior, germinen 200 o menos semillas?</li>
+<li>¿Cuál es la probabilidad de que si se siembran 1000 semillas,
+germinen al menos 800 y no más de 900 semillas?</li>
+</ol>
+<div id="respuestas" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad de que de esas 200 semillas, germine
+el 85% de las semillas que indica el semillero?</strong></p>
+<p>Para responder esta pregunta primero vamos a calcular cuantas
+semillas son el 85% de 200.</p>
+<p>Luego, dado que queremos averiguar la probabilidad de <span class="math inline">\(x = 170\)</span>, vamos a utilizar la función
+<code>dbinom()</code> para calcular la probabilidad en el punto 170
+<span class="math inline">\(P(X = 170) = f(170)\)</span></p>
+<p><strong>Paso 1:</strong> definimos los parámetros de la distribución
+binomial:</p>
+<pre class="r"><code>n &lt;- 200 # 200 semillas sembradas
+p &lt;- 0.85 # 85% de probabilidad de que germinen</code></pre>
+<p><strong>Paso 2:</strong> definimos el valor de X</p>
+<pre class="r"><code>x &lt;- 200 * 0.85 # Valor de X</code></pre>
+<p><strong>Paso 3:</strong> Ingresamos todos los argumentos en la
+función:</p>
+<pre class="r"><code>dbinom(x = x, size = n, prob = p)</code></pre>
+<pre><code>[1] 0.07877741</code></pre>
+<p><em>Respuesta:</em> 7.88% es la probabilidad de que si se siembran
+esas semillas germine el 85%.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad de que al sembrar 500 semillas
+germinen el 80% o más de ellas?</strong></p>
+<p>Dado que el 80% de 500 semillas es 400, estamos interesados en
+calcular la probabilidad de que en una muestra de 500 semillas germinen
+400 semillas o más <span class="math inline">\(P(X &gt;=
+400)\)</span></p>
+<p>Utilizaremos la función <code>pbinom()</code> para calcular
+probabilidades acumuladas. Queremos incluir el número 400 y calcular la
+probabilidad acumulada de los valores mayores</p>
+<p><strong>Paso 1:</strong> definimos los parámetros de la
+distribución:</p>
+<pre class="r"><code>p &lt;- 0.85 # es la misma del item anterior
+n &lt;- 500 # 500 semillas en éste item</code></pre>
+<p><strong>Paso 2:</strong> otros argumentos que necesitamos:</p>
+<p>Queremos calcular los valores mayores a 400 semillas pero
+incluyendolo, entonces el valor de <code>q</code> va a ser 399 para que
+usando el complemento o <code>lower.tail</code> = F, la probabilidad se
+calcule a partir de 400.</p>
+<pre class="r"><code>q &lt;- 400 - 1
+pbinom(q = q, size = n, prob = p, lower.tail = F)</code></pre>
+<pre><code>[1] 0.9989565</code></pre>
+<p><em>Respuesta:</em> 99.9% es la probabilidad de que si siembro 500 de
+esas semillas germine el 80% o más de ellas.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad de que si se siembran las 500
+semillas del item anterior, germinen 200 o menos semillas?</strong></p>
+<p>Significa que nos interesa la probabilidad acumulada de valores
+inferiores a 200 <span class="math inline">\(P(X &lt;= 200)\)</span>.
+Utilizaremos la función <code>pbinom()</code> porque queremos calcular
+probabilidades acumuladas.</p>
+<p><strong>Paso 1:</strong> definimos los parámetros de la
+distribución:</p>
+<pre class="r"><code>p &lt;- 0.85 # igual que el item anterior
+n &lt;- 500 # igual que el item anterior</code></pre>
+<p><strong>Paso 2:</strong> otros argumentos que necesitamos:</p>
+<p>Ya que queremos calcular probabilidades menores o iguales al valor
+indicado usamos <code>lower.tail = T</code></p>
+<pre class="r"><code>q &lt;- 200
+pbinom(q = q, size = n, prob = p, lower.tail = T)</code></pre>
+<pre><code>[1] 2.944298e-117</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad de que si se siembran 1000 semillas,
+germinen al menos 800 y no más de 900 semillas?</strong></p>
+<p>Queremos calcular <span class="math inline">\(P(800 &lt;= x &lt;
+900)\)</span>. Para eso utilizaremos la función <code>pbinom()</code>
+porque queremos calcular probabilidades acumuladas. En este caso
+incluyendo a 800 pero no a 900.</p>
+<p>Definimos los parámetros y argumentos de la distribución:</p>
+<pre class="r"><code>p &lt;- 0.85 # igual que el item anterior
+n &lt;- 1000 # 1000 semillas</code></pre>
+<p>Definimos los límites superior (<code>q2</code>) e inferior
+(<code>q1</code>) de modo tal de incluir el valor 800 pero no 900.</p>
+<pre class="r"><code>q1 &lt;- 799
+q2 &lt;- 899
+
+P_799 &lt;- pbinom(q = q1, size = n, prob = p) # lower.tail = T, por defecto
+P_899 &lt;- pbinom(q = q2, size = n, prob = p) # lower.tail = T, por defecto
+
+P_899 - P_799 # valor mayor - menor</code></pre>
+<pre><code>[1] 0.9999895</code></pre>
+</div>
+</div>
+<div id="ejercicio-2" class="section level2">
+<h2>Ejercicio 2</h2>
+<p>Supongamos que tenemos una población de insectos de los cuales el 40%
+se infectan por determinado virus. Si extraemos una muestra de <span class="math inline">\(n = 5\)</span>:</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que 3 insectos se infecten?</li>
+<li>¿Cuál es la probabilidad de que menos de 2 insectos se
+infecten?</li>
+<li>¿Cual es el número esperado de insectos infectados en dicha muestra?
+¿Cual es el desvío?</li>
+</ol>
+<div id="respuestas-1" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 3, size = 5, prob = 0.4)</code></pre>
+<pre><code>[1] 0.2304</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>pbinom(q = 1, size = 5, prob = 0.4)</code></pre>
+<pre><code>[1] 0.33696</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(E(X) = np = 5\cdot 0.4 = 2\)</span>
+insectos y <span class="math inline">\(D(X) = \sqrt{V(X)} = \sqrt{npq} =
+\sqrt{5\cdot 0.4 \cdot 0.6} = 1.2\)</span> insectos</li>
+</ol>
+</div>
+</div>
+<div id="ejercicio-3" class="section level2">
+<h2>Ejercicio 3</h2>
+<p>Se sabe que en un cultivo de maíz, la probabilidad de que una mazorca
+elegida al azar tenga un peso superior a las 300 g. es igual a 0,5. Si
+se eligen 10 mazorcas:</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que 3 de ellas tengan un peso superior a
+los 300 g?</li>
+<li>¿Cuál es la probabilidad de que 1 o más mazorcas tengan un peso
+superior a los 300 g?</li>
+<li>Suponiendo que por hectárea se producen 80.000 mazorcas, ¿cuál es el
+número esperado de mazorcas con peso mayor a 300 g?</li>
+</ol>
+<div id="respuestas-2" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 3, size = 10, prob = 0.5)</code></pre>
+<pre><code>[1] 0.1171875</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>pbinom(q = 0, size = 10, prob = 0.5, lower.tail = F)</code></pre>
+<pre><code>[1] 0.9990234</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>El número esperado en la población de 80000 plantas es: <span class="math inline">\(E(X) = np = 80000\cdot 0.5 = 40000\)</span>
+mazorcas con peso mayor a 300 g</li>
+</ol>
+</div>
+</div>
+<div id="ejercicio-4" class="section level2">
+<h2>Ejercicio 4</h2>
+<p>La mejor manera de provocar e incentivar el crecimiento natural de
+las plantas y cultivos es someterlos a altos niveles de temperatura,
+luminosidad y a una humedad relativa. Esto se consigue gracias a una
+<strong>cámara de germinación</strong>, donde se crea un clima idóneo
+que propicia la correcta evolución de las semillas plantadas en su
+interior.</p>
+<p>Una empresa proveedora dispone de 120 cámaras de germinación, de las
+cuáles sólo 80 están bien calibradas.</p>
+<p><strong>Responder:</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li>Si se toma una muestra aleatoria de 5 cámaras ¿Cuál es la
+probabilidad de que solamente 2 de las 5 estén bien calibradas?</li>
+<li>Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la
+probabilidad de que menos 5 no estén calibradas?</li>
+<li>Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la
+probabilidad de que más de 5 no estén calibradas?</li>
+<li>¿Cuántas cámaras se esperan que estén correctamente calibradas en
+una muestra de 50 cámaras?</li>
+</ol>
+<div id="respuestas-3" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>Si se toma una muestra aleatoria de 5 cámaras ¿Cuál es la
+probabilidad de que solamente 2 de las 5 estén bien
+calibradas?</strong></p>
+<p>Queremos calcular la probabilidad en el punto: <span class="math inline">\(P(x=2)\)</span></p>
+<p>Utilizaremos la funcion <code>dhyper()</code></p>
+<p>Definimos los parámetros de la distribución hipergeometrica:</p>
+<pre class="r"><code>n &lt;- 5 # tamaño de la muestra
+N &lt;- 120 # cámaras de germinación totales
+N1 &lt;- 80 # cámaras asociadas al éxito: bien calibradas
+
+x &lt;- 2</code></pre>
+<p>Ingresamos todos los argumentos en la función:</p>
+<pre class="r"><code>dhyper(x = x, m = N1, n = N - N1, k = n)</code></pre>
+<pre><code>[1] 0.1638216</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la
+probabilidad de que menos 5 no estén calibradas?</strong></p>
+<p>En éste item cambia el éxito, ahora es las que no están
+calibradas</p>
+<p>Queremos calcular la probabilidad acumulada: <span class="math inline">\(P(x&lt;5)\)</span>. No queremos incluir al 5</p>
+<p>Utilizaremos la funcion <code>phyper()</code> porque queremos
+calcular la probabilidad acumulada</p>
+<p>Definimos los parámetros de la distribución hipergeometrica:</p>
+<pre class="r"><code>n &lt;- 10 # tamaño de la muestra
+N &lt;- 120 # cámaras de germinación totales
+N1 &lt;- 40 # cámaras no calibradas</code></pre>
+<p>Para definir <code>q</code>, tener en cuenta que no quiero incluir el
+valor 5 y que quiero calcular la probabilidad acumulada de los menores
+(<code>lower.tail = T</code>)</p>
+<p>Cuando <code>lower.tail = T</code> incluye el valor de
+<code>q</code>, por lo tanto para que no tome el valor 5, se pone un
+valor inmediato menor, en éste caso, el valor 4</p>
+<pre class="r"><code>q &lt;- 4</code></pre>
+<p>Ingresamos todos los argumentos en la función:</p>
+<pre class="r"><code>phyper(q = q, m = N1, n = N - N1, k = n)</code></pre>
+<pre><code>[1] 0.795924</code></pre>
+<pre class="r"><code># lower.tail=T por defecto, no hace falta aclararlo</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la
+probabilidad de que más de 5 no estén calibradas?</strong></p>
+<p>En éste item el éxito son las cámaras que no están calibradas</p>
+<p>Queremos calcular la probabilidad acumulada:_ <span class="math inline">\(P(x&gt;5)\)</span>. No queremos incluir al 5</p>
+<p>Utilizaremos la funcion <code>phyper()</code> porque queremos
+calcular la probabilidad acumulada</p>
+<p>Definimos los parámetros de la distribución hipergeometrica:</p>
+<pre class="r"><code>n &lt;- 10 # tamaño de la muestra
+N &lt;- 120 # cámaras de germinación totales
+N1 &lt;- 40 # cámaras no calibradas</code></pre>
+<p>Para definir <code>q</code>, tener en cuenta que no quiero incluir el
+valor 5 y que quiero calcular la probabilidad acumulada de los mayores
+(<code>lower.tail = F</code>)</p>
+<p>Cuando <code>lower.tail = F</code> NO incluye el valor de
+<code>q</code>, por lo tanto si coloco el valor <code>q</code>=5, no lo
+incluirá.</p>
+<pre class="r"><code>q &lt;- 5</code></pre>
+<p>Ingresamos todos los argumentos en la función:</p>
+<pre class="r"><code>phyper(q = q, m = N1, n = N - N1, k = n, lower.tail = F)</code></pre>
+<pre><code>[1] 0.06778948</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuántas cámaras se esperan que estén correctamente
+calibradas en una muestra de 50 cámaras?</strong></p>
+<p>La pregunta hace refencia al <strong>valor esperado</strong> o
+<strong>esperanza</strong></p>
+<p>Definimos los parámetros de la distribución hipergeometrica y
+aplicamos a la fórmula de la Esperanza de la distribución:</p>
+<pre class="r"><code>n &lt;- 50 # tamaño de la muestra
+N &lt;- 120 # cámaras de germinación totales
+N1 &lt;- 80 # cámaras bien calibradas
+
+Esperanza &lt;- n * N1 / N
+Esperanza</code></pre>
+<pre><code>[1] 33.33333</code></pre>
+<pre class="r"><code>round(Esperanza, 0) # redondeo a 0 decimales</code></pre>
+<pre><code>[1] 33</code></pre>
+</div>
+</div>
+<div id="ejercicio-5" class="section level2">
+<h2>Ejercicio 5</h2>
+<p>Se capturaron, etiquetaron y liberaron cinco novillos de un lote de
+25 animales para identificar que estaban vacunadas contra brucelosis,
+luego se los devolvio al lote original de animales. Después de haber
+tenido la oportunidad de mezclarse, se selecciona una muestra aleatoria
+de 10 de estos animales. Sea X el número de animales etiquetados. ¿cuál
+es la probabilidad de que</p>
+<ol style="list-style-type: lower-alpha">
+<li>El numero de animales etiquetados sea exactamente 2.</li>
+<li>El numero de animales etiquetados menor o igual de 2.</li>
+<li>El número de animales etiquetados sea mayor o igual a 3 y menor o
+igual a 10.</li>
+</ol>
+<div id="respuestas-4" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Datos:
+m &lt;- 5 # animales etiquetados
+n &lt;- 25 - m # número de animales no etiquetados
+k &lt;- 10 # tamaño de muestra
+
+# P(x = 2)
+dhyper(x = 2, m = m, n = n, k = k)</code></pre>
+<pre><code>[1] 0.3853755</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x &lt;= 2)
+phyper(q = 2, m = m, n = n, k = k, lower.tail = T)</code></pre>
+<pre><code>[1] 0.6988142</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>phyper(q = 10, m = m, n = n, k = k) - phyper(q = 2, m = m, n = n, k = k)</code></pre>
+<pre><code>[1] 0.3011858</code></pre>
+</div>
+</div>
+<div id="ejercicio-6" class="section level2">
+<h2>Ejercicio 6</h2>
+<p>En un frasco de laboratorio, un zoólogo tiene contabilizados 20
+coleópteros hembra y 16 coleópteros macho.</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que, al extraer una muestra de 10
+coleópteros, obtenga 3 machos? b.¿Cuál es la probabilidad de que, al
+extraer una muestra de 10 coleópteros, obtenga menos de 3 o más de 5
+machos?</li>
+<li>Calcule el número esperado de machos en esa población</li>
+</ol>
+<div id="respuestas-5" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dhyper(x = 3, m = 16, n = 20, k = 10)</code></pre>
+<pre><code>[1] 0.1707846</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>menos_3 &lt;- phyper(q = 2, m = 16, n = 20, k = 10)
+
+mas_5 &lt;- phyper(q = 5, m = 16, n = 20, k = 10, lower.tail = F)
+
+menos_3 + mas_5</code></pre>
+<pre><code>[1] 0.2852665</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(E(X) = n \dfrac{N_1}{N} = 10
+\dfrac{16}{36} = 4.44 \approx 4\)</span> machos</li>
+</ol>
+</div>
+</div>
+<div id="ejercicio-7" class="section level2">
+<h2>Ejercicio 7</h2>
+<p>Un estudio de la Secretaría de Tránsito de la localidad de Puerto
+General San Martín, indica que el número promedio de camiones que llega
+por día al Puerto de Cargill es de 450.</p>
+<p><strong>Responder:</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que en un día determinado lleguen más de
+350 camiones?</li>
+<li>¿Cuál es la probabilidad de que en dos días lleguen 1000 o más
+camiones?</li>
+<li>¿Cuál es la probabilidad que en medio día lleguen entre más de 100 y
+menos de 200 camiones inclusive?</li>
+<li>¿Cuál es el valor esperado de camiones en una semana?</li>
+</ol>
+<div id="respuestas-6" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad de que en un día determinado lleguen
+más de 350 camiones?</strong></p>
+<p>Queremos calcular la probabilidad acumulada: <span class="math inline">\(P(x&gt;350)\)</span>. No incluimos el 350</p>
+<p>Utilizaremos la funcion <code>ppois()</code> y el argumento
+<code>lower.tail = F</code> porque queremos calcular la probabilidad
+acumulada de los valores mayores a 350.</p>
+<p>Definimos los parámetros de la distribución Poisson:</p>
+<pre class="r"><code>lambda &lt;- 450 # camiones por día</code></pre>
+<p>Si utilizo <code>lower.tail = F</code>, no incluye el valor que
+pongamos en <code>q</code>, en éste caso no queremos que incluya a
+350</p>
+<pre class="r"><code>q &lt;- 350</code></pre>
+<p>Ingresamos todos los argumentos en la función:</p>
+<pre class="r"><code>ppois(q = q, lambda = lambda, lower.tail = F)</code></pre>
+<pre><code>[1] 0.9999995</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad de que en dos días lleguen 1000 o
+más camiones?</strong></p>
+<p>Queremos calcular la probabilidad acumulada: <span class="math inline">\(P(x\ge 1000)\)</span>. Incluimos el 1000</p>
+<p>Utilizaremos la funcion <code>ppois()</code> porque queremos calcular
+la probabilidad acumulada de los valores mayores o iguales a 1000</p>
+<p>Definimos los parámetros de la distribución Poisson:</p>
+<pre class="r"><code>lambda &lt;- 900 # 450 camiones por día * 2 días</code></pre>
+<p>Queremos calcular valores mayores o iguales a 1000, utilizamos
+<code>lower.tail = F</code>, no incluye el valor que pongamos en
+<code>q</code>, en éste caso queremos que incluya a 1000 por lo cual
+<code>q</code> = 999</p>
+<pre class="r"><code>q &lt;- 1000</code></pre>
+<p>Ingresamos todos los argumentos en la función:</p>
+<pre class="r"><code>ppois(q = q, lambda = lambda, lower.tail = F)</code></pre>
+<pre><code>[1] 0.0004906327</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es la probabilidad que en medio día lleguen entre más
+de 100 y menos de 200 camiones inclusive?</strong></p>
+<p>Queremos calcular la probabilidad acumulada entre dos valores: <span class="math inline">\(P(100&lt; x\le 200)\)</span>. Incluímos el 200, no
+incluímos el 100</p>
+<p>Utilizaremos la funcion <code>ppois()</code> porque queremos calcular
+la probabilidad acumulada</p>
+<p>Definimos los parámetros de la distribución Poisson:</p>
+<pre class="r"><code>lambda &lt;- 450 / 2 # se divide por dos porque la pregunta es por medio día</code></pre>
+<p>Tenemos en cuenta que utilizaremos <code>lower.tail = T</code>, que
+incluye el valor que pongamos en <code>q</code>, en éste caso: - no
+queremos que incluya a 100, por lo cual <code>q1</code> = 100 - queremos
+que incluya a 200, por lo cual <code>q2</code> = 200</p>
+<pre class="r"><code>q1 &lt;- 100
+q2 &lt;- 200</code></pre>
+<p>Ingresamos todos los argumentos en la función, podemos hacerlo de 2
+maneras:</p>
+<p>Alternativa 1: restando probabilidades acumuladas, calculandolas por
+separado</p>
+<pre class="r"><code>P_100 &lt;- ppois(q = q1, lambda = lambda) # lower.tail = T, por defecto
+P_200 &lt;- ppois(q = q2, lambda = lambda)
+
+P_200 - P_100 # valor mayor - menor</code></pre>
+<pre><code>[1] 0.04915755</code></pre>
+<p>Alternativa 2: usando la función <code>diff()</code> para calcular
+diferencias (resta)</p>
+<pre class="r"><code>diff(ppois(q = c(q1, q2), lambda = lambda))</code></pre>
+<pre><code>[1] 0.04915755</code></pre>
+<pre class="r"><code># en el vector q = c(q1, q2), primero el valor menor y luego el mayor</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<p><strong>¿Cuál es el valor esperado de camiones que llegarán al Puerto
+de Cargill en una semana?</strong></p>
+<pre class="r"><code>450 * 7</code></pre>
+<pre><code>[1] 3150</code></pre>
+</div>
+</div>
+<div id="ejercicio-8" class="section level2">
+<h2>Ejercicio 8</h2>
+<p>Los dientes de león se estudian para conocer sus efectos sobre los
+cultivos y el crecimiento del césped. En una región se descubrió que el
+número medio de plantas de dientes de león por metro cuadrado es de
+7.0.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Calcule la probabilidad de que no haya plantas de dientes de león en
+una área de 1 <span class="math inline">\(m^2\)</span>.</li>
+<li>Calcule la probabilidad de al menos una planta diente de león en una
+área de 1 <span class="math inline">\(m^2\)</span>.</li>
+<li>Calcule la probabilidad de dos plantas de dientes de león, cuando
+mucho, en una área de 1 <span class="math inline">\(m^2\)</span>.</li>
+</ol>
+<div id="respuestas-7" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Datos:
+lambda &lt;- 7 # dientes de león por metro cuadrado
+# P(x = 0)
+dpois(x = 0, lambda = lambda)</code></pre>
+<pre><code>[1] 0.000911882</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x &gt;= 1)
+1 - dpois(x = 0, lambda = lambda)</code></pre>
+<pre><code>[1] 0.9990881</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x &lt;= 2)
+ppois(q = 2, lambda = lambda, lower.tail = T)</code></pre>
+<pre><code>[1] 0.02963616</code></pre>
+</div>
+</div>
+<div id="ejercicio-9" class="section level2">
+<h2>Ejercicio 9</h2>
+<p>Sea X el número de orugas de lepidópteros adultos capturados en una
+trampa durante un periodo determinado. Se sabe que en promedio las
+trampas contendrán 4.5 orugas Halle:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>La probabilidad de que una trampa contenga exactamente cinco
+orugas</p></li>
+<li><p>La probabilidad de que una trampa contenga cuando mucho cinco
+orugas</p></li>
+</ol>
+<div id="respuestas-8" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x = 5)
+dpois(x = 5, lambda = 4.5)</code></pre>
+<pre><code>[1] 0.1708269</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x &lt;= 5)
+ppois(q = 5, lambda = 4.5, lower.tail = T)</code></pre>
+<pre><code>[1] 0.7029304</code></pre>
+<hr />
+</div>
+</div>
+</div>
+<div id="ejercicios-complementarios" class="section level1">
+<h1>Ejercicios complementarios</h1>
+<div id="ejercicio-10" class="section level2">
+<h2>Ejercicio 10</h2>
+<p>Si se lanza una moneda 6 veces y se llama <code>cara</code> a un
+éxito:</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que sucedan 2 caras exactamente?</li>
+<li>¿Cuál es la probabilidad de lograr 4 caras o más?</li>
+</ol>
+<div id="respuestas-9" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 2, size = 6, prob = 0.5)</code></pre>
+<pre><code>[1] 0.234375</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>pbinom(q = 3, size = 6, prob = 0.5, lower.tail = F)</code></pre>
+<pre><code>[1] 0.34375</code></pre>
+</div>
+</div>
+<div id="ejercicio-11" class="section level2">
+<h2>Ejercicio 11</h2>
+<p>La probabilidad de que un estudiante que ingresa a la Universidad se
+gradúe es 0,4. Hallar la probabilidad que entre 4 estudiantes elegidos
+al azar se gradúe:</p>
+<ol style="list-style-type: lower-alpha">
+<li>ninguno</li>
+<li>sólo uno</li>
+<li>al menos 1</li>
+<li>todos</li>
+</ol>
+<div id="respuestas-10" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 0, size = 4, prob = 0.4)</code></pre>
+<pre><code>[1] 0.1296</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 1, size = 4, prob = 0.4)</code></pre>
+<pre><code>[1] 0.3456</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>pbinom(q = 0, size = 4, prob = 0.4, lower.tail = F)</code></pre>
+<pre><code>[1] 0.8704</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 4, size = 4, prob = 0.4)</code></pre>
+<pre><code>[1] 0.0256</code></pre>
+</div>
+</div>
+<div id="ejercicio-12" class="section level2">
+<h2>Ejercicio 12</h2>
+<p>Se sabe que cierta práctica agrícola ha sido adoptada por los
+productores en un 70% de los casos. Con el objeto de observar la
+incidencia de la adopción sobre otras variables, se propone visitar 10
+productores para averiguar si han adoptado o no dicha tecnología.</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que ninguno la haya adoptado?</li>
+<li>¿Cuál es la probabilidad de que al menos 1 de ellos la haya
+adoptado?</li>
+<li>¿Cuál es el número esperado de productores que la adoptaron?</li>
+<li>¿Cuál es la variancia?</li>
+</ol>
+<div id="respuestas-11" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 0, size = 10, prob = 0.7)</code></pre>
+<pre><code>[1] 5.9049e-06</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>1 - dbinom(x = 0, size = 10, prob = 0.7)</code></pre>
+<pre><code>[1] 0.9999941</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(E(X) = np = 10\cdot 0.7 = 7\)</span>
+productores</p></li>
+<li><p><span class="math inline">\(V(X) = npq = 10 \cdot 0.7 \cdot 0.3 =
+2.1\)</span> productores<sup>2</sup></p></li>
+</ol>
+</div>
+</div>
+<div id="ejercicio-13" class="section level2">
+<h2>Ejercicio 13</h2>
+<p>Por experiencias anteriores se conoce que la proporción de semillas
+que germinan de una cierta variedad de trigo es el 80%. Para realizar un
+ensayo se tomaron 10 semillas. ¿Cuál es la probabilidad de que menos de
+2 semillas germinen?</p>
+<p><strong>Respuesta</strong></p>
+<pre class="r"><code>pbinom(q = 1, size = 10, prob = 0.8)</code></pre>
+<pre><code>[1] 4.1984e-06</code></pre>
+</div>
+<div id="ejercicio-14" class="section level2">
+<h2>Ejercicio 14</h2>
+<p>Se sabe que la semilla de trébol rojo que vende un proveedor contiene
+1% de semillas de maleza. Si se extrae una muestra de 100 semillas.</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de encontrar 3 semillas de malezas?</li>
+<li>¿Cuál es la probabilidad de encontrar 4 o más semillas de
+malezas?</li>
+<li>Si la bolsa contiene 25 kg y las 1000 semillas pesan 1.8 g, ¿cuál es
+el número esperado de semillas de malezas en la bolsa?</li>
+</ol>
+<div id="respuestas-12" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dbinom(x = 3, size = 100, prob = 0.01)</code></pre>
+<pre><code>[1] 0.06099917</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>pbinom(q = 3, size = 100, prob = 0.01, lower.tail = F)</code></pre>
+<pre><code>[1] 0.01837404</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>round(25000 * 1000 / 1.8 * 0.01, 0)</code></pre>
+<pre><code>[1] 138889</code></pre>
+</div>
+</div>
+<div id="ejercicio-15" class="section level2">
+<h2>Ejercicio 15</h2>
+<p>En un laboratorio de semillas se tienen 30 semillas de girasol de las
+cuales de las cuales 20 están inoculadas. Si se toma una muestra de 10
+semillas:</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál será la probabilidad de extraer 6 inoculadas?</li>
+<li>¿Cuál es el valor esperado de semillas inoculadas en esa
+población?</li>
+</ol>
+<div id="respuestas-13" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dhyper(x = 6, m = 20, n = 10, k = 10)</code></pre>
+<pre><code>[1] 0.2709135</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(E(X) = n \dfrac{N_1}{N} = 10
+\dfrac{20}{30} = 6.66 \approx 7\)</span> semillas inoculadas</li>
+</ol>
+</div>
+</div>
+<div id="ejercicio-16" class="section level2">
+<h2>Ejercicio 16</h2>
+<p>En el relevamiento previo de un censo de viviendas se han
+identificado 15 casas y 18 departamentos en una manzana en particular.
+¿Cuál será la probabilidad de que en una muestra de 6 viviendas
+aparezcan 2 departamentos?</p>
+<div id="respuestas-14" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<pre class="r"><code>dhyper(x = 2, m = 18, n = 15, k = 6)</code></pre>
+<pre><code>[1] 0.1885618</code></pre>
+</div>
+</div>
+<div id="ejercicio-17" class="section level2">
+<h2>Ejercicio 17</h2>
+<p>Si una persona recibe por término medio 5 llamadas telefónicas por
+día: ¿Cuál es la probabilidad de que reciba menos de 4?</p>
+<div id="respuestas-15" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<pre class="r"><code>ppois(q = 3, lambda = 5)</code></pre>
+<pre><code>[1] 0.2650259</code></pre>
+</div>
+</div>
+<div id="ejercicio-18" class="section level2">
+<h2>Ejercicio 18</h2>
+<p>La probabilidad de que un caballo reciba una inyección y sufra una
+reacción desfavorable es de 0,002. Si 3000 caballos reciben aplicaciones
+de ese medicamento.</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la probabilidad de que ninguno reaccione mal?</li>
+<li>¿Cuál es la probabilidad de que menos de 3 caballos reaccionen
+mal?</li>
+<li>¿Cuál es la probabilidad de que al menos 3 caballos reaccionen
+mal?</li>
+</ol>
+<div id="respuestas-16" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Usando binomial
+dbinom(x = 0, size = 3000, prob = 0.002)</code></pre>
+<pre><code>[1] 0.002463904</code></pre>
+<pre class="r"><code># Aproximando por Poisson
+lambda &lt;- 3000 * 0.002
+dpois(x = 0, lambda = lambda)</code></pre>
+<pre><code>[1] 0.002478752</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Binomial
+pbinom(q = 2, size = 3000, prob = 0.002)</code></pre>
+<pre><code>[1] 0.06179033</code></pre>
+<pre class="r"><code># Aproximacion Poisson
+ppois(q = 2, lambda = 3000 * 0.002)</code></pre>
+<pre><code>[1] 0.0619688</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>pbinom(q = 2, size = 3000, prob = 0.002, lower.tail = F)</code></pre>
+<pre><code>[1] 0.9382097</code></pre>
+</div>
+</div>
+<div id="ejercicio-19" class="section level2">
+<h2>Ejercicio 19</h2>
+<p>La probabilidad de que una semilla no germine es igual a 0,002.
+Hallar la probabilidad de que en un lote de 2500 semillas:</p>
+<ol style="list-style-type: lower-alpha">
+<li>No germinen 4 semillas</li>
+<li>No germinen menos de 2 semillas</li>
+</ol>
+<div id="respuestas-17" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Usando binomial
+dbinom(x = 4, size = 2500, prob = 0.002)</code></pre>
+<pre><code>[1] 0.1755727</code></pre>
+<pre class="r"><code># Aproximando por Poisson
+lambda &lt;- 2500 * 0.002
+dpois(x = 4, lambda = lambda)</code></pre>
+<pre><code>[1] 0.1754674</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Usando binomial
+pbinom(q = 1, size = 2500, prob = 0.002)</code></pre>
+<pre><code>[1] 0.04029296</code></pre>
+<pre class="r"><code># Aproximando por Poisson
+lambda &lt;- 2500 * 0.002
+ppois(q = 1, lambda = lambda)</code></pre>
+<pre><code>[1] 0.04042768</code></pre>
+</div>
+</div>
+<div id="ejercicio-20" class="section level2">
+<h2>Ejercicio 20</h2>
+<p>Entre las 2 y las 4 PM, el número medio de llamadas telefónicas por
+minutos que recibe una central es 2,5.</p>
+<p>Hallar la probabilidad de que durante un minuto concreto se
+produzcan:</p>
+<ol style="list-style-type: lower-alpha">
+<li>0 llamadas</li>
+<li>1 llamada</li>
+<li>al menos 3 llamadas</li>
+<li>¿Cuál es el número de llamadas esperado?</li>
+</ol>
+<div id="respuestas-18" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dpois(x = 0, lambda = 2.5)</code></pre>
+<pre><code>[1] 0.082085</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>dpois(x = 1, lambda = 2.5)</code></pre>
+<pre><code>[1] 0.2052125</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code>ppois(q = 2, lambda = 2.5, lower.tail = F)</code></pre>
+<pre><code>[1] 0.4561869</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(E(X) = \lambda = 2.5\)</span>
+llamadas</li>
+</ol>
+</div>
+</div>
+<div id="ejercicio-21" class="section level2">
+<h2>Ejercicio 21</h2>
+<p>El 20% de todos los ejemplares de un libro de texto particular no
+pasan una prueba de resistencia de encuadernación. Sea X el número entre
+15 ejemplares seleccionados al azar que no pasan la prueba. Halle:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>La probabilidad de que cuando mucho 8 no pasen la prueba</p></li>
+<li><p>La probabilidad de que exactamente 8 fallen</p></li>
+<li><p>La probabilidad de que entre 4 y 7, inclusive, fallen</p></li>
+</ol>
+<div id="respuestas-19" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x &lt;= 8)
+pbinom(q = 8, size = 15, prob = 0.2, lower.tail = T)</code></pre>
+<pre><code>[1] 0.999215</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x = 8)
+dbinom(x = 8, size = 15, prob = 0.2)</code></pre>
+<pre><code>[1] 0.003454764</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(4 &lt;= x &lt;= 7)
+diff(pbinom(q = c(3, 7), size = 15, prob = 0.2))</code></pre>
+<pre><code>[1] 0.3475981</code></pre>
+</div>
+</div>
+<div id="ejercicio-22" class="section level2">
+<h2>Ejercicio 22</h2>
+<p>Cuando se utilizan tarjetas de circuito en la fabricación de
+reproductores de discos compactos se prueban; el porcentaje de
+defectuosas es de 5%. En una muestra aleatoria de tamaño n=25:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>¿Cuál es la probabilidad que ninguna de estas 25 tarjetas esté
+defectuosa?</p></li>
+<li><p>Calcule el valor esperado y la desviación estándar.</p></li>
+</ol>
+<div id="respuestas-20" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># P(x = 0)
+dbinom(x = 0, size = 25, prob = 0.05)</code></pre>
+<pre><code>[1] 0.2773896</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<pre class="r"><code># Esperanza:
+25 * 0.05</code></pre>
+<pre><code>[1] 1.25</code></pre>
+<pre class="r"><code># Desvío:
+sqrt(25 * 0.05 * 0.95)</code></pre>
+<pre><code>[1] 1.089725</code></pre>
+</div>
+</div>
+<div id="ejercicio-23" class="section level2">
+<h2>Ejercicio 23</h2>
+<p>Un geólogo recolectó 10 especímenes de roca basáltica y 10
+especímenes de granito. Él le pide a su ayudante de laboratorio que
+seleccione al azar 15 de los especímenes para analizarlos.</p>
+<ol style="list-style-type: lower-alpha">
+<li>¿Cuál es la función masa de probabilidad del número de especímenes
+de granito seleccionados para su análisis?</li>
+</ol>
+<p>b.¿Cuál es la probabilidad de que todos los especímenes de uno de los
+dos tipos de roca sean seleccionados para su análisis?</p>
+<div id="respuestas-21" class="section level3 resp">
+<h3 class="resp">Respuestas</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(X \sim Hyper(x, 15, 10,
+20)\)</span></p></li>
+<li></li>
+</ol>
+<pre class="r"><code># Datos:
+m &lt;- 10 # especímenes de un tipo
+n &lt;- 10 # especímenes del otro tipo
+k &lt;- 15 # tamaño de muestra
+
+# P(x = 15)
+dhyper(x = 10, m = m, n = n, k = k)</code></pre>
+<pre><code>[1] 0.01625387</code></pre>
+</div>
+</div>
+</div>
 
 <p style="text-align: right; font-size: 10pt; padding-right: 20px;">
   <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">
