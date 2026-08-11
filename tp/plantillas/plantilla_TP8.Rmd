@@ -1,0 +1,442 @@
+---
+title: "TP N° 8: Análisis de datos categóricos"
+output: html_document
+---
+
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+## Ejercicio 1
+
+Un experimentador efectuó pruebas de germinación de tres tratamientos químicos aplicados a cada una de 200 semillas elegidas al azar. Los resultados obtenidos fueron:
+
+Los datos se encuentran en el archivo [germinacion.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/germinacion.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+Pruebe la hipótesis de que el porcentaje de semillas germinadas es el mismo para todos los tratamientos químicos empleados. Use un nivel de significancia del 5%.
+
+
+### Respuestas
+
+$$
+H_0: \text{la proporción de semillas germinadas es homogenea entre tratamientos} \\
+H_1: \text{la proporción de semillas germinadas no es homogenea entre tratamientos}
+$$
+
+```{r}
+# Opción 1: Importar archivo local
+germinacion <- import("germinacion.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(germinacion)
+
+# Tabla frecuencias (observados)
+obs <- xtabs(semillas ~ Trat + Germinado, germinacion)
+obs
+
+# Total por muestra (margen 1)
+n1 <- margin.table(obs, margin = 1)
+n1
+
+# Tabla frecuencias relativas
+props <- prop.table(obs)
+props
+
+# Proporción media tratamientos (margen 2)
+p <- margin.table(props, margin = 2)
+p
+
+# Valores esperados eij = ni. * p.j
+esp <- n1 %*% t(p)
+esp
+
+# Chi calculado
+chi_calc <- sum((obs - esp)^2 / esp)
+chi_calc
+
+# Chi critico
+gl <- (nrow(obs) - 1) * (ncol(obs) - 1)
+chi_crit <- qchisq(p = 0.05, df = gl, lower.tail = F)
+chi_crit
+
+# valor p
+pchisq(chi_calc, df = gl, lower.tail = F)
+
+# Funcion chisq.test()
+chisq.test(obs, p = p)
+```
+
+Se rechaza $H_0$
+
+
+
+## Ejercicio 2
+
+La siguiente tabla da la clasificación de 1282 plantas de algodón según color de corola y forma de hoja. ¿Existe asociación entre ambas características?.
+
+```{r}
+txt <- textConnection(
+    "corola  hoja    frec
+  amarilla ancha   717
+  amarilla angosta 249
+  blanca   ancha   236
+  blanca   angosta 80"
+)
+algodon <- read.table(txt, header = T)
+xtabs(frec ~ corola + hoja, algodon)
+# writexl::write_xlsx(algodon, "algodon.xlsx")
+```
+
+Los datos se encuentran en el archivo [algodon.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/algodon.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+Plantee la hipótesis respectiva, verifíquela utilizando un nivel de significación del 1%. Extraiga conclusiones.
+
+
+
+### Respuestas
+$$
+H_0: \text{el color de la corola es independiente del tipo de hoja} \\
+H_1: \text{el color de la corola no es independiente del tipo de hoja}
+$$
+
+```{r}
+# Opción 1: Importar archivo local
+algodon <- import("algodon.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(algodon)
+
+# Tabla frecuencias (observados)
+obs <- xtabs(frec ~ corola + hoja, algodon)
+obs
+
+# Total observaciones
+n <- margin.table(obs)
+n
+
+# Frecuencias marginales (totales filas y columnas)
+n1 <- margin.table(obs, margin = 1)
+n1
+n2 <- margin.table(obs, margin = 2)
+n2
+
+# Valores esperados eij = (ni. * n.j)/n
+esp <- (n1 %*% t(n2)) / n
+esp
+
+# Chi critico
+gl <- (nrow(obs) - 1) * (ncol(obs) - 1)
+chi_crit <- qchisq(p = 0.01, df = gl, lower.tail = F)
+chi_crit
+
+# Chi calculado con corrección de continuidad
+a <- as.numeric(obs[1, 1])
+b <- as.numeric(obs[1, 2])
+c <- as.numeric(obs[2, 1])
+d <- as.numeric(obs[2, 2])
+chi_calc2 <- n * (abs(a * d - b * c) - 0.5 * n)^2 / ((a + c) * (b + d) * (a + b) * (c + d))
+chi_calc2
+
+# valor p
+pchisq(chi_calc2, df = gl, lower.tail = F)
+
+# Funcion chisq.test()
+chisq.test(obs, correct = T)
+```
+
+No se rechaza $H_0$
+
+
+
+
+## Ejercicio 3
+
+Los datos que se presentan en la siguiente tabla corresponden al número de estudiantes universitarios hombres, casados y solteros; que aún estaban en el establecimiento educacional tres años mas tarde del ingreso. ¿Puede concluir de estos datos, si la proporción de estudiantes que aún están en la misma universidad tres años más tarde difiere?
+
+Los datos se encuentran en el archivo [educacion.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/educacion.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+
+## Ejercicio 4
+
+Mendel en uno de sus clásicos estudios genéticos, observó la variación de planta a planta, en una serie de experimentos sobre la forma de la semilla. Las primeras diez plantas dieron los siguientes resultados:
+
+Los datos se encuentran en el archivo [semilla.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/semilla.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+Probar si la razón 3:1 para las diez plantas es verdadera. Use un $\alpha$ de 5%	
+
+
+
+## Ejercicio 5
+
+Mendel también observó la variación de planta a planta en un experimento sobre el color del albumen de las semillas. 
+
+Los datos se encuentran en el archivo [albumen.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/albumen.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+Probar si la razón 3:1 para las diez plantas es verdadera. Use un nivel de significancia de 5%.
+
+
+## Ejercicio 6
+
+Los siguientes datos corresponden a la distribución de un insecto en una muestra de 400 plantas
+
+Los datos se encuentran en el archivo [insectos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/insectos.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+Con la información proporcionada por estos datos y con la ayuda del test Chi-cuadrado, de bondad de ajuste, ¿puede concluir que los mismos siguen una distribución de Poisson? Use un nivel de significación del 5%
+
+
+
+## Ejercicio 7
+
+La siguiente tabla muestra los resultados del lanzamiento de 4 monedas 160 veces.
+
+Los datos se encuentran en el archivo [monedas.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/monedas.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+Con un nivel de significancia del 1%, ¿proporcionan estos datos suficiente evidencia para inferir que los mismos siguen una distribución binomial?
+
+
+
+
+
+
+## Ejercicio 8
+
+El número observado de insectos capturados en un lote en 1000 intervalos de un minuto se describe en la siguiente tabla:
+
+Los datos se encuentran en el archivo [capturados.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/capturados.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+Probar al 5% de significancia la hipótesis nula de que la distribución de los insectos capturados es de Poisson con parámetro $\lambda$ = 1.
+
+
+
+## Ejercicio 9
+
+Se realizó una experiencia en trigo a fin de establecer si existe relación entre los caracteres largo de semilla y susceptibilidad a roya. Se obtuvieron los siguientes valores para un cruzamiento entre un padre de semilla larga y resistente y otro de semilla corta y susceptible.
+
+
+Los datos se encuentran en el archivo [susceptibilidad.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/susceptibilidad.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+Efectúe la prueba correspondiente, usando un nivel de significación del 5%.
+
+
+## Ejercicio 10
+
+En una encuesta socioeconómica efectuada en el área rural de cuatro localidades, se obtuvieron los siguientes valores para la variable actividad predominante de la explotación
+
+
+Los datos se encuentran en el archivo [actividad.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/actividad.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+¿Puede considerarse, al 5% de significancia, que las cuatro localidades constituyen una región homogénea respecto a la actividad predominante de los establecimientos?
+
+
+## Ejercicio 11
+
+Para estudiar la relación entre el tipo de parto y la raza en vacas lecheras, se tomó una muestra de 300 vacas de una cuenca lechera y se las clasificó según dichos atributos.
+
+Los datos se encuentran en el archivo [razas.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/razas.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+¿Se puede afirmar con un 5% de significancia que existe **relación** entre el tipo de parto y la raza?
+
+
+### Respuestas
+
+H_0: El tipo de parto **es independiente** del clima
+H_1: El tipo de parto **no es independiente** del clima
+
+```{r}
+# Opción 1: Importar archivo local
+razas <- import("razas.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(razas)
+
+# Tabla frecuencias
+obs <- xtabs(partos ~ Tipo + Raza, razas)
+addmargins(obs)
+```
+
+```{r}
+# Valores esperados
+n <- margin.table(obs)
+n1 <- margin.table(obs, margin = 1)
+n2 <- margin.table(obs, margin = 2)
+esp <- (n1 %*% t(n2)) / n
+esp
+```
+
+```{r}
+# Estadístico de prueba
+chi_calc <- sum((obs - esp)^2 / esp)
+chi_calc
+```
+
+```{r}
+# Valor crítico
+alfa <- 0.05
+df <- (nrow(esp) - 1) * (ncol(esp) - 1)
+chi_crit <- qchisq(alfa, df, lower.tail = F)
+chi_crit
+```
+
+```{r}
+# Valor p
+pchisq(chi_calc, df = df, lower.tail = F)
+```
+
+```{r}
+# Usando la función chisq.test()
+chisq.test(obs)
+```
+
+
+## Ejercicio 12
+
+Se quiere saber si la proporción de los tamaños de semilla de maíz son similares en 3 partidas de semillas. De cada partida se toma una muestra y se clasifica la semilla según su tamaño en chico, normal y grande.
+
+Los datos se encuentran en el archivo [semillas.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/semillas.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+¿Se puede afirmar con un 1% de significancia que la proporción de semillas chicas, normales y grandes es similar entre las partidas?
+
+
+### Respuestas
+
+H_0: La proporción de tamaños de semillas es homogenea entre las partidas de semillas
+H_1: La proporción de tamaños de semillas no es homogenea entre las partidas de semillas
+
+```{r}
+# Opción 1: Importar archivo local
+semillas <- import("semillas.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(semillas)
+
+# Tabla frecuencias
+obs <- xtabs(semillas ~ Partida + Tamaño, semillas)
+addmargins(obs)
+```
+
+
+```{r}
+# Tabla frec relativas
+prop <- prop.table(obs)
+addmargins(prop)
+```
+
+```{r}
+# Valores esperados
+n <- margin.table(obs)
+n1 <- margin.table(obs, margin = 1)
+n2 <- margin.table(obs, margin = 2)
+esp <- (n1 %*% t(n2)) / n
+esp
+
+# Estadístico de prueba
+chi_calc <- sum((obs - esp)^2 / esp)
+chi_calc
+```
+
+Valor crítico
+
+```{r}
+alfa <- 0.01
+df <- (nrow(esp) - 1) * (ncol(esp) - 1)
+chi_crit <- qchisq(alfa, df, lower.tail = F)
+chi_crit
+```
+
+Valor p
+
+```{r}
+pchisq(chi_calc, df = df, lower.tail = F)
+```
+
+Usando la función chisq.test()
+
+```{r}
+# Proporción global
+p <- margin.table(prop, margin = 2)
+
+# Test
+chisq.test(obs, p = p)
+```
+
+
+
+
+## Ejercicio 13
+
+En una variedad de arvejas, la textura y color de la semilla se rigen por caracteres mendelianos, siendo "lisas" y "amarillas" fenotipos dominantes, mientras que "rugosas" y "verdes" son recesivos. La proporción teórica del número de arvejas LA, LV, RA y RV es 9:3:3:1. Se clasificaron 556 arvejas según su textura lisa (L) o rugosa (R) y color amarillo (A) o verde (V) y se obtuvieron las siguientes frecuencias observadas:
+
+Los datos se encuentran en el archivo [arvejas.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/arvejas.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+¿Con un 5% de significancia, estos datos se ajustan a la distribución teórica 9:3:3:1?
+
+
+### Respuestas
+
+H_0: La distribución teórica 9:3:3:1 se ajusta a los datos de la muestra
+H_1: La distribución teórica 9:3:3:1 no se ajusta a los datos de la muestra
+
+
+```{r}
+# Opción 1: Importar archivo local
+arvejas <- import("arvejas.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(arvejas)
+
+obs <- arvejas$freq
+```
+
+Proporciones de refrencia según la distribución teórica
+
+```{r}
+prob <- c(LA = 9 / 16, LV = 3 / 16, RA = 3 / 16, RV = 1 / 16)
+prob
+```
+
+Valores esperados según la proporción teórcia
+
+```{r}
+esp <- sum(obs) * prob
+esp
+```
+
+Estadístico de prueba
+
+```{r}
+chi_calc <- sum((obs - esp)^2 / esp)
+chi_calc
+```
+
+Valor crítico 
+
+```{r}
+df <- nrow(obs) - 1
+chi_crit <- qchisq(p = 1 - 0.05, df = df)
+chi_crit
+```
+
+Valor p
+
+```{r}
+pchisq(q = chi_calc, df = df, lower.tail = F)
+```
+
+Con chisq.test()
+
+```{r}
+chisq.test(obs, p = prob)
+```
+
+

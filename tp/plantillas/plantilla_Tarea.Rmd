@@ -1,0 +1,16 @@
+---
+title: "Plantilla Tareas"
+output: html_document
+---
+
+```{r, include = FALSE}
+# Paquetes requeridos
+library(tidyverse)
+```
+
+## Tarea
+
+```{r}
+
+```
+

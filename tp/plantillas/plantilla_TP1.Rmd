@@ -1,0 +1,186 @@
+---
+title: "TP U1 Estadística Descriptiva"
+output: html_document
+---
+
+Cada vez que se inicia la sesión de RStudio debemos leer los paquetes que serán utilizados:
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+
+## Ejercicio 5
+
+Se registraron datos de 1598 terneros que ingresaron al sistema de engorde de la estancia "La Escondida S.A.". 
+
+**a. Cargue los datos en **R** y examine la tabla con `View()`. Puede hacerlo:
+    - importando el archivo local con la función `import()` del paquete `rio`
+    - utilizando el set de datos de la librería de la cátedra con la función `data()`**
+
+  
+```{r}
+# Opción 1: Importar archivo local
+pesada_terneros <- import("pesada_terneros.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(pesada_terneros)
+
+# Visualizar
+View(pesada_terneros)
+```
+
+**b. Considere las siguientes variables: `Procedencia`, `IDV`, `Hora` y `Peso`. Determine para cada una el tipo de datos que contiene y la escala de medición que puede aplicarse. **
+
+Procedencia:
+
+IDV:
+
+Hora: 
+
+Peso:
+
+**c. Comente si los datos pueden considerarse una muestra o una población.**
+
+**d. Realice una tabla de frecuencia de la variable  `Procedencia`  y realice un gráfico de barras.**
+
+Tabla de frecuencia:
+
+```{r}
+pesada_terneros %>%
+    group_by(Procedencia) %>%
+    count()
+```
+
+Gráfico: 
+
+```{r}
+ggplot(pesada_terneros) +
+    aes(x = Procedencia) +
+    geom_bar()
+```
+
+**e. Realice una tabla de frecuencia de los pesos y grafique en un histograma.**
+
+Tabla de frecuencias: 
+
+Calcular límites y marcas de clase: `pretty()` suaviza los límites de los intervalos
+
+```{r}
+lim5 <- pretty(pesada_terneros$Peso, n = 5) # n es el número aproximado de intervalos que desee
+lim5 # ver los limites creados
+```
+
+Calcular la marca de clase sumando a cada límite inferior media amplitud de clase
+
+```{r}
+a <- 50 # ancho del intervalo (fijarse que los valores de lim)
+mc <- lim5[1:6] + a / 2 # cuantos de los valores de `lim` tomar como "Limites Inferiores"
+```
+
+Armado de la tabla de frecuencias: `cut()` crea las clases
+
+```{r}
+pesada_terneros <- pesada_terneros %>%
+    mutate(clases = cut(Peso, breaks = lim5, include.lowest = T, right = F))
+pesada_terneros
+```
+
+- `breaks`: donde hacer los cortes (limites)
+- `include.lowest`: para que cada clase incluya el valor menor, cerrado a izquierda,
+- `right`: abierto a derecha, no incluye el mayor
+
+Ahora haciendo el conteo
+
+```{r}
+tbl_frec <- pesada_terneros %>%
+    group_by(clases, .drop = FALSE) %>% # agrupar por clases incluyendo las que no tienen frecuencia.
+    count(name = "f") # para que le de nombre f a la columna
+tbl_frec
+```
+
+Calcular otras frecuencias
+
+```{r}
+tbl_frec <- tbl_frec %>%
+    mutate(
+        mc = !!mc, # marca de clase o valor medio de la clase
+        F = cumsum(f), # frecuencia absoluta acumulada
+        h = f / sum(f), # frecuencia relativa simple
+        H = F / sum(f) # frecuencia relativa acumulada
+    )
+tbl_frec
+```
+
+Ahora graficar un histograma: ggplot hace las clases y frecuencias por nosotros.
+
+```{r}
+ggplot(pesada_terneros) +
+    aes(x = Peso) +
+    geom_histogram(binwidth = a) # para darle la amplitud de clase que queríamos
+```
+
+
+**f. Graficar la distribución de los pesos en función de las procedencias:**
+
+Con distintos colores
+
+```{r}
+ggplot(pesada_terneros) +
+    aes(x = Peso, fill = Procedencia) +
+    geom_histogram(binwidth = a)
+```
+
+O en distintos paneles con `facet_wrap`
+
+Graficando las procedencias en distintos paneles:
+
+```{r}
+ggplot(pesada_terneros) +
+    aes(x = Peso) +
+    geom_histogram(binwidth = a) +
+    facet_wrap(~Procedencia)
+```
+
+**g. Construya un histograma para los pesos de los animales que provienen del Establecimiento "Las Glicinas" únicamente.**
+
+Primero filtrar y luego graficar.
+
+```{r}
+filter(pesada_terneros, Procedencia == "Las Glicinas") %>%
+    ggplot(.) +
+    aes(x = Peso) +
+    geom_histogram(binwidth = a)
+```
+
+
+## Ejercicio 11
+
+Se obtuvieron datos de un relevamiento del arbolado público realizado en Rafaela.
+
+Los datos están en el archivo `riesgo_arbolado.xlsx`.
+
+a. Cargue los datos en **R** y examine la tabla con `View()`. Puede hacerlo:
+    - importando el archivo local con la función `import()` del paquete `rio`
+    - utilizando el set de datos de la librería de la cátedra con la función `data()`
+
+
+```{r}
+
+```
+
+b. Agrupe las variables en categorías según el tipo de datos que contiene y la escala de medición que puede aplicarse.
+
+c. Comente cuál es la población objetivo.
+
+d. Resuma la distribución de especies de los datos de censo de arbolado mediante una tabla de frecuencias y un gráfico de barras. ¿Cual es la especie más común?
+
+e. Resuma los datos de DAP (diámetro) en una tabla de frecuencias.
+
+f. Construya un histograma para los valores de DAP
+
+g. Construya un histograma para los valores de DAP, sólo de la especie Fraxinus.

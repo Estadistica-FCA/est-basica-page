@@ -1,0 +1,604 @@
+---
+title: "TP N° 7: Inferencia estadística basada en dos muestras"
+output: html_document
+---
+
+Para descargar los archivos en la GUIA hacer click sobre el nombre del archivo con el botón derecho, seleccionar **Guardar enlace como...** e indicar el directorio de trabajo.
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+# Intervalos de confianza
+
+## Ejercicio 1
+
+Los participantes de un programa de salud, miden su progreso mediante el tiempo que les toma correr determinada distancia. Un índice del progreso lo constituye la tasa de recuperación cardíaca (TRC). Los siguientes datos son tiempos (minutos y segundos), para una carrera de 2,5 km. Los TRC1 corresponden a hombres entre 40 - 49 años y los TRC2 a hombres de 50 - 59 años.
+
+Los datos se encuentran en el archivo [TRC.xlsx]
+
+Construir un intervalo del 95% para las diferencias entre las medias de las dos poblaciones.
+
+### Respuestas 
+
+- Alternativa 1: importar los datos como vectores con la función `c()`
+
+
+```{r, echo = T}
+# Ingresar datos:
+TRC1 <- c(11.23, 11.44, 10.03, 10.21, 10.57, 7.33, 10.15, 10.51, 7.27, 11.01, 10.02, 11, 10.3)
+TRC2 <- c(15.34, 11.36, 13.52, 12.29, 12.49, 15.06, 11.52, 19.51, 19.12)
+
+# Datos
+xbar_TRC1 <- mean(TRC1)
+xbar_TRC2 <- mean(TRC2)
+
+S_TRC1 <- sd(TRC1)
+S_TRC2 <- sd(TRC2)
+
+n_TRC1 <- length(TRC1)
+n_TRC2 <- length(TRC2)
+
+alfa <- 0.05
+
+# Variancias poblacionales: iguales o distintas?
+var.test(x = TRC1, y = TRC2, alternative = "two")
+```
+
+Existen evidencias significativas para rechazar la H0, por lo tanto la variaanzas de las  tasas de recuperación cardíaca no son iguales.
+
+```{r}
+# Diferencia estimada
+xbar_TRC1 - xbar_TRC2
+
+# Cuantiles
+delta <- ((S_TRC1^2 / n_TRC1 + S_TRC2^2 / n_TRC2)^2) / (((S_TRC1^2 / n_TRC1)^2) / (n_TRC1 - 1) + ((S_TRC2^2 / n_TRC2)^2) / (n_TRC2 - 1))
+
+t_crit <- qt(p = c(alfa / 2, 1 - alfa / 2), df = delta)
+t_crit
+
+# Límites
+lim <- xbar_TRC1 - xbar_TRC2 + t_crit * sqrt(S_TRC1^2 / n_TRC1 + S_TRC2^2 / n_TRC2)
+lim
+
+t.test(x = TRC1, y = TRC2, alternative = "two", mu = 0, var.equal = F)
+```
+
+
+- Alternativa 2: importar los datos de un archivo ".xlsx":
+
+```{r}
+# Ingresar datos:
+datos <- import("TRC.xlsx")
+```
+
+```{r, echo = T}
+# Datos
+resumen <- datos %>%
+    group_by(Grupo) %>%
+    summarise(
+        xbar = mean(TRC),
+        sd = sd(TRC),
+        n = length(TRC)
+    )
+
+resumen
+```
+
+Para usar los test, indico que la variable RESPUESTA está en función de (~) la variable TRATAMIENTO: `datos$TRC ~ datos$Grupo` _(con `datos$` le indicamos donde encontrar esas variables)_
+
+```{r, echo = T}
+# Variancias poblacionales: iguales o distintas?
+
+# Indico que la variable RESPUESTA está en función de (~) la variable TRATAMIENTO: datos$TRC ~ datos$Grupo
+var.test(TRC ~ Grupo, datos, alternative = "two")
+```
+
+
+Existen evidencias significativas para rechazar la H0, por lo tanto la varianzas de las  tasas de recuperación cardíaca no son iguales.
+
+```{r, echo = T}
+t.test(TRC ~ Grupo, datos, alternative = "two", mu = 0, var.equal = F)
+```
+
+
+## Ejercicio 2
+
+A fin de indagar sobre adopción de cierta técnica de crianza de terneros, se tomó una muestra aleatoria de 425 productores lecheros de un distrito del departamento Castellanos (Santa Fe) y otra de 550 de un distrito del departamento Las Colonias. Ciento veinti ocho del departamento Castellanos y 330 del de Las Colonias dijeron que habían adoptado la técnica. Hallar los límites de confianza del 95 % y del 99 % para la diferencia de las proporciones de los productores que adoptaron.
+
+
+## Ejercicio 3
+
+Una muestra de 250 lotes sembrados con la variedad A de maíz, arrojó que 25 de ellos estaban afectados con gusano del tallo. Otra muestra de 190 lotes, de la misma área agrícola, pero sembrados con la variedad B de maíz, sólo 10 estaban afectados por el mismo gusano. Determinar los límites de confianza del 95 % y del 99 % para la diferencia de las proporciones de lotes afectados por el gusano.
+
+
+
+
+## Ejercicio 4
+
+Se quiere comparar dos métodos rápidos para estimar la concentración de una principio activo en un insecticida. Se preparan 10 dosis en el laboratorio y se mide la concentración de cada una, con los dos métodos. Se obtienen los siguientes resultados:
+
+Los datos se encuentran en el archivo [concentracion_insecticida.xlsx]
+
+
+Calcular un intervalo de confianza al nivel 0.9 para el cociente de varianzas y la diferencia de concentraciones medias.
+
+
+## Ejercicio 5
+
+Los investigadores de la Environmental Protection Agency (EPA) están interesados en el número medio de microorganismos de partículas en suspensión por metro cúbico de aire que es uno de los indicadores de la calidad del aire.  Para monitorear la calidad del aire se hace una lectura cada seis días, extrayendo un metro cúbico de aire a través de un filtro y determinado el número de microorganismos de partículas en suspensión concentradas en él. Después de un período de treinta días, se ha generado una muestra aleatoria de tamaño 5. Los valores observados de estas variables, para el período dado de 30 días son:
+
+
+Hallar un intervalo de confianza al nivel de confianza 95% para el número medio de microorganismos de partículas en suspensión por metro cúbico sabiendo que la varianza poblacional es igual a 9. ¿Cómo sería el intervalo si no se conoce la varianza poblacional?
+
+
+
+---
+
+# Prueba de Hipótesis
+
+## Ejercicio 1
+
+Una cooperativa agrícola debe decidir cuál de dos tipos de neumáticos (A y B) va a comprar para sus camiones. Los neumáticos se prueban bajo condiciones semejantes hasta que se desgastan. Se emplean 15 de cada marca (en miles de km)
+
+Los datos se encuentran en el archivo [neumaticos.xlsx]
+
+¿Existen diferencias significativas entre las medias al nivel de significación del 5%?
+
+
+### Respuestas
+
+Hipotesis:
+
+ H_0: μ_A = μ_B
+H_1: μ_A ≠  μ_B 
+
+Son muestras independientes con sigmas desconocidos por lo tanto se prueba antes si esos sigmas se asumen iguales o distintos .
+
+
+- Alternativa 1: importar los datos como vectores con la función `c()`
+
+
+```{r, echo=T}
+A <- c(25.5, 25.8, 25.4, 26.5, 25.9, 25.4, 26, 26.1, 26, 25.6, 26.4, 25.9, 25.5, 24.8, 26.3)
+B <- c(23.2, 23.2, 23.6, 23.6, 23.5, 23.6, 23.6, 23.2, 22.3, 23.5, 23.2, 23.1, 22.5, 23, 23.4)
+
+# Variancias poblacionales: iguales o distintas?
+var.test(x = A, y = B, alternative = "two")
+
+# Igualdad de medias:
+t.test(
+    x = A, y = B, # carga de datos de ambas muestras
+    alternative = "two", # signo de la hipótesis alternativa
+    var.equal = T
+) # para indicar si las varianzas son homogéneas o no
+```
+
+
+- Alternativa 2: importar los datos de un archivo ".xlsx" 
+
+Indico que la variable RESPUESTA está en función de (~) la variable TRATAMIENTO: `datos$duración ~ datos$marca` _(con `datos$` le indicamos donde encontrar esas variables)_
+
+```{r}
+# Opción 1: Importar archivo local
+neumaticos <- import("neumaticos.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(neumaticos)
+
+```
+
+```{r, echo = T}
+# Variancias poblacionales: iguales o distintas?
+var.test(duración ~ marca, neumaticos, alternative = "two")
+
+# Igualdad de medias: t.test() ordena por alfabeto el tratamiento que coloca en x
+
+t.test(duración ~ marca, neumaticos, # carga de variable respuesta ~ tratamiento
+    alternative = "two", # signo de la hipótesis alternativa
+    var.equal = T
+) # para indicar si las varianzas son homogéneas o no
+```
+
+Conclusión: existen evidencias significativas para rechazar la H0nula (p < 0.0001) por lo tanto hay diferencias en el kilometraje promedio al cual se desgastan los neumáticos (P < 0.0001) 
+
+
+
+## Ejercicio 2
+
+Mediante dos procesos se fabrican alambres galvanizados lisos para alambrados rurales. Los técnicos de la fábrica desean determinar si los dos procesos poseen diferentes efectos en la resistencia media de ruptura del alambre. Se someten varias muestras a los dos procesos con los siguientes resultados:
+
+Suponiendo conocidas las variancias  $\sigma_1^2$  = 5,28 y   $\sigma_2^2$ = 5,35 y considerando α  = 0,05, probar la hipótesis de que las medias de resistencia a la ruptura son iguales.
+
+
+## Ejercicio 3
+
+Se sabe que una máquina de empacar balanceado para cerdos, vierte el balanceado en bolsas de 20 kg, con una desviación estándar de 3,8 kg. Se llevan a cabo verificaciones constantes de los pesos netos de las bolsas para mantener el ajuste de la maquinaria que controla el peso. Dos muestras tomadas en dos días, presentan la siguiente información:
+
+Los datos se encuentran en el archivo [peso_balanceado.xlsx]
+
+
+Probar la H0 que no se verifica ningún cambio en el ajuste de la máquina entre los dos días (α = 0.05) 
+
+
+
+### Respuestas
+
+Hipotesis:
+
+H_0: μ_A = μ_B 
+H_1: μ_A ≠  μ_B 
+
+```{r}
+# Opción 1: Importar archivo local
+muestra1 <- import("peso_balanceado.xlsx") %>%
+    filter(dia == "muestra1") %>%
+    pull(peso)
+
+muestra2 <- import("peso_balanceado.xlsx") %>%
+    filter(dia == "muestra2") %>%
+    pull(peso)
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(peso_balanceado)
+
+muestra1 <- peso_balanceado %>%
+    filter(dia == "muestra1") %>%
+    pull(peso)
+
+muestra2 <- peso_balanceado %>%
+    filter(dia == "muestra2") %>%
+    pull(peso)
+```
+
+```{r}
+sigma1 <- 3.8
+sigma2 <- 3.8
+
+# Valor p
+z.test(x = muestra1, y = muestra2, sig_x = sigma1, sig_y = sigma2, alternative = "two")
+```
+
+Existen evidencias significativas para rechazar la H0, por lo tanto se verifica que el ajuste de la máquina es distinto entre los dos días (p = 0.0017)
+
+
+
+
+## Ejercicio 4
+
+En un ensayo de engorde de novillos se utilizaron dos raciones (A y B) en dos lotes de 12 animales cada uno. La variable respuesta fue ganancia de peso por animal por día (kg). Por información previa se consideró que las variancias poblacionales eran iguales, con un valor de 0,65. 
+
+
+Los datos se encuentran en el archivo [raciones.xlsx]
+
+Se desea docimar al 5% la H0 μ_A = μ_B$ 
+
+
+## Ejercicio 5
+
+En un ensayo de engorde de cerdos se utilizaron dos tipos de alimentación diferente, D y M  en dos lotes de 8 cerdos. Al mes  de iniciado el ensayo la ganancia en peso (kg) fue:
+
+Los datos se encuentran en el archivo [cerdos.xlsx.xlsx]
+
+Determinar si se puede rechazar la H0 μ_D = μ_M$ para un nivel de confianza del 95%.
+
+## Ejercicio 6
+
+Se realizó un ensayo con novillos de raza Holando. A un grupo de animales se le dio un mineral y al otro grupo un placebo. La ganancia de peso (kg), se detalla a continuación:
+
+Los datos se encuentran en el archivo [ganancia_novillos.xlsx]
+
+Verifique la hipótesis que no existen diferencias en el peso promedio entre el mineral y el placebo. Utilice un error de tipo I igual al 5%.
+
+
+
+## Ejercicio 7
+
+El contenido de  N–NO3 (ppm) en diferentes suelos del norte de la provincia de Santa Fe fueron:
+
+
+Los datos se encuentran en el archivo [N_suelo.xlsx]
+
+Probar la hipótesis que existe diferencia significativa entre las medias poblacionales (α = 0.01) 
+
+
+
+### Respuestas
+  
+Hipotesis:
+
+H_0: μ_B = μ_P 
+H_1: μ_B ≠  μ_P
+
+```{r}
+# Opción 1: Importar archivo local
+N_suelo <- import("N_suelo.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(N_suelo)
+```
+
+```{r, echo = T}
+# Variancias poblacionales: iguales o distintas?
+var.test(ppm ~ tipo, N_suelo, alternative = "two")
+```
+
+Existen evidencias significativas para rechazar la H0, las **variancias** NO son iguales (P < 0.01)
+
+```{r, echo = T}
+# Igualdad de medias: t.test() ordena por alfabeto el tratamiento que coloca en x
+t.test(ppm ~ tipo, N_suelo, alternative = "two", var.equal = F, conf.level = 0.99)
+```
+
+Se rechaza la Hipotesis nula (P < 0.0001)
+
+
+
+
+## Ejercicio 8
+
+Los pesos en gramos de 10 machos y 10 hembras de patos silvestres atrapados en junio en el departamento San Javier, fueron:
+
+```{r, echo=F}
+machos <- c(1594, 1653, 1933, 1793, 1605, 1968, 1755, 1949, 1650, 2049)
+hembras <- c(1271, 1276, 1308, 1223, 1363, 1369, 1310, 1521, 1231, 1218)
+```
+
+Verificar si existen diferencias significativas entre los pesos de machos y hembras con un α  = 5%$
+
+## Ejercicio 9
+
+La resistencia mecánica a la penetración (RP) es una propiedad del suelo que influye sobre el desarrollo del sistema radical. Se realizó un muestreo con un penetrómetro de campo en donde se registró la resistencia a la penetración expresada en MPa (megapascales). Luego de la labranza se tomaron nuevamente datos de RP en los mismos lugares que se había tomando.
+
+Los datos se encuentran en el archivo [penetrometro.xlsx]
+
+¿Hay evidencias suficientes para decir que la labranza mejoró los valores de compactación, es decir que los valores luego de la labranza son menores a los valores que había antes? Utilice un nivel de significancia de 0.05.
+
+
+### Respuestas
+
+```{r}
+# Opción 1: Importar archivo local
+penetrometro <- import("penetrometro.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(penetrometro)
+```
+
+
+H_0: μ_antes ≤  μ_después
+H_1:  μ_antes > μ_después
+
+Otra forma:
+
+H0 μ_d ≤ 0 
+H_0: μ_d > 0$
+
+
+```{r}
+t.test(RP ~ momento, penetrometro, # carga de variable respuesta ~ tratamiento
+    alternative = "greater", # signo de la hipótesis alternativa
+    paired = T
+) # indica que las muestras son apareadas o no (por defecto es FALSE)
+# ordena los tratamientos por alfabeto, es decir, "antes vs despues", para tener en cuenta en la selección del argumento "alterntive"
+```
+
+
+Se rechaza H0(p<0.001), por lo tanto podemos decir que fue efectiva la labranza, los valores de RP antes fueron menores que luego de realizada la misma.
+
+
+## Ejercicio 10
+
+Para contrastar la efectividad  del uso de una nueva máquina sembradora, con respecto a una tradicional  se seleccionaron 10 parcelas. Cada una de ellas se dividió en dos sectores asignándose al azar a cada uno de los mismos las distintas máquinas, utilizando el mismo cultivo. El rendimiento en kg/parcela se  detalla a continuación
+
+Los datos se encuentran en el archivo [efectividad_sembradora.xlsx]
+
+Verificar si existen diferencias entre las diferentes máquinas con un α = 0.05
+
+
+
+## Ejercicio 11
+
+En un ensayo se comparó la cantidad de lesiones provocadas en hojas de tabaco por dos concentraciones de un virus. Se seleccionaron 8 pares de hojas (un par de hojas por planta). A cada hoja del par se le aplicó uno de los preparados y se midió el número de lesiones provocadas artificialmente.
+
+Los datos se encuentran en el archivo [lesiones_hojas.xlsx]
+
+Indicar si la diferencia entre el número de lesiones provocadas por las dos concentraciones del virus pueden o no ser debidas al azar (α = 0.01)
+
+
+## Ejercicio 12
+
+Se estudió el efecto de la pérdida de peso (kg) en 10 búfalos sometidos a una dieta hipocalórica. Los datos fueron:
+
+Los datos se encuentran en el archivo [dieta_bufalos.xlsx]
+
+Probar la hipótesis de que no hay diferencia significativa en el peso de los individuos (α = 0.05)
+
+
+## Ejercicio 13
+
+Se compara el nivel de colesterol en la sangre (mg/dl) de pacientes seleccionados al azar y sometidos a dos dietas distintas, una baja en grasa y otra normal. 
+
+Los datos se encuentran en el archivo [colesterol.xlsx]
+
+Proporcionan estos datos suficiente evidencia que indique una diferencia en la variabilidad de las dos poblaciones de donde se obtuvieron las muestras (α = 0.05)
+
+
+## Ejercicio 14
+
+De una muestra de 450 votantes hombres, 105 se declararon simpatizantes del concejal A. De una muestra de 550 votantes mujeres 120 se declararon simpatizantes del mismo candidato.
+
+¿Proporcionan estos datos evidencia suficiente como para considerar que las proporciones de los simpatizantes hombres y mujeres son iguales? (α = 0.05)
+
+
+
+## Ejercicio 15
+
+Se realizó una encuesta para determinar la diferencia que puede existir entre las proporciones de casados y solteros entre 20 y 30 años que fuman. Se entrevistaron 200 personas de cada grupo y se encontraron 64 casados y 80 solteros que fuman. ¿Contienen los datos suficiente evidencia que indica que existe una diferencia entre las dos proporciones de fumadores para las dos poblaciones?
+
+
+
+## Ejercicio 16
+
+En un cultivo de girasol, se seleccionaron 30 plantas azar de las cuales 16 de ellas eran normales y 14 anormales. Los porcentajes de materia seca para cada grupo fueron: 
+Los datos se encuentran en el archivo [MS_girasol.xlsx]
+
+
+Verifique la hipótesis de que el porcentaje de materia seca de las plantas `Anormales` es menor al de las `Normales` (α = 0.01) 
+
+## Ejercicio 17
+
+El Gifosato es un herbicida utilizado para control de post-emergente de malezas. Una marca comercial conocida, dispende éste producto en gránulos solubles, y cada paquete contiene 15 kg.  Por sospechas sobre el funcionamiento de la maquinaria que realiza el empaque, se decide controlar las desviaciones o  variabilidad en los pesos que en el empaque de las cajas del producto. Si la desviación de la carga de las cajas es mayor a 0.1 kg, los compradores no compran el producto.
+
+Se registran los pesos del empaque durante todo el mes de febrero en la empresa (en kg) yse los compara con los datos del mes anterior (enero).
+
+Los datos se encuentran en el archivo [glifosato.xlsx]
+
+Se sospecha que en el mes de enero el peso medio de los envases fue mayor a los de febrero por un defecto en la maquina ¿Existe evidencia que indique esto?. Utilice un nivel de significancia de 0.05.
+
+
+
+### Respuestas
+
+
+Hipotesis principal:
+ H_0: μ_e ≤ μ_f 
+ H_1: μ_e > μ_f 
+  
+
+```{r}
+# Opción 1: Importar archivo local
+glifosato <- import("glifosato.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(glifosato)
+```
+
+```{r, echo = T}
+# Variancias poblacionales: iguales o distintas?
+var.test(Peso ~ Mes, glifosato, alternative = "two", conf.level = 0.95)
+
+# Igualdad de medias: t.test() ordena por alfabeto el tratamiento que coloca en x
+t.test(Peso ~ Mes, glifosato, alternative = "greater", var.equal = T, conf.level = 0.99)
+```
+
+No se Rechaza H0, por lo tanto podemos no afirmar que el peso medio de los envases en enero fue mayor que en febrero.
+
+
+
+## Ejercicio 18
+
+Se buscaron 8 pares de pollos idénticos en cuanto a peso, raza y sexo. A un lote se le suministró por 15 días el alimento tradicional y al otro lote una ración especial. La ganancia de peso es la que se detalla:
+
+Los datos se encuentran en el archivo [dietas_pollos.xlsx]
+
+Verificar si existen diferencias significativas entre ambas raciones con un α = 0.05
+
+
+## Ejercicio 19
+
+El proveedor de un insecticida para control de barrenador del brote de soja (_Epinotia aporema_) afirma que su producto tiene una eficacia de mayor al 60%. 
+Primero se condujo un experimento en un lote (lote 1) en donde se seleccionaron plantas con barrenador del brote y se aplico se le aplicó la dosis de producto recomendada. El mismo experimento se replicó en otro lote (lote 2) donde se seleccionaron 1100 plantas con barrenador del brote y se aplico se le aplicó la dosis de producto recomendada. En cada lote se registró si se contróló la plaga (si o no). En el lote 1 se encontró que de las 950 plantas analizadas, en 520 si controló la plaga. En el lote 2 se analizaron 1100 plantas y en 625 si controló la plaga.
+
+Los datos se encuentran en el archivo [barrenador.xlsx]
+
+ ¿Esta evidencia es suiciente para concluir la eficacia del producto fue igual en ambos lotes? Utilice un nivel de significancia de 0.05.
+ 
+
+### Respuestas
+
+```{r, echo= T , eval= F}
+# Opción 1: Importar archivo local
+barrenador_1 <- import("barrenador.xlsx") %>%
+    filter(Lote == "1")
+
+barrenador_2 <- import("barrenador.xlsx") %>%
+    filter(Lote == "2")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(barrenador)
+
+barrenador_1 <- barrenador %>%
+    filter(Lote == "1")
+
+barrenador_2 <- barrenador %>%
+    filter(Lote == "2")
+```
+
+
+H0 π1 = π2
+H1 π1 ≠  π2
+
+
+```{r}
+alfa <- 0.05 # 1 - 0.95 = 0.05
+
+# lote 1
+control_lote1 <- barrenador_1 %>%
+    group_by(Control) %>%
+    count()
+
+control_lote1
+
+n1 <- 430 + 520
+p1 <- 520 / n1
+
+# lote 2
+control_lote2 <- barrenador_2 %>%
+    group_by(Control) %>%
+    count()
+
+control_lote2
+
+n2 <- 475 + 625
+p2 <- 625 / n2
+
+
+p <- (n1 * p1 + n2 * p2) / (n1 + n2)
+q <- 1 - p
+
+# Estadístico de prueba
+z_calc <- (p1 - p2) / sqrt(p * (1 - p) / n1 + p * (1 - p) / n2)
+z_calc
+
+
+# Tomando decisión a través de los valores críticos:
+z_crit <- qnorm(c(alfa / 2, 1 - alfa / 2))
+z_crit
+
+# Tomando decisión a través del valor "p"
+z.test(p1 = p1, p2 = p2, n1 = n1, n2 = n2, alternative = "two")
+```
+
+5. Conclusión COMPLETA:
+
+- Si concluyo con los valores críticos:
+
+No existe evidencia suficiente para rechazar la H0,
+ya que el estadístico de prueba se encuentra en la región de no rechazo,
+por lo tanto podemos concluir que la eficacia del producto fue igual en ambos lotes. 
+
+- Si concluyo con el valor "p":
+
+No existe evidencia suficiente para rechazar la H0,
+ya que el valor "p" (......) es mayor al nivel de significancia (α=0.05),
+por lo tanto podemos concluir que la eficacia del producto fue igual en ambos lotes. 
+
+
+
+
+## Ejercicio 20
+
+Supongamos que se lleva adelante una investigación sobre la eficacia de una droga en la reducción de un tumor. Para ello se escogen 12 ratas a las cuales se les aplican células cancerígenas que desarrollan el tumor en cuestión. Cuando el mismo llega a un cierto estadio se lo mide, luego se administra la droga a cada una de las ratas y al cabo de un cierto tiempo se lo vuelve a medir. Las mediciones antes y después son:
+
+```{r}
+antes <- c(5.2, 4.1, 2.3, 3.5, 4.0, 5.1, 4.2, 5.0, 3.9, 4.1, 4.0, 3.5)
+despues <- c(2.3, 3.2, 2.1, 3.0, 3.3, 3.9, 3.0, 3.5, 3.6, 3.2, 3.6, 2.9)
+```
+
+Probar la hipótesis que las diferencias del diámetro del tumor, antes y después del tratamiento no son significativas (α = 0.01)
+
+

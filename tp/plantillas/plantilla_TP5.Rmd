@@ -1,0 +1,276 @@
+---
+title: "TP N° 5: Inferencia estadística basada en una muestra: IC"
+output: html_document
+---
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+# Intervalos de confianza
+
+## Ejercicio 1
+
+Los siguientes datos son las altura en metros, de una muestra de 10 ejemplares de árboles Eucalyptus en su segundo año de plantación de un predio de San Agustín (Santa Fe):
+
+Los datos se encuentran en el archivo **"plantacion.xlsx"**
+
+Suponiendo que las estaturas se distribuyen normalmente estimar mediante un intervalo de confianza la media de las alturas de los árboles, con un coeficiente de confianza del 95%.
+
+### Respuestas
+
+```{r}
+# Opción 1: Importar archivo local
+plantacion <- import("plantacion.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(plantacion)
+```
+
+```{r}
+xbar <- mean(plantacion$altura)
+S <- sd(plantacion$altura)
+n <- length(plantacion$altura)
+alfa <- 0.05 # alfa = 1-0.95
+
+# IC95
+IC <- xbar + qt(p = c(alfa / 2, 1 - alfa / 2), df = n - 1) * S / sqrt(n)
+IC
+```
+
+## Ejercicio 2
+
+A continuación se muestran datos de DAP (diámetro a la altura del pecho) expresados en cm de los árboles de la plantación anterior:
+
+Los datos se encuentran en el archivo **"plantacion_dap.xlsx"**
+
+Considerando que el desvío poblacional es igual a 2.3 cm construir un intervalo de confianza del 99%, para el DAP.
+
+### Respuestas
+
+```{r}
+# Opción 1: Importar archivo local
+plantacion_dap <- import("plantacion_dap.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(plantacion_dap)
+```
+
+```{r}
+xbar <- mean(plantacion_dap$dap)
+sigma <- 2.3
+alfa <- 0.01 # alfa = 1- 0.99
+n <- length(plantacion_dap$dap)
+
+# IC99
+IC <- xbar + qnorm(p = c(alfa / 2, 1 - alfa / 2)) * sigma / sqrt(n)
+IC
+```
+
+## Ejercicio 3
+
+En un estudio sobre las pulsaciones del corazón de caballos carrera se registraron las pulsaciones de una muestra de 15 caballos:
+
+Los datos se encuentran en el archivo **"caballos.xlsx"**
+
+Hallar los límites de los intervalos de confianza 95% y 99% que contienen a la verdadera media de las pulsaciones del corazón.
+```{r}
+
+```
+
+## Ejercicio 4
+
+Una empresa mayorista solicita al fabricante torres de molinos que puedan soportar vientos de 80 km h^-1^. La misma quiere determinar si las torres se ajustan a esta especificaciones solicitadas para lo cual selecciona una muestra aleatoria de 15 molinos y los somete a pruebas de viento:
+
+Los datos se encuentran en el archivo **"molinos.xlsx"**
+
+Estime si el valor está o no incluido en la especificación del fabricante con un coeficiente de riesgo del 5 %.
+```{r}
+
+```
+
+## Ejercicio 5
+
+En una plantación de naranjas se eligieron al azar 50 plantas y se registró la producción por planta. El promedio resultante fue de 1512 naranjas. Se conoce que el desvío de la población es de 108 naranjas. Estimar entre que valores estará el verdadero parámetro, con una probabilidad de equivocarnos de 1 en 100 y de 5 en 100.
+```{r}
+
+```
+
+## Ejercicio 6
+
+La media y el desvío estándar de las cargas máximas soportadas por 70 cables son 12,08 y 0,76 toneladas, respectivamente. Hallar los límites de confianza del 95 % y del 99 % para la media de las cargas máximas soportadas por los cables de ese tipo.
+
+### Respuestas
+
+```{r}
+xbar <- 12.08
+S <- 0.76
+n <- 70
+alfa1 <- 0.01
+alfa2 <- 0.05
+
+IC99 <- xbar + qt(p = c(alfa1 / 2, 1 - alfa1 / 2), df = n - 1) * S / sqrt(n)
+IC95 <- xbar + qt(p = c(alfa2 / 2, 1 - alfa2 / 2), df = n - 1) * S / sqrt(n)
+
+IC99
+IC95
+```
+
+## Ejercicio 7
+
+Una muestra de 220 remaches manufacturados por una empresa, produjo una media y un desvío estándar de 0,71325 y 0,00062 pulgadas respectivamente. Hallar los límites de confianza del 95 % y del 99 % para el diámetro medio verdadero de los remaches producidos por dicha empresa.
+```{r}
+
+```
+
+## Ejercicio 8
+
+Un nutricionista animal desea estimar el contenido vitamínico de cierto alimento. Toma una muestra de 16 animales y registra los siguientes contenidos de vitaminas por cada 100 g.
+
+Los datos se encuentran en el archivo **"alimento.xlsx"**
+
+Por estudios previos se sabe que el desvío poblacional es de 2.5 mg. Encontrar los límites de confianza del 95 % para el promedio poblacional. Se supone que la distribución del contenido vitamínico es normal.
+
+### Respuestas
+
+```{r}
+# Opción 1: Importar archivo local
+alimento <- import("alimento.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(alimento)
+```
+
+```{r}
+xbar <- mean(alimento$vitaminas)
+sigma <- 2.5
+n <- 16
+alfa <- 0.05
+IC <- xbar + qnorm(p = c(alfa / 2, 1 - alfa / 2)) * sigma / sqrt(n)
+```
+
+## Ejercicio 9
+
+Las siguientes observaciones corresponden al número de plantas m^-2^2 nacidas en 20 sectores dentro de un lote de maíz
+
+Los datos se encuentran en el archivo **"maiz.xlsx"**
+
+Utilizando esta información hallar los límites de confianza del 99 % y del 95 % para el promedio verdadero del número de plantas de maíz promedio en dicho lote.
+
+
+```{r}
+# Opción 1: Importar archivo local
+maiz <- import("maiz.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(maiz)
+```
+
+
+```{r}
+# media y desvio datos agrupados
+n <- sum(maiz$plantas)
+xbar <- weighted.mean(x = maiz$plantas, w = maiz$parcelas)
+
+S <- sqrt(1 / (n - 1) * (sum(maiz$plantas^2 * maiz$parcelas) - (sum(maiz$plantas * maiz$parcelas)^2) / n))
+
+# IC95
+alfa1 <- 0.05
+IC1 <- xbar + qt(p = c(alfa1 / 2, 1 - alfa1 / 2), df = n - 1) * S / sqrt(n)
+
+# IC99
+alfa2 <- 0.01
+IC2 <- xbar + qt(p = c(alfa2 / 2, 1 - alfa2 / 2), df = n - 1) * S / sqrt(n)
+```
+
+## Ejercicio 10
+
+Las larvas de algunas mariposas concentran glucósidos cardíacos a partir de plantas de algodón, lo que las hacen repugnantes para los pájaros que tienden a evitarlas después de un primer encuentro. Una muestra de 85 mariposas ha sido recolectada en una localidad y se han medido las concentraciones de glucósidos en relación a sus pesos. Los datos proporcionaron una media de 0,225 g y una variancia de 0,012 g^2^. Construir un intervalo de confianza del 95% para la verdadera media de la población.
+```{r}
+
+```
+
+## Ejercicio 11
+
+Se realizó un estudio de consumo de carne ovina en la provincia de Santa Fe. Se encuestó a potenciales consumidores para saber si consumieron alguna vez carne ovina o no. Se encuestaron 162 individuos, de los cuales 132 respondieron que si. Hallar los límites de confianza del 95 % para quienes si consumieron alguna vez de carne ovina.
+
+### Respuestas
+
+```{r}
+n <- 162
+p <- 132 / 162 # prop si consumen
+q <- 1 - p
+alfa <- 0.05
+IC <- p + qnorm(c(alfa1 / 2, 1 - alfa1 / 2)) * sqrt(p * q / n)
+```
+
+## Ejercicio 12
+
+Se arroja una moneda al aire 200 veces, obteniéndose 90 veces caras. Construir un intervalo de confianza del 95 % para la verdadera proporción "P" de obtener cara.
+
+```{r}
+
+```
+
+## Ejercicio 13
+
+En un galpón hay bolsas sin rotular de trigo y avena. Una muestra aleatoria de 60 bolsas, seleccionada con reposición indicó que el 70 % de ellas eran de trigo. Hallar los límites de confianza del 95 % y del 99 % para la proporción real de bolsas de trigo en la urna.
+
+```{r}
+
+```
+
+## Ejercicio 14
+
+Una muestra de 20 corderos indica los siguientes pesos en kg:
+
+Los datos se encuentran en el archivo **"corderos.xlsx"**
+
+¿Entre qué valores estará la desviación estándar de los pesos en la población de conejos para un nivel de confianza del 95 % y del 99 %?
+
+### Respuestas
+
+```{r}
+# Opción 1: Importar archivo local
+corderos <- import("corderos.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(corderos)
+```
+
+```{r}
+# Datos
+S <- sd(corderos$peso)
+n <- length(corderos$peso)
+
+# IC95
+alfa1 <- 0.05
+IC95 <- sqrt(n - 1) * S / sqrt(qchisq(p = c(1 - alfa1 / 2, alfa1 / 2), df = n - 1))
+IC95
+
+# IC99
+alfa2 <- 0.01
+IC99 <- sqrt(n - 1) * S / sqrt(qchisq(p = c(1 - alfa2 / 2, alfa2 / 2), df = n - 1))
+IC99
+```
+
+## Ejercicio 15
+
+Trescientas cincuenta plantas de cierto híbrido de cebada, espigaron en promedio a los 70 días de sembraron, con una desviación de 6,9 días. De una estimación del desvío estándar poblacional, con un coeficiente de riesgo del 1% y del 5%.
+
+```{r}
+
+```
+
+## Ejercicio 16
+
+La desviación típica de las tensiones de ruptura de 150 cables probados por una empresa era de 87,50 kg. Hallar los límites de confianza del 95 % y del 99 % para la desviación típica de todos los cables de ese tipo.
+
+```{r}
+
+```
+

@@ -1,0 +1,174 @@
+---
+title: "TP N° 4: Distribuciones contínuas"
+output: html_document
+---
+
+Cada vez que se inicia la sesión de RStudio debemos leer los paquetes que serán utilizados:
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+# Distribución Normal
+
+## Ejercicio 1
+
+En un establecimiento lechero del Departamento las Colonias se lleva registro de las producciones de leche. Éstos registros indican que la producción de leche por vaca por día sigue una distribución normal, promedio $\mu=25$ litros y con un desvío $\sigma=3$ litros.
+
+**Responder:**
+
+Si un día se decide visitar el establecimiento:
+
+a. ¿Cuál es la probabilidad de que la producción de ese día, sea de exactamente 25 litros?
+b. ¿Cuál es la probabilidad de que la producción de ese día, sea mayor a 20 litros?
+c. ¿Cuál es la probabilidad de que la producción de ese día,  sea menor de 10 litros?
+d. ¿Cuál es la probabilidad de que la producción de ese día,  sea mayor de 10 litros y menor de 20 litros?
+
+#### Item (a).
+
+**¿Cuál es la probabilidad de que la producción de ese día, sea de exactamente 25 litros?**
+
+Queremos calcular la probabilidad: $P(X = 25)$. NO utilizaremos la función `dnorm()` porque ésta función NO calcula probabilidad, sino que devuelve la densidad de probabilidad.
+
+La producción de leche es una variable continua $X$ y 25 litros es uno de los infinitos números que puede tomar por lo tanto su probabilidad es 0.
+
+### Item (b).
+
+**¿Cuál es la probabilidad de que la producción de ese día, sea mayor a 20 litros?**
+
+Queremos calcular la probabilidad acumulada: $P(X > 20)$. Utilizaremos la función `pnorm()` porque queremos calcular la probabilidad acumulada
+
+No importa si queremos incluir o no al 25 (recordar que la probabilidad en el punto es = 0)
+
+Definimos los parámetros de la distribución normal:
+
+```{r}
+mu <- 25 # litros, media de producción de leche
+sigma <- 3 # litros, desviación estándar de la producción de leche
+```
+
+Para definir `q`, no importa si lo queremos incluir o no, corresponde al valor de x incógnita, en éste caso 20.
+
+```{r}
+q <- 20
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+pnorm(q = q, mean = mu, sd = sigma, lower.tail = F)
+```
+
+
+### Item (c).
+
+**¿Cuál es la probabilidad de que la producción de ese día,  sea menor de 18 litros?**
+
+```{r}
+
+```
+
+### Item (d).
+
+**¿Cuál es la probabilidad de que la producción de ese día,  sea mayor de 20 litros y menor de 30 litros?**
+
+```{r}
+
+```
+
+-------------------------------------
+
+# Distribución de la media muestral
+
+## Ejercicio 4
+
+La capacidad para transportar vacunos en un camión de 30 m^2^ de jaula es de 13200 kg (33 animales de 400 kg).
+
+Los animales que entregará un productor para que ese camión jaula transporte, tienen una media $\mu = 450$ kg con una desviación estándar de $\sigma = 25$ kg cada uno.
+
+**Responder:**
+
+a. ¿Cuál es la probabilidad de que en una muestra de 20 animales, el peso promedio sea mayor a 400 kg?
+b. ¿Cuál es la probabilidad de que en una muestra de 5 animales, el peso promedio sea menor a 350 kg?
+c. ¿Cuál es la probabilidad de que en una muestra de 5 animales, el peso promedio sea mayor a 350 y menor a 450 kg?
+d. ¿Cuál es la probabilidad de que en una muestra de 10 animales, el peso promedio sea exactamente 450 kg?
+
+### Item (a).
+
+**¿Cuál es la probabilidad de que en una muestra de 20 animales, el peso promedio sea mayor a 460 kg?**
+
+Queremos calcular la probabilidad acumulada: $P(\bar{X} > 460)$. en muestras de $n=20$ animales.
+
+Utilizaremos la función `pnorm()` porque queremos calcular la probabilidad acumulada. No importa si queremos incluir o no al 460 (recordar que la probabilidad en el punto es 0)
+
+Definimos los parámetros de la distribución normal de la **media**:
+
+```{r}
+n <- 20 # animales de la muestra
+mu_xbar <- 450 # kg, media de peso de los animales del establecimiento
+sigma_xbar <- 25 / sqrt(n) # litros, desviación estándar de la producción de leche para una muestra de 20 animales
+```
+
+Para definir `q`, no importa si lo queremos incluir o no, corresponde al valor de x incógnita, en éste caso 460.
+
+```{r}
+q <- 460
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+pnorm(q = q, mean = mu_xbar, sd = sigma_xbar, lower.tail = F)
+```
+
+Usamos `lower.tail = F` ya que queremos calcular valores mayores a 460
+
+### Item (b).
+
+**¿Cuál es la probabilidad de que en una muestra de 5 animales, el peso promedio sea menor a 430 kg?**
+
+Queremos calcular la probabilidad acumulada: $P(\bar{X} < 430)$ pero en muestras de $n=5$ animales.
+
+Definimos los parámetros de la distribución normal de la **media**:
+
+```{r}
+n <- 5 # animales de la muestra
+mu_xbar # no cambia del item anterior
+sigma_xbar <- 25 / sqrt(n) # cambia el n
+```
+
+Definimos `q` que es el límite hasta donde queremos acumular probabilidades.
+
+```{r}
+q <- 430
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+pnorm(q = q, mean = mu_xbar, sd = sigma_xbar) # lower.tail = T, por defecto
+```
+
+`lower.tail = T` por defecto, queremos calcular valores menores a 430
+
+### Item (c).
+
+**¿Cuál es la probabilidad de que en una muestra de 5 animales, el peso promedio sea mayor a 430 y menor a 450 kg?**
+
+```{r}
+
+```
+
+### Item (d).
+
+**¿Cuál es la probabilidad de que en una muestra de 10 animales, el peso promedio sea exactamente 450 kg?**
+
+```{r}
+
+```
+
+

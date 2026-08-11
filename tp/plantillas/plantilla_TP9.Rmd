@@ -1,0 +1,550 @@
+---
+title: "TP Nº 9: Análisis de Regresión y Correlación Lineal"
+output: html_document
+
+---
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+## Ejercicio 1
+
+Los siguientes datos representan la cantidad de agua aplicada (cm^3^) y el rendimiento de una especie forrajera (tn MS ha^-1^), en un establecimiento de la provincia de Santa Fe.
+
+Los datos se encuentran en el archivo [agua_forrajera.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/agua_forrajera.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+a.  Hacer un diagrama de dispersión ¿como es la relación entre las variables?
+b.  Hallar la recta de regresión del rendimiento en función del agua. Representar gráficamente. Interpretar los parámetros.
+c.  ¿Es estadísticamente significativo el coeficiente de regresión?
+d.  Interpretar la bondad de ajuste del modelo.
+e.  Estimar los intervalos de confianza de los parámetros del modelo.
+f.  Predecir cual será el rendimiento del forraje si se aplican 20 cm^3^.
+## Ejercicio 2
+
+A continuación se detallan los datos de una muestra de 12 explotaciones agrícolas donde se registra el tamaño de las mismas y el área sembrada con trigo:
+
+Los datos se encuentran en el archivo [area_trigo.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/area_trigo.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+a.  Explorar gráficamente la relación entre la superficie total de la explotación y la superficie destinada al cultivo de trigo.
+b.  Calcular e interpretar el coeficiente de correlación.
+c.  Determinar si la correlación observada es estadísticamente significatvia 5%.
+
+
+## Ejercicio 3
+
+Los siguientes datos proceden de un estudio de pérdida de agua en el coleóptero de la harina (*Tribolium confusum*). Se pesaron 9 lotes de 25 coleópteros cada uno, se guardaron a diferente humedad relativa y se pesaron nuevamente a los 6 días. Se calculó la pérdida de peso (mg) para cada lote:
+
+Los datos se encuentran en el archivo [coleoptero.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/coleoptero.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+a.  Hace un gráfico de dispersión. ¿como es la relación entre la humedad relativa y la pérdida de peso?
+b.  Obtener la recta de regresión lineal.
+c.  Determinar con un nivel de significancia del 5% si la pendiente de la recta es diferente de 0. ¿Qué representa este valor?
+d.  Estimar con un 95% de confianza los límites del intervalo que contiene a la verdadera tasa de peridad de peso.
+e.  Estimar con un 95% de confianza los límites del intervalo que contiene a la verdadera perdida de peso cuando la humedad relativa es 0%.
+f.  ¿Que propoción de variabilidad de la perdida de peso no es explicada por el modelo?
+
+
+## Ejercicio 4
+
+Se realizó un experimento para determinar la relación entre la cantidad de P inorgánico en el suelo (ppm) al inicio del cultivo de maiz y la cantidad de P que es recuperada por la planta (en ppm) a los 30 días. Para ello se prepararon macetas con distintas concentraciones de P inicial a las cuales se les sembró el mismo híbrido de maiz y luego de 30 días se determinó el contenido de P en planta. Los resultados fueron:
+
+Los datos se encuentran en el archivo [P_maiz.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/P_maiz.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+a.  Graficar la relación entre `P_suelo` y `P_planta`.
+b.  Asumiendo que el valor de P_suelo se mide sin error, estimar los parámetros de un modelo lineal que relacione ambas variables.
+c.  Estimar con un 95% de confianza el intervalo que contenga el aumento del `P_planta` por cada unidad de `P_suelo`.
+d.  Estimar el contenido de `P_planta` si en el suelo hay 20 ppm de fósforo.
+
+
+## Ejercicio 5
+
+Los siguientes datos representan el rendimiento en toneladas de forraje y la lluvia caída en mm, durante los meses de julio y agosto en 10 establecimientos elegidos al azar, en una determinada región.
+
+Los datos se encuentran en el archivo [lluvia_forraje.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/lluvia_forraje.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+a.  Grafique la relación entre ambas variables.
+b.  ¿Se podría postular que la lluvia caida durante los meses de julio y agosto tiene una relación lineal con la producción de forraje?
+c.  Con un 95% de confianza, ¿entre que valores se encuentra la tasa de producción de pasto por milímetro de lluvia caido?
+d.  Si la lluvia caída fue de 20 mm, predecir cuál será el rendimiento de forraje.
+
+
+## Ejercicio 6
+
+Un estudio sobre maiz busca determinar la relación entre el peso de la espiga y el número de hileras de grano.
+
+Los datos se encuentran en el archivo [hileras_maiz.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/hileras_maiz.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+a.  Estime el coeficiente de correlación entre las variables.
+b.  Estime los parámetros del modelo, y sus intervalos de confianza 95%
+c.  Mediante el ANOVA pruebe si la pendiente es significativa.
+
+
+## Ejercicio 7
+
+La siguiente tabla detalla las calificaciones en Física y Matemática de una muestra de 12 alumnos
+
+
+Los datos se encuentran en el archivo [calificaciones.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/calificaciones.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+a.  Explorar la relación entre las variables mediante un gráfico.
+b.  Calcular e interpretar el coeficiente de correlación lineal.
+c.  Verificar si existe correlación estidisticamente significativa entre las calificaciones.
+
+
+## Ejercicio 8
+
+Con el objeto de indentificar variables asociadas con las diferencias de peso de semillas de trigo diploide (*Triticum monococcum*), Jing et al. (2007) estudiaron varios caracteres de (peso, longitud, diámetro, dureza) de 190 semillas obtenidas a azar.
+
+Los datos se encuentran en el archivo [semilla_trigo.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/semilla_trigo.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+¿Existe asociación entre el peso y la longitud de la semilla? ¿Y entre el peso y la dureza del endosperma? Interprete el resultado de la prueba de hipótesis y la magnitud de la correlación obtenida.
+
+### Respuestas
+
+```{r}
+# Opción 1: Importar archivo local
+semilla_trigo <- import("semilla_trigo.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(semilla_trigo)
+```
+
+```{r}
+# Matriz de correlación
+cor(semilla_trigo)
+```
+
+Prueba hipotesis
+
+$$ H_0: ρ = 0 \\ H_1: ρ \ne 0  $$
+
+```{r}
+cor.test(semilla_trigo$Peso, semilla_trigo$Long)
+```
+
+Existen evidencias suficientes para rechazar H0, la correlación entre Peso y Longitud de la semilla es significativa (p\<0.0001). El coeficiente de correlación ($r$ 0.8826) indica que la correlación es positiva y alta entre las variables mencionadas. Es decir, a medida que aumenta la longitud de la semilla, aumenta el peso de la semilla, o vice versa.
+
+```{r}
+cor.test(semilla_trigo$Peso, semilla_trigo$Dureza)
+```
+
+Existen evidencias suficientes para rechazar H0, la correlación entre Peso y Dureza del endosperma es significativa (p=0.004). El coeficiente de correlación ($r$ -0.207) indica que la correlación es negativa y muy baja entre las variables mencionadas.
+
+
+
+## Ejercicio 9
+
+En un estudio sobre el éxito reproductivo de langostas, un entomólogo busca ajustar modelar la relación entre el peso de las hembras y el número de huevos que produce. Para ello selecciona 30 langostas de de diferentes pesos (en gramos) y registra el número de huevos que producen.
+
+Los datos se encuentran en el archivo [huevos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/huevos.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+a.  Grafique los datos
+b.  Calcule e interprete el coeficiente de correlación de estos datos.
+c.  ¿Qué proporción de variación del número de huevos explicaría el modelo lineal en función del peso de las langostas?
+
+
+## Ejercicio 10
+
+Un investigador condujo un experimento para modelar la relación entre la ganancia de peso en pollos cuyas dietas fueron suplementadas con distintas cantidades de lisina (aminoácido) y la cantidad de lisina consumida. Dado que el porcentaje de lisina del alimento es conocido, la cantidad de lisina consumida se estima a partir de la cantidad de alimento consumida. Se seleccionó una muestra aleatoria de 12 pollos los cuales fueron alojados en jaulas individuales y alimentados a voluntad con el alimento más el suplemento.
+
+Los datos se encuentran en el archivo [pollos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/pollos.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+a.  Grafique los datos
+b.  Estime los parámtros del modelo lineal.
+c.  ¿Qué proporción de la variación de la ganancia de peso es explicada por modelo en función de la lisina?
+d.  Si un pollo consumiera 0.20 g de lisina, ¿cual es el aumento de peso esperado? Estime con un 95% de confianza el intervalo de predicción para dicho aumento de peso.
+
+## Ejercicio 11
+
+Se desea probar la efectividad de un nuevo fungicida para el control de roya en trigo. Se probaron distintas dosis en gramos de principio activo por ha (gr.p.a./ha) en 13 parcelas de 100 plantas cada una. A los 15 días de la aplicación se realizó una evaluación del daño, como el tamaño promedio de las machas en hoja bandera.
+
+
+Los datos se encuentran en el archivo [fungicida.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/fungicida.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+a.  Estime los parámetros del un modelo de regresión lineal.
+b.  Pruebe la significancia de la pendiente e interprete. Utilice $\alpha=0.05$. Calcule su intervalo de confianza del 95%.
+c.  Interprete la bondad de ajuste del modelo.
+d.  Estime e interprete el coeficiente que mide la relación entre las variables.
+e.  Predecir el daño (tamaño promedio de las manchas) que se hallará si se aplican 260 gr.p.a./ha
+
+## Ejercicio 12
+
+Los datos se refieren al contenido de proteína bruta (PB) y caseína (CA) en leche en una muestra de 23 tambos de la cuenca lechera del centro del país.
+
+Los datos se encuentran en el archivo [proteina_caseina.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/proteina_caseina.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+Indique y pruebe la significancia de la relación entre las variables. Utilice $\alpha=0.05$.
+
+
+## Ejercicio 13
+
+Se realizó un análisis de crecimiento de tomate en invernadero y se midieron distintas variables como rendimiento de fruto en kg/ha y la cantidad de tallos por m^2^.
+
+Las plantas fueron establecidas en macetas, se utilizó un sistema de riego dirigido y se les aplicó diferentes dosis de fertilizante. Al momento de cosecha se contabilizaron los tallos y se pesaron los frutos.
+
+Los datos se encuentran en el archivo [dosis_tomate.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/dosis_tomate.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+
+
+Se desea determinar el grado de correlación existente entre los diferentes órganos de la planta evaluados (fruto y tallos) y la ecuación que represente la relación entre el nivel de fertilizante utilizado y el rendimiento del fruto.
+
+Las Variables estudiadas fueron la **dosis** de fertilizante (en ml/ha), rendimiento de **fruto** (en miles de kg/ha de peso húmedo) y **tallo** (número de tallos por m^2^).
+
+**Responda:**
+
+a.  Interprete el coeficiente que relaciona los diferentes órganos de planta evaluados.
+
+b.  Pruebe la significancia estadística del coeficiente anterior. Utilice un nivel de significancia del 0.01.
+
+c.  Indique el modelo que mejor representa la relación entre el nivel de fertilizante utilizado y el rendimiento del fruto. Interprete los coeficientes del modelo.
+
+d.  Pruebe las hipótesis sobre el coeficiente de regresión y redacte una conclusión completa sobre la significancia estadística del modelo ajustado. Utilice un nivel de signficancia de 0.05.
+
+e.  Interprete el IC95% y el IC99% de los parámetros relevantes.
+
+f.  Valore la bondad de ajuste del modelo.
+
+g.  Si se desea aplicar una dosis de fertilizante de 25 ml/ha:
+
+    i.  Cuál es la respuesta promedio esperada de las plantas a las que se le aplique esa dosis de fertilizante con un 99% de confianza?
+
+    ii. Que rendimiento en fruto se espera obtener con esa dosis de fertilizante?
+
+    iii. Cuál es el intervalo de confianza de predicción del 99%, para la predicción anterior?
+
+
+### Respuestas
+
+Ingresamos los datos:
+
+```{r}
+# Opción 1: Importar archivo local
+dosis_tomate <- import("dosis_tomate.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(dosis_tomate)
+```
+
+
+
+Item (a).
+
+**Interprete el coeficiente que relaciona los diferentes órganos de planta evaluados.**
+
+El coeficiente que relaciona variables es el coeficiente de correlación $r$
+
+*En éste caso queremos evaluar la relación entre los órganos: fruto y tallo*
+
+Alternativa 1: con la función `cor()` del paquete base de R
+
+```{r}
+# no importa el orden (quien pongo primero)
+cor(dosis_tomate$fruto, dosis_tomate$tallo)
+
+# es lo mismo:
+with(dosis_tomate, cor(fruto, tallo))
+```
+
+Alternativa 2: haciendo la raíz cuadrada al $R^2$ de la salida del `summary()`
+
+*Signo de* $r$: ver el signo de la pendiente
+
+`Multiple R-squared` o $R^2$:
+
+```{r}
+m0 <- lm(fruto ~ tallo, dosis_tomate)
+summary(m0)$r.squared
+
+sqrt(0.9184216)
+```
+
+```{r}
+sum <- summary(m0)
+r2 <- summary(m0)$r.squared
+```
+
+Por lo tanto, el coeficiente de correlación de las variables tallo y fruto es `r round(sqrt(r2),4)` o `r round(sqrt(r2),2)*100`%. Éste valor indica que la correlación entre las variables es alta y positiva, es decir que a medida que una variable aumenta, la otra también.
+
+
+
+Item (b).
+
+**Pruebe la significancia estadística del coeficiente anterior. Utilice un nivel de significancia del 0.01.**
+
+1.  Planteo de hipotesis
+
+
+H_0: ρ = 0
+H_1: ρ ≠ 0
+
+
+2.  Estadístico de prueba y decisión a través del valor `p`
+
+Utilizando la función `cor.test()` del paquete base de R
+
+```{r}
+# no importa el orden (quien pongo primero)
+cor.test(dosis_tomate$fruto, dosis_tomate$tallo)
+```
+
+```{r, echo=F}
+cor <- cor.test(dosis_tomate$fruto, dosis_tomate$tallo)
+cor
+```
+
+Existe evidencia suficiente para rechazar la H0, dado que el valor p (4.602e-06) es menor al nivel de significancia (α=0.01), por lo tanto la correlación es estadísticamente significativa.
+
+El intervalo de confianza del 95%, con límites inferior XXXX y superior XXXX, contienen al verdadero valor de correlación ρ, entre las variables fruto y tallo de tomate.
+
+
+
+Item (c).
+
+**Indique el modelo que mejor representa la relación entre el nivel de fertilizante utilizado y el rendimiento del fruto.**
+
+Pasos:
+
+1.  Identificamos cuál es la variable dependiente y cuál la independiente.
+
+-   Variable dependiente: rendimiento del fruto (miles de kg/ha)
+
+-   Variable independiente: dosis de fertilizante utilizado (ml/ha)
+
+2.  Estudiamos a través de un gráfico o diagrama de dispersión
+
+```{r}
+ggplot(dosis_tomate, aes(x = dosis, y = fruto)) +
+    geom_point()
+```
+
+Luego de ver que la nube de puntos se aproxima a una recta, trazamos una línea por el método `lm` (`lineal model`: modelo lineal en R)
+
+```{r}
+ggplot(dosis_tomate, aes(x = dosis, y = fruto)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = F) # `se = F` para que no grafique un suavizado del IC
+```
+
+En las gráficas anteriores se observa que los datos pueden modelarse por un modelo de regresión lineal.
+
+> Por más que no se solicita la realización de las gráficas, las mismas sirven de guía para orientar si la distribución de puntos se puede ajustar o no por un modelo lineal.
+
+
+
+3.  Estimaremos los parámetros de una función lineal: Y_i = β_0 + β_1 X_i + e_i$, a través del método de mínimos cuadrados.
+
+Ajustamos el modelo lineal, Utilizando la función `lm()`
+
+```{r}
+m1 <- lm(fruto ~ dosis, dosis_tomate)
+m1
+```
+
+Éstos valores:
+
+-   `(Intercept)` indica el valor de la ordenada al origen o b_0
+-   `dosis` indica el valor de la pendiente o b_1 (la variable "dosis" es la variable regresora)
+
+**Respuesta:**
+
+El modelo que mejor representa la relación entre el nivel de fertilizante utilizado y el rendimiento del fruto, es un modelo lineal:
+
+Y = 79.4332 + 0.3009  * X
+
+Lo mismo:
+
+Fruto = 79.4332 + 0.3009 * Dosis
+
+**Interprete los coeficientes del modelo.**
+
+-   b_0: es la ordenada al origen, 79.4332 miles de kg/ha de fruto obtenido cuando no se aplica fertilizante (cuando "Dosis=0"),
+-   b_1: es la pendiente, o cambio marginal en la cantidad de fruto obtenido por cada unidad de fertilizante aplicado, 0.3009 miles de kg/ha de fruto se obtendrán por cada unidad de dosis de fertilizante aplicado.
+
+
+
+Item (d).
+
+**Pruebe las hipótesis sobre el coeficiente de regresión y redacte una conclusión completa sobre la significancia estadística del modelo ajustado. Utilice un nivel de signficancia de 0.05.**
+
+*Coeficiente de regresión:* β_1
+
+1.  Planteo de hipótesis
+
+H_0: β_1 = 0 
+H_1: β_1 ≠ 0
+
+2.  Estadístico de prueba y decisión a través del valor p
+
+Alternativa 1: función `summary()`
+
+```{r}
+summary(m1)
+```
+
+`Residuals` es un resumen de medidas de los residuos e_i (mínimo, primer cuartil, mediana, tercer cuartil y máximo)
+
+`Coefficients`:
+
+-   `(Intercept)`: ordendada al origen o b_0
+-   `dosis`: pendiente o b_1
+-   cada una de esas líneas refresenta la inferencia sobre cada coeficiente del modelo lineal, donde:
+    -   `Estimate`: valor estimado de cada coeficiente
+    -   `Std. Error`: error estándar de cada coeficiente S_b0 y S_b1
+    -   `t value` estadístico de prueba de cada coeficiente ("t" calculado de cada uno)
+    -   `Pr(>|t|)` valor p de cada coeficiente
+
+`Residual standard error`: error estándar residual S_e
+
+`Multiple R-squared`: R^2, coeficiente de determinación, bondad de ajuste del modelo
+
+`F-statistic` prueba F, sólo para significancia estadística del modelo, es decir de PH de β_1
+
+Alternativa 2: función `anova()` o Análisis de la variancia
+
+```{r}
+anova(m1)
+```
+
+En las filas, fuentes de variación:
+
+-   `dosis`: fuente de variación de la variable regresora
+-   `Residuals`: fuente de variación de los resuduos
+
+En las columnas:
+
+-   `Df`: grados de libertad de cada fuente de variación
+-   `Sum Sq`: Suma de cuadrados
+-   `Mean Sq`: Cuadrados Medios
+-   `F value`: estadístico de pruefa "f" (o f calculado)
+-   `Pr(>F)`: valor p
+
+3.  Conclusión completa
+
+Existen evidencias suficientes para rechazar H0, dado que el valor p es menor al nivel de significancia (α = 0.05), por lo tanto el coeficiente de regresión es significativo, el modelo ajustado es significativo.
+
+
+
+Item (e).
+
+**Interprete el IC95% y el IC99% de los parámetros relevantes.**
+
+*La función `confint()` por defecto devuelve el 0.95.*
+
+Intervalo de confianza del 95%
+
+```{r}
+IC <- confint(m1)
+IC
+```
+
+-   `(Intercept)`: hace referencia a la ordenada al origen
+-   `dosis`: hace referencia a la pendiene
+
+El verdadero valor de β_0 u ordenada al origen se encuentra entre los límites inferior: 75.43 y superior: 83.43, con un nivel de confianza del 95%.
+
+P(75.43 < β_0 < 83.43) =95%
+
+El verdadero valor de β_1 o pendiente o cambio marginal, se encuentra entre los límites inferior: 0.233 y superior: 0.368, con un nivel de confianza del 95%.
+
+P(0.233 < β_1 < 0.368)= 95%
+
+
+
+Intervalo de confianza del 99%
+
+```{r}
+IC99 <- confint(m1, level = 0.99)
+IC99
+```
+
+El verdadero valor de β_0 u ordenada al origen se encuentra entre los límites inferior: 73.68 y superior: 85.18, con un nivel de confianza del 99%.
+
+
+El verdadero valor de β_1 o pendiente o cambio marginal, se encuentra entre los límites inferior: 0.203 y superior: 0.398, con un nivel de confianza del 99%.
+
+
+
+
+Item (f).
+
+**Valore la bondad de ajuste del modelo.**
+
+```{r, echo=F}
+sum <- summary(m1)
+sum
+```
+
+La bondad de ajuste del modelo la encontramos en la salida del `summary()`, como `Multiple R-squared`: 0.9184 o expresado en porcentaje: 91.84%.
+
+Su notación es como R^2 y también se lo conoce como coeficiente de determinación.
+
+En éste caso el 91.84% de la variación del peso de los frutos de tomate es explicado por el modelo lineal planteado en función de la dosis de fertilizante. Según éste valor de R^2, la bondad de ajuste es muy buena.
+
+
+
+Item (g).
+
+**Si se desea aplicar una dosis de fertilizante de 25 ml/ha:**
+
+**i. Cuál es la respuesta promedio esperada de las plantas a las que se le aplique esa dosis de fertilizante con un 99% de confianza?**
+
+Intervalo de **Confianza** para un valor predicho de la media
+
+```{r}
+# level: por defecto es 0.95
+predict(m1, newdata = list(dosis = 25), interval = "confidence", level = 0.99)
+```
+
+-   `fit` valor ajustado o predicho
+-   `lwr` límite inferior
+-   `upr` límite superior
+
+El intervalo de confianza del 99% para la respuesta esperada cuando se aplica una dosis de fertilizante de 25 ml/ha es de 84.23;89.68
+
+
+
+**ii. Que rendimiento en fruto se espera obtener con esa dosis de fertilizante?**
+
+*Estimación puntual cuando la dosis es* X=25 ml/ha
+
+Alternativa 1: reemplazando en el modelo ajustado
+
+El modelo era: Y = 79.4331 + 0.3009 * x
+
+```{r}
+x <- 25
+
+79.4331 + 0.3009 * x
+```
+
+Alternativa 2: utilizando la función `predict()`
+
+```{r}
+predict(m1, newdata = list(dosis = 25))
+```
+
+De las dos maneras, obtenemos que cuando aplicamos una dosis de fertilizante de 25 ml/ha, el rendimiento de fruto de tomate esperado es de 86.95659 miles de kg/ha.
+
+
+
+**iii. Cuál es el intervalo de confianza de predicción del 99%, para la predicción anterior?**
+
+Intervalo de confianza de la **Predicción**
+
+```{r}
+predict(m1, newdata = list(dosis = 25), interval = "prediction", level = 0.99)
+```
+
+El intervalo de predicción del 99% para una dosis de 25 ml/ha es de 76.04;97.87
+
+

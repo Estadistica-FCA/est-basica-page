@@ -1,0 +1,504 @@
+---
+title: "TP N° 3: Distribuciones discretas"
+output: html_document
+---
+
+Cada vez que se inicia la sesion de RStudio debemos leer los paquetes que serán utilizados:
+
+```{r}
+# Paquetes requeridos
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+# Distribución Binomial
+
+Las funciones de probabilidad binomial se obtienen con las funciones de la familia `*binom()`
+
+## Ejercicio 1
+
+Un criadero de semillas afirma que el poder germinativo de las semillas de una nueva variedad de soja es del 85%. Para verificarlo, un técnico realiza un ensayo de germinación tomando 200 semillas al azar y colocándolas en bandejas de germinación.
+
+**Responder:**
+
+a.  ¿Cuál es la probabilidad de que de esas 200 semillas, germine el 85% de las semillas que indica el semillero?
+b.  ¿Cuál es la probabilidad de que al sembrar 500 semillas germinen el 80% o más de ellas?
+c.  ¿Cuál es la probabilidad de que si se siembran las 500 semillas del ítem anterior, germinen 200 o menos semillas?
+d.  ¿Cuál es la probabilidad de que si se siembran 1000 semillas, germinen al menos 800 y no más de 900 semillas?
+
+## Item (a).
+
+**¿Cuál es la probabilidad de que de esas 200 semillas, germine el 85% de las semillas que indica el semillero?**
+
+Para responder esta pregunta primero vamos a calcular cuantas semillas son el 85% de 200.
+
+Luego, dado que queremos averiguar la probabilidad de $x = 170$, vamos a utilizar la función `dbinom()` para calcular la probabilidad en el punto 170 $P(X = 170) = f(170)$
+
+**Paso 1:** definimos los parámetros de la distribución binomial:
+
+```{r}
+n <- 200 # 200 semillas sembradas
+p <- 0.85 # 85% de probabilidad de que germinen
+```
+
+**Paso 2:** definimos el valor de X
+
+```{r}
+x <- 200 * 0.85 # Valor de X
+x
+```
+
+**Paso 3:** Ingresamos todos los argumentos en la función:
+
+```{r}
+dbinom(x = x, size = n, prob = p)
+```
+
+**Respuesta:** `7.88%` es la probabilidad de que si se siembran 200 semillas germine exactamente el 85%.
+
+## Item (b).
+
+**¿Cuál es la probabilidad de que al sembrar 500 semillas germinen el 80% o más de ellas?**
+
+Dado que el 80% de 500 semillas es 400, estamos interesados en calcular la probabilidad de que en una muestra de 500 semillas germinen 400 semillas o más $P(X >= 400)$
+
+Utilizaremos la función `pbinom()` para calcular probabilidades acumuladas. Queremos incluir el número 400 y calcular la probabilidad acumulada de los valores mayores
+
+**Paso 1:** definimos los parámetros de la distribución:
+
+```{r}
+p <- 0.85 # es la misma del ítem anterior
+n <- 500 # 500 semillas en éste ítem
+```
+
+**Paso 2:** otros argumentos que necesitamos:
+
+Queremos calcular los valores mayores a 400 semillas pero incluyéndolo, entonces el valor de `q` va a ser 399 para que usando el complemento o `lower.tail` = F, la probabilidad se calcule a partir de 400.
+
+```{r}
+q <- 400 - 1
+pbinom(q = q, size = n, prob = p, lower.tail = F)
+```
+
+**Respuesta:** `99.9%` es la probabilidad de que si siembro 500 de esas semillas germine el 80% o más de ellas.
+
+## Item (c).
+
+**¿Cuál es la probabilidad de que si se siembran las 500 semillas del ítem anterior, germinen 200 o menos semillas?**
+
+Significa que nos interesa la probabilidad acumulada de valores inferiores a 200 $P(X <= 200)$. Utilizaremos la función `pbinom()` porque queremos calcular probabilidades acumuladas.
+
+**Paso 1:** definimos los parámetros de la distribución:
+
+```{r}
+p <- 0.85 # igual que el ítem anterior
+n <- 500 # igual que el ítem anterior
+```
+
+**Paso 2:** otros argumentos que necesitamos:
+
+Ya que queremos calcular probabilidades menores o iguales al valor indicado usamos `lower.tail = T`
+
+```{r}
+q <- 200
+pbinom(q = q, size = n, prob = p, lower.tail = T)
+```
+**Respuesta:** `2.9*e-115%` es la probabilidad de que si siembro 500 de esas semillas germinen 200 o menos de ellas.
+
+## Item (d).
+
+**¿Cuál es la probabilidad de que si se siembran 1000 semillas, germinen al menos 800 y no más de 900 semillas?**
+
+Queremos calcular $P(800 <= x < 900)$. Para eso utilizaremos la función `pbinom()` porque queremos calcular probabilidades acumuladas. En este caso incluyendo a 800 pero no a 900.
+
+Definimos los parámetros y argumentos de la distribución:
+
+```{r}
+p <- 0.85 # igual que el ítem anterior
+n <- 1000 # 1000 semillas
+```
+
+Definimos los límites superior (`q2`) e inferior (`q1`) de modo tal de incluir el valor 800 pero no 900.
+
+```{r}
+q1 <- 799
+q2 <- 899
+
+P_799 <- pbinom(q = q1, size = n, prob = p) # lower.tail = T, por defecto
+P_899 <- pbinom(q = q2, size = n, prob = p) # lower.tail = T, por defecto
+
+P_899 - P_799 # valor mayor - menor
+
+sum(dbinom(c(800:899), size = n, p = p))
+```
+**Respuesta:** `99.9%` es la probabilidad de que si siembro 1000 de esas semillas ggerminen al menos 800 y no más de 900 de ellas.
+
+## Ejercicio 2
+
+Supongamos que tenemos una población de insectos de los cuales el 40% se infectan por determinado virus. Si extraemos una muestra de $n = 5$:
+
+a.  ¿Cuál es la probabilidad de que 3 insectos se infecten?
+b.  ¿Cuál es la probabilidad de que menos de 2 insectos se infecten?
+c.  ¿Cual es el número esperado de insectos infectados en dicha muestra? ¿Cual es el desvío?
+
+## Item (a)
+
+**¿Cuál es la probabilidad de que 3 insectos se infecten?**
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+**Respuesta:**
+
+## Item (b)
+
+**¿Cuál es la probabilidad de que menos de 2 insectos se infecten?**
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+**Respuesta:**
+
+## Item (c)
+
+**¿Cual es el número esperado de insectos infectados en dicha muestra? ¿Cual es el desvío?**
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+**Respuesta:**
+
+------------------------------------------------------------------------
+
+# Distribución Hipergeométrica
+
+Las funciones de probabilidad hipergeométrica se obtienen con las funciones de la familia `*hyper()`
+
+## Ejercicio 4
+
+La mejor manera de provocar e incentivar el crecimiento natural de las plantas y cultivos es someterlos a altos niveles de temperatura, luminosidad y a una humedad relativa. Esto se consigue gracias a una **cámara de germinación**, donde se crea un clima idóneo que propicia la correcta evolución de las semillas plantadas en su interior.
+
+Una empresa proveedora dispone de 120 cámaras de germinación, de las cuáles sólo 80 están bien calibradas.
+
+**Responder:**
+
+a.  Si se toma una muestra aleatoria de 5 cámaras ¿Cuál es la probabilidad de que solamente 2 de las 5 estén bien calibradas?
+b.  Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la probabilidad de que menos de 5 no estén calibradas?
+c.  Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la probabilidad de que más de 5 no estén calibradas?
+d.  ¿Cuántas cámaras se esperan que estén correctamente calibradas en una muestra de 50 cámaras?
+
+## Item (a).
+
+**Si se toma una muestra aleatoria de 5 cámaras ¿Cuál es la probabilidad de que solamente 2 de las 5 estén bien calibradas?**
+
+Queremos calcular la probabilidad en el punto: $P(x=2)$
+
+Utilizaremos la función `dhyper()`
+
+Definimos los parámetros de la distribución hipergeométrica:
+
+```{r}
+n <- 5 # tamaño de la muestra
+N <- 120 # cámaras de germinación totales
+N1 <- 80 # cámaras asociadas al éxito: bien calibradas
+
+x <- 2
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+dhyper(x = x, m = N1, n = N - N1, k = n)
+```
+
+
+## Item (b).
+
+**Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la probabilidad de que menos de 5 no estén calibradas?**
+
+En éste ítem cambia el éxito, ahora es las que no están calibradas
+
+Queremos calcular la probabilidad acumulada: $P(x<5)$. No queremos incluir al 5
+
+Utilizaremos la función `phyper()` porque queremos calcular la probabilidad acumulada
+
+Definimos los parámetros de la distribución hipergeométrica:
+
+```{r}
+n <- 10 # tamaño de la muestra
+N <- 120 # cámaras de germinación totales
+N1 <- 40 # cámaras no calibradas
+```
+
+Para definir `q`, tener en cuenta que no quiero incluir el valor 5 y que quiero calcular la probabilidad acumulada de los menores (`lower.tail = T`)
+
+Cuando `lower.tail = T` incluye el valor de `q`, por lo tanto para que no tome el valor 5, se pone un valor inmediato menor, en éste caso, el valor 4
+
+```{r}
+q <- 4
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+phyper(q = q, m = N1, n = N - N1, k = n)
+
+# lower.tail=T por defecto, no hace falta aclararlo
+```
+
+## Item (c).
+
+**Si se toma una muestra aleatoria de 10 cámaras ¿Cuál es la probabilidad de que más de 5 no estén calibradas?**
+
+En éste ítem el éxito son las cámaras que no están calibradas
+
+Queremos calcular la probabilidad acumulada:\_ $P(x>5)$. No queremos incluir al 5
+
+Utilizaremos la función `phyper()` porque queremos calcular la probabilidad acumulada
+
+Definimos los parámetros de la distribución hipergeométrica:
+
+```{r}
+n <- 10 # tamaño de la muestra
+N <- 120 # cámaras de germinación totales
+N1 <- 40 # cámaras no calibradas
+```
+
+Para definir `q`, tener en cuenta que no quiero incluir el valor 5 y que quiero calcular la probabilidad acumulada de los mayores (`lower.tail = F`)
+
+Cuando `lower.tail = F` NO incluye el valor de `q`, por lo tanto si coloco el valor `q`=5, no lo incluirá.
+
+```{r}
+q <- 5
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+phyper(q = q, m = N1, n = N - N1, k = n, lower.tail = F)
+```
+
+## Item (d).
+
+**¿Cuántas cámaras se esperan que estén correctamente calibradas en una muestra de 50 cámaras?**
+
+La pregunta hace referencia al **valor esperado** o **esperanza**
+
+Definimos los parámetros de la distribución hipergeométrica y aplicamos a la fórmula de la Esperanza de la distribución:
+
+```{r}
+n <- 50 # tamaño de la muestra
+N <- 120 # cámaras de germinación totales
+N1 <- 80 # cámaras bien calibradas
+
+Esperanza <- n * N1 / N
+Esperanza
+
+round(Esperanza, 0) # redondeo a 0 decimales
+```
+
+## Ejercicio 5
+
+Se capturaron, etiquetaron y liberaron cinco novillos de un lote de 25 animales para identificar que estaban vacunadas contra brucelosis, luego se los devolvió al lote original de animales. Después de haber tenido la oportunidad de mezclarse, se selecciona una muestra aleatoria de 10 de estos animales. Sea X el número de animales etiquetados. ¿cuál es la probabilidad de que
+
+a.  El numero de animales etiquetados sea exactamente 2.
+b.  El numero de animales etiquetados menor o igual de 2.
+c.  El número de animales etiquetados sea mayor o igual a 3 y menor o igual a 10.
+
+## Item (a)
+
+**El numero de animales etiquetados sea exactamente 2.**
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+## Item (b)
+
+**El numero de animales etiquetados menor o igual de 2.**
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+## Item (c)
+
+**El número de animales etiquetados sea mayor o igual a 3 y menor o igual a 10.**
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+------------------------------------------------------------------------
+
+# Distribución Poisson
+
+Las funciones de probabilidad poisson se obtienen con las funciones de la familia `*pois()`
+
+## Ejercicio 7
+
+Un estudio de la Secretaría de Tránsito de la localidad de Puerto General San Martín, indica que el número promedio de camiones que llega por día al Puerto de Cargill es de 450.
+
+**Responder:**
+
+a.  ¿Cuál es la probabilidad de que en un día determinado lleguen más de 350 camiones?
+b.  ¿Cuál es la probabilidad de que en dos días lleguen 1000 o más camiones?
+c.  ¿Cuál es la probabilidad que en medio día lleguen entre más de 100 y menos de 200 camiones inclusive?
+d.  ¿Cuál es el valor esperado de camiones en una semana?
+
+## Item (a).
+
+**¿Cuál es la probabilidad de que en un día determinado lleguen más de 350 camiones?**
+
+Queremos calcular la probabilidad acumulada: $P(x>350)$. No incluimos el 350
+
+Utilizaremos la funcion `ppois()` y el argumento `lower.tail = F` porque queremos calcular la probabilidad acumulada de los valores mayores a 350.
+
+Definimos los parámetros de la distribución Poisson:
+
+```{r}
+lambda <- 450 # camiones por día
+```
+
+Si utilizo `lower.tail = F`, no incluye el valor que pongamos en `q`, en éste caso no queremos que incluya a 350
+
+```{r}
+q <- 350
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+ppois(q = q, lambda = lambda, lower.tail = F)
+```
+
+## Item (b).
+
+**¿Cuál es la probabilidad de que en dos días lleguen 1000 o más camiones?**
+
+Queremos calcular la probabilidad acumulada: $P(x\ge 1000)$. Incluimos el 1000
+
+Utilizaremos la función `ppois()` porque queremos calcular la probabilidad acumulada de los valores mayores o iguales a 1000
+
+Definimos los parámetros de la distribución Poisson:
+
+```{r}
+lambda <- 900 # 450 camiones por día * 2 días
+```
+
+Queremos calcular valores mayores o iguales a 1000, utilizamos `lower.tail = F`, no incluye el valor que pongamos en `q`, en éste caso queremos que incluya a 1000 por lo cual `q` = 999
+
+```{r}
+q <- 999
+```
+
+Ingresamos todos los argumentos en la función:
+
+```{r}
+ppois(q = q, lambda = lambda, lower.tail = F)
+```
+
+## Item (c).
+
+**¿Cuál es la probabilidad que en medio día lleguen entre más de 100 y menos de 200 camiones inclusive?**
+
+Queremos calcular la probabilidad acumulada entre dos valores: $P(100< x\le 200)$. Incluimos el 200, no incluimos el 100
+
+Utilizaremos la función `ppois()` porque queremos calcular la probabilidad acumulada
+
+Definimos los parámetros de la distribución Poisson:
+
+```{r}
+lambda <- 450 / 2 # se divide por dos porque la pregunta es por medio día
+```
+
+Tenemos en cuenta que utilizaremos `lower.tail = T`, que incluye el valor que pongamos en `q`, en éste caso: - no queremos que incluya a 100, por lo cual `q1` = 100 - queremos que incluya a 200, por lo cual `q2` = 200
+
+```{r}
+q1 <- 100
+q2 <- 200
+```
+
+Ingresamos todos los argumentos en la función, podemos hacerlo de 2 maneras:
+
+Alternativa 1: restando probabilidades acumuladas, calculándolas por separado
+
+```{r}
+P_100 <- ppois(q = q1, lambda = lambda) # lower.tail = T, por defecto
+P_200 <- ppois(q = q2, lambda = lambda)
+
+P_200 - P_100 # valor mayor - menor  de 100 a 200 inclusive
+```
+
+Alternativa 2: usando la función `diff()` para calcular diferencias (resta)
+
+```{r}
+diff(ppois(q = c(q1, q2), lambda = lambda))
+
+# en el vector q = c(q1, q2), primero el valor menor y luego el mayor
+```
+
+## Item (d).
+
+**¿Cuál es el valor esperado de camiones que llegarán al Puerto de Cargill en una semana?**
+
+```{r}
+450 * 7
+```
+
+## Ejercicio 8
+
+Los dientes de león se estudian para conocer sus efectos sobre los cultivos y el crecimiento del césped. En una región se descubrió que el número medio de plantas de dientes de león por metro cuadrado es de 7.0.
+
+a.  Calcule la probabilidad de que no haya plantas de dientes de león en una área de 1 $m^2$.
+b.  Calcule la probabilidad de al menos una planta diente de león en una área de 1 $m^2$.
+c.  Calcule la probabilidad de dos plantas de dientes de león, cuando mucho, en una área de 1 $m^2$.
+
+## Item (a)
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+## Item (b)
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```
+
+## Item (c)
+
+```{r}
+# Definir parámetros
+
+
+# Aplicar función
+```

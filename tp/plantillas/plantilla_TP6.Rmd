@@ -1,0 +1,388 @@
+---
+title: "TP N° 6: Inferencia estadística basada en una muestra: PH"
+output: html_document
+---
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+# Prueba de hipótesis
+
+## Ejercicio 1
+
+Las siguientes son las alturas de una muestra de 16 plantas de sorgo forrajero:
+
+Los datos se encuentran en el archivo **"sorgo.xlsx"**
+
+Verificar al 5% de signifícancia si la altura promedio de esta variedad es distinta de 2 m.
+
+### Respuestas
+
+H0: μ = 2
+
+H1: μ ≠ 2
+
+```{r}
+# Opción 1: Importar archivo local
+sorgo <- import("sorgo.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(sorgo)
+```
+
+```{r}
+n <- length(sorgo$altura)
+S <- sd(sorgo$altura)
+xbar <- mean(sorgo$altura)
+alfa <- 0.05
+mu <- 2
+
+# t calc
+t_calc <- (xbar - mu) / (S / sqrt(n))
+t_calc
+
+# t_crit
+t_crit <- qt(p = c(alfa / 2, 1 - alfa / 2), df = n - 1)
+t_crit
+
+# Regla decisión (porque es bilateral)
+t_calc > abs(t_crit)
+
+# Valor P
+pt(t_calc, df = n - 1, lower.tail = xbar < mu) * 2
+```
+
+Lo anterior puede reemplazarse por la función `t.test`
+
+```{r, echo = T}
+t.test(sorgo$altura, mu = 2, alternative = "two")
+```
+
+Decisión: no se rechaza H0
+
+## Ejercicio 2
+
+En una muestra al azar de 450 productores, el 70 % de ellos eran propietarios y el 30 % no. Verifique la hipótesis de que la muestra proviene de una población en la que el 65 % son propietarios. Use una probabilidad de cometer un error de tipo I del 5%.
+
+### Respuestas
+
+H0: p = 0.65
+
+H1: p ≠ 0.65
+
+```{r, echo = T}
+n <- 450
+alfa <- 0.05
+
+# Valores hipoteticos
+p0 <- 0.65
+q0 <- 1 - p0
+
+# Valores observados
+p <- 0.7
+q <- 1 - p
+
+
+# estadístico Z
+z_calc <- (p - p0) / sqrt(p0 * q0 / n)
+z_calc
+
+# valores criticos
+z_crit <- qnorm(p = c(alfa / 2, 1 - alfa / 2))
+z_crit
+
+# Regla decisión bilateral
+abs(z_calc) > abs(z_crit)
+
+# Valor p
+pnorm(z_calc, lower.tail = z_calc < 0) * 2
+```
+
+Lo anterior puede reemplazarse por la función `z.test`
+
+```{r, echo = T}
+z.test(p1 = 0.7, n1 = 450, mu = 0.65, alternative = "two.sided")
+```
+
+Decisión: Se rechaza H0
+
+## Ejercicio 3
+
+La ganancia en peso promedio de 25 ovejas sometidas a una ración alimenticia durante un cierto período fue:
+
+Los datos se encuentran en el archivo [ovejas.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/ovejas.xlsx?forcedownload=1)
+
+Suponiendo que la varianza del peso de la ganancia de peso de las ovejas es de σ^2 = 4 kg^2^, ¿es posible afirmar que esta ración aumenta el peso al menos en 11 kg?
+
+### Respuestas
+
+H0: μ ≥ 11
+
+H1: μ < 11
+
+```{r}
+# Opción 1: Importar archivo local
+ovejas <- import("ovejas.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(ovejas)
+```
+
+```{r}
+xbar <- mean(ovejas$peso)
+sigma <- 2
+n <- length(ovejas$peso)
+alfa <- 0.05
+z_calc <- (xbar - 11) / (sigma / sqrt(n))
+z_crit <- qnorm(p = alfa)
+
+pvalue <- pnorm(z_calc, lower.tail = z_calc < 0)
+```
+
+Lo anterior puede reemplazarse por la función `z.test`
+
+```{r, echo = T}
+z.test(x = ovejas$peso, sig_x = 2, mu = 11, alternative = "less")
+```
+
+Se rechaza H0
+
+## Ejercicio 4
+
+Un fabricante dedicado a la elaboración de alimento balanceado para cerdos afirma que su producto aumenta el peso promedio en 200 gr. En una muestra de 20 cerdos tomados al azar se obtuvieron los siguientes aumentos de peso:
+
+Los datos se encuentran en el archivo [balanceado_cerdos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/balanceado_cerdos.xlsx?forcedownload=1)
+
+¿Se puede suponer que la afirmación del fabricante es correcta con un nivel de significación del 1%?
+
+### Respuestas
+
+H0: μ = 200
+
+H1: μ ≠ 200
+
+```{r}
+# Opción 1: Importar archivo local
+balanceado_cerdos <- import("balanceado_cerdos.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(balanceado_cerdos)
+```
+
+```{r}
+t.test(balanceado_cerdos$aumento, mu = 200, alternative = "two", conf.level = 0.99)
+```
+
+No se rechaza H0
+
+## Ejercicio 5
+
+Un fabricante de pezoneras sostiene que la duración media de las mismas es superior a 1400 h. Se tomó una muestra de 20 pezoneras y los datos se detallan a continuación:
+
+Los datos se encuentran en el archivo [pezoneras.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/pezoneras.xlsx?forcedownload=1)
+
+¿Puede afirmarse con un nivel de significancia del 5% que las pesoneras duran más de 1400 hs?
+
+### Respuestas
+
+H0: μ ≤ 1400
+
+H1: μ \> 1400
+
+```{r}
+# Opción 1: Importar archivo local
+pezoneras <- import("pezoneras.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(pezoneras)
+```
+
+```{r}
+t.test(pezoneras$duracion, mu = 1400, alternative = "greater", conf.level = 0.95)
+```
+
+No se rechaza H0
+
+## Ejercicio 6
+
+Un estudio económico desea probar si la superficie media de los establecimientos de una región es mayor a 135 ha. Para ello se tomó una muestra de 12 establecimientos agropecuarios y se obtuvieron los siguientes datos:
+
+Los datos se encuentran en el archivo [establecimientos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/establecimientos.xlsx?forcedownload=1)
+
+¿Hay evidencia suficiente para afirmar que la superficie promedio de todos los establecimientos de la región es mayor a 135 ha?
+
+## Ejercicio 7
+
+En un establecimiento lechero, 20 vacas de raza Frisia produjeron en promedio 80 ± 18 kg de grasa en la tercer semana de lactancia. ¿Se puede afirmar con un α = 0.05 que la producción es superior a 70 kg?
+
+### Respuestas
+
+H0: μ ≤ 70 H1: μ \> 70
+
+```{r}
+xbar <- 80
+S <- 18
+mu <- 70
+n <- 20
+alfa <- 0.05
+
+t_calc <- (xbar - mu) / (S / sqrt(n))
+t_crit <- qt(p = 1 - alfa, df = n - 1)
+
+pvalue <- pt(t_calc, df = n - 1, lower.tail = xbar < mu)
+```
+
+Se rechaza H0
+
+## Ejercicio 8
+
+Con los datos del problema 10 (de Intervalos de Confianza), determinar si se puede afirmar con una significancia de 5% que las concentraciones de glucósidlos de las larvas es distinta a 0.175 g.
+
+## Ejercicio 9
+
+Un fabricante de neumáticos de tractores mide en miles de km la duración de los mismos. En un ensayo de 15 neumáticos la duración de los mismos fue:
+
+Los datos se encuentran en el archivo [neumaticos_tractores.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/neumaticos_tractores.xlsx?forcedownload=1)
+
+Probar si los neumáticos duran más de 26 mil km utilizando un nivel de significancia del 5%.
+
+## Ejercicio 10
+
+En una fábrica de conservas de fruta se desea verificar si el peso promedio de las latas que producen tienen un peso no inferior a 500 g. Se sabe que el tamaño de la fruta puede introducir una variación en los pesos de las latas de manera que éstos se distribuyan normalmente con una dispersión de 27 g. En una muestra de 100 latas el peso promedio fue de 480 g. Con un nivel de significación del 5%, ¿hay suficiente evidencia para afirmar que las latas tienen pesos mayores a 500 g?
+
+## Ejercicio 11
+
+El departamento de control de calidad de una empresa que vende insumos agropecuarios, decide controlar las desviaciones o variabilidad en los pesos que en el empaque de las cajas de Glifosato (herbicida que dispenden en gránulos solubles) del mes de enero (el set de datos tiene registro de varios meses).
+
+Los datos se encuentran en el archivo [glifosato.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/glifosato.xlsx?forcedownload=1)
+
+La desviación estándar especificada es de 14.17 g. ¿Se cumple esta especificación? Use el nivel de significación del 1% y una prueba bilateral
+
+### Respuestas
+
+H0: σ = 14.17
+
+H1: σ ≠ 14.17
+
+```{r}
+# Opción 1: Importar archivo local
+glifosato <- import("glifosato.xlsx") %>%
+    filter(Mes == "enero")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(glifosato)
+glifosato <- glifosato %>%
+    filter(Mes == "enero")
+```
+
+```{r, echo = T}
+n <- length(glifosato$Peso)
+S <- sd(glifosato$Peso)
+sigma <- 14.17
+alfa <- 0.01
+
+# estadístico
+chi_calc <- (n - 1) * (S^2) / (sigma^2)
+chi_calc
+
+# valor critico
+chi_crit <- qchisq(c(alfa / 2, 1 - alfa / 2), df = n - 1)
+chi_crit
+
+# valor p (bilateral)
+pchisq(q = chi_calc, df = n - 1, lower.tail = S < sigma) * 2
+```
+
+## Ejercicio 12
+
+El Departamento de Control de Calidad de una empresa que fabrica computadoras estima que si la longitud de una determinada pieza presenta una variancia mayor a 3,5 mm. irremediablemente se producirá una inutilización de una plaqueta en el término de 7 meses de uso. Una muestra de 16 piezas arrojó una longitud media de 4,5 mm. con una desviación estándar de 1,3 mm.. ¿Qué conclusiones puede obtener el Departamento de Calidad de la empresa en cuanto a la calidad de la pieza analizada?
+
+## Ejercicio 13
+
+Se conoce por investigaciones ya realizadas que el 30% de la población mayor de 18 años fuma. Después de efectuar una fuerte campaña televisiva y radial durante 8 meses, se decide estudiar si la población adulta ha disminuido el hábito de fumar. Para ello se selecciona una muestra aleatoria de 900 personas adultas a las que somete a una determinada encuesta, resumida la información proporcionada por el trabajo de campo, se observó que el 12% de las personas encuestadas fumaba habitualmente. Probar la hipótesis que la campaña publicitaria ha disminuido la cantidad de fumadores.
+
+## Ejercicio 14
+
+Se arroja una moneda al aire 200 veces, obteniéndose 90 veces caras. Con un nivel de significación del 5%, ¿se puede afirmar que la moneda es *legal*?
+
+## Ejercicio 15
+
+El proveedor de un insecticida para control de barrenador del brote de soja (*Epinotia aporema*) afirma que su producto tiene una eficacia de mayor al 60%. Para verificar dicha afirmación, se condujo un experimento en donde se seleccionaron 950 plantas con barrenador del brote y se aplico se le aplicó la dosis de producto recomendada.
+
+Los datos se encuentran en el archivo [barrenador.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/barrenador.xlsx?forcedownload=1) . Donde "Control", indica si el producto controló o no al barrenador.
+
+¿Esta evidencia es suiciente para concluir que la afirmación del proveedor es correcta? Utilice un nivel de significancia de 0.05.
+
+H0: p = 0.50 H1: p ≠ 0.50
+
+```{r, echo=T, eval=F}
+# Opción 1: Importar archivo local
+barrenador <- import("barrenador.xlsx") %>%
+    filter(Lote == 1)
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(barrenador)
+barrenador <- barrenador %>%
+    filter(Lote == 1)
+```
+
+```{r}
+total <- barrenador %>%
+    group_by(Control) %>%
+    count()
+total
+```
+
+Controló en 520 muestras y No controlo en 430 muestras, de un total de 950 muestras.
+
+Proporción de plantas controladas por el producto:
+
+```{r}
+p <- 520 / 950
+p
+```
+
+H_0: ρ ≥ 60 %
+
+H_1: ρ \< 60 %
+
+```{r}
+n <- 950
+alfa <- 0.01
+
+# Valores hipoteticos (poblacionales)
+p0 <- 0.60 # lo que afirman que controla el producto
+q0 <- 1 - p0
+
+# Estadístico de prueba
+z_calc <- (p - p0) / sqrt(p0 * (1 - p0) / n)
+z_calc
+
+# Valor crítico para alfa = 5%
+alfa <- 0.05
+z_crit <- qnorm(p = alfa) # lower.tail por defecto es TRUE ya que H1 tiene simbolo <
+z_crit
+
+pvalue <- pnorm(z_calc, lower.tail = T)
+# lower.tail = TRUE porque H1 tiene simbolo <
+
+pvalue
+```
+
+Lo anterior puede reemplazarse por la función `z.test`
+
+```{r, echo = T}
+z.test(p1 = 520/950, n1 = 950, mu = 0.60, alternative = "less")
+```
+
+No se rechaza H0
+
+## Ejercicio 16
+
+La resistencia mecánica a la penetración (RP) es una propiedad del suelo que influye sobre el desarrollo del sistema radical. Valores superiores a 2 MPa implican limitaciones para el cultivo por lo que se aconseja realizar algun tipo de labranza vertical. Un asesor sospecha que en un lote, producto de la compactación, la RP es superior al umbral crítico (2 MPa). Para corroborar éstos datos se realiza un muestreo con un penetrómetro de campo, *antes* de realizar la labranza.
+
+Los datos se encuentran en el archivo [penetrometro.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/penetrometro.xlsx?forcedownload=1) , donde RP es la resistencia a la penetración explesada en MPa (megapascales).

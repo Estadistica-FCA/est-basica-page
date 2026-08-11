@@ -1,0 +1,181 @@
+---
+title: "TP U1 Estadística Descriptiva"
+output: html_document
+---
+
+Cada vez que se inicia la sesión de RStudio debemos leer los paquetes que serán utilizados:
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+
+## Ejercicio 5
+
+Se registraron datos de 1598 terneros que ingresaron al sistema de engorde de la estancia "La Escondida S.A.". 
+
+a. Cargue los datos en **R**. Puede hacerlo:
+    - importando el archivo local con la función `import()` del paquete `rio`
+    - utilizando el set de datos de la librería de la cátedra con la función `data()`
+
+```{r}
+# Opción 1: Importar archivo local
+pesada_terneros <- import("pesada_terneros.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(pesada_terneros)
+```
+
+b. Calcule medidas de resumen para los datos de Peso de los terneros
+
+```{r}
+pesada_terneros %>%
+    summarise(
+        n = length(Peso),
+
+        # medidas de tendencia central
+        media = mean(Peso), # media
+        mediana = median(Peso), # mediana
+
+        # medidas de dispersión
+        var = var(Peso), # varianza
+        desv = sd(Peso), # desvío
+        CV = desv / media, # coeficiente de variación
+
+        # medidas de posición
+        IQR = IQR(Peso), # rango intercuartílico
+        Q20 = quantile(Peso, 0.2), # percentil 20
+        Q80 = quantile(Peso, 0.8),
+
+        # medidas de forma
+        asim = moments::skewness(Peso), # asimetría
+        kurt = moments::kurtosis(Peso), # curtosis
+
+        # otras
+        min = min(Peso), # minimo
+        max = max(Peso), # maximo
+    )
+```
+
+c. Obtenga las estadísticas anteriores agrupando los terneros por `Procedencia`
+
+```{r}
+
+```
+
+## Ejercicio 14
+
+a. Realice un gráfico de cajas con los pesos de los terneros provenientes de la estancia `Las Glicinas` del archivo `pesada_terneros.xlsx`. Averigüe cuales son los terneros que tienen peso atípicos leves o severos. Reporte los `IDV`. 
+
+```{r}
+# Filtrar
+terneros_glicinas <- pesada_terneros %>%
+    filter(Procedencia == "Las Glicinas")
+
+# Outliers leves y severos
+ggplot(terneros_glicinas) +
+    aes(x = "", y = Peso) +
+    geom_boxplot() # por defecto usa coef= 1.5
+```
+
+```{r}
+# Outliers severos
+ggplot(terneros_glicinas) +
+    aes(x = "", y = Peso) +
+    geom_boxplot(coef = 3)
+```
+   
+No hay valores atípicos severos, solo moderados.
+
+Las vallas se calculan de la siguiente manera:
+
+ VII = Q1 - 1.5 RIQ 
+ VEI = Q1 - 3 RIQ 
+ VIS = Q3 + 1.5 RIQ
+ VES = Q3 * 3 RIQ
+
+Entonces:
+  
+```{r}
+vallas_outliers(terneros_glicinas$Peso)
+```
+
+```{r}
+# seleccionar mirando las vallas
+terneros_glicinas %>%
+    filter(Peso > vallas$VIS | Peso < vallas$VII) %>%
+    select(IDV)
+```
+
+
+b. Cree una variable con los z-scores e identifique los terneros que pesan ±2σ y ±3σ de la media. Suponiendo que la distribución es normal, ¿qué puede decir de estos pesos?
+
+```{r}
+# variable con los z-scores
+terneros_glicinas <- terneros_glicinas %>%
+    mutate(z = (Peso - mean(Peso)) / sd(Peso))
+
+# filtro a ±2σ
+terneros_glicinas %>%
+    filter(abs(z) > 2)
+```
+
+```{r}
+# filtro a ±3σ
+terneros_glicinas %>%
+    filter(abs(z) > 3)
+```
+
+
+## Ejercicio 21
+
+c. Haga un gráfico boxplot con la distribución de los pesos en función de la procedencia. ¿Qué conclusiones puede sacar?
+
+```{r}
+ggplot(pesada_terneros) +
+    aes(x = Procedencia, y = Peso) +
+    geom_boxplot()
+```
+
+################################################################################
+
+## Ejercicio 11
+
+Se obtuvieron datos de un relevamiento del arbolado público realizado en Rafaela.
+
+Los datos están en el archivo `riesgo_arbolado.xlsx`
+
+a. Cargue los datos en **R** y examine la tabla con `View()`. Puede hacerlo:
+    - importando el archivo local con la función `import()` del paquete `rio`
+    - utilizando el set de datos de la librería de la cátedra con la función `data()`
+
+```{r}
+
+```
+
+## Ejercicio 27
+
+a .Resuma la distribución de especies de los datos de censo de arbolado `riesgo_arbolado.xlsx` mediante un gráfico de barras. ¿Cual es la especie más común?
+
+b. Calcule por especie las siguientes medidas de resumen para el `DAP`: n, media, desvío, CV, min, max, asimetría, curtósis. Comente los resultados
+
+c. Compare CV con el CV de Peso de los terneros del ejercicio anterior.
+
+## Ejercicio 28
+
+a. Con los datos `riesgo_arbolado.xlsx`, construya un gráfico de caja del `DAP` para cada especie. Comente los resultados.
+
+## Ejercicio 32
+
+Con los datos `riesgo_arbolado.xlsx` averigüe el valor de riesgo min, max y medio de cada especie. Comente los resultados. 
+
+
+## Ejercicio 31
+
+a. Con los datos `riesgo_arbolado.xlsx` transforme los datos de DAP en puntuaciones Z. ¿Que representan esos valores? Haga un histograma.
+
+b. Repita el calculo de Z pero agrupando por especie. ¿Qué representan esos valores? Haga un gráfico de caja por especie y comente los resultados.

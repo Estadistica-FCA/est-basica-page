@@ -1,0 +1,184 @@
+---
+title: "Tarea Unidad 0"
+output: html_document
+---
+
+## Presentación
+
+Este es un documento R Markdown. Markdown es una sintaxis de formato simple para crear documentos HTML, PDF y MS Word. 
+
+Al hacer clic en el botón **Knit**, se generará un documento que incluye tanto el contenido como la salida de cualquier fragmento de código R incrustado dentro del documento. Puede incrustar un fragmento de código R como este:
+
+```{r}
+x <- 2 + 2
+x
+```
+
+
+Agregue un nuevo _fragmento_ o _chunk_ con *Ctrl+Alt+I* o haciendo clic en *Insert Chunk* en la barra de herramientas "Code".
+
+
+```{r}
+
+```
+Anotación: Acento grave: ` se puede realizar con alt96
+
+
+
+## Ejercicio X
+
+También puede incrustar gráficos, por ejemplo, utilizando el set de datos `cars` de la librería `datasets`:
+
+```{r}
+plot(cars)
+```
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+El parámetro `echo = FALSE` se agregó al fragmento de código para evitar la impresión del código R que generó el gráfico, cuando se genere el html.
+
+
+## OTROS
+
+Con el set de datos `trees` de la librería `datasets`:
+
+```{r}
+trees
+
+## extraer una variable
+trees$Girth
+
+## asignar los datos de diametro en un objeto
+diametros <- trees$Girth
+```
+
+## Trabajando con paquetes
+
+```{r, eval = F}
+# instalar paquetes (si no estan instalados) con pak
+pak::pak(c("car", "ggplot2"))
+```
+
+```{r}
+# cargar los paquetes en la sesion
+library(car)
+library(ggplot2)
+```
+
+
+```{r}
+# ver si un paquete esta cargado:
+"car" %in% (.packages())
+
+# remover un paquete de la sesion
+detach("package:car", unload = TRUE)
+
+# remover algun paquete de nuestra biblioteca
+pak::pkg_remove("car")
+```
+
+## Tarea Unidad 0
+
+### Ejercicio 1
+
+  a. 
+```{r}
+1 + 2 * (3+4)
+```
+  
+  b. 
+```{r}
+4^3 + 3^(2+1)
+```
+  
+  c. 
+```{r}
+sqrt((4+3)*(2+1))
+```
+  
+  d. 
+```{r}
+((1+2)/(3+4))**2
+```
+  
+  e. 
+```{r}
+x <- 1 + 2 * (3+4)
+y <- sqrt((4+3)*(2+1))
+```
+  
+  f. 
+```{r}
+z <- 2*x + y^-1
+```
+
+### Ejercicio 2
+
+  a. 
+```{r}
+x <- c(2, 7, 6, 2, 9, 9, 1, 8, 5, 0)
+```
+  
+  b. 
+```{r}
+sqrt(x / 2)
+```
+  c.
+```{r}
+length(x)
+```
+   
+  d.
+```{r}
+sum(x)
+```
+   
+  e. 
+```{r}
+sum(x)/length(x)
+```
+   
+  f. 
+```{r}
+fun <- function(y) {
+  sum(y)/length(y)
+}
+fun(x)
+```
+
+## Item 10 a 13
+
+```{r}
+# Paquetes requeridos
+# pak::pak("tidyverse")
+library(tidyverse)
+```
+
+10. Del set de datos `trees` de la librería `datasets`, extraer la variable `Volume` y guardarla en un objeto con nombre "Volumen"
+
+```{r}
+Volumen <- trees$Volume
+```
+
+11. Del mismo set de datos extraer los datos de la fila 5 
+
+```{r}
+trees[ 5 ,  ]
+```
+
+12. Guardar lo anterior en un objeto con nombre "fila5"
+
+```{r}
+fila5 <- trees[ 5 ,  ]
+```
+
+13. Filtrar los arboles que tengan altura (Height) más de 80 y guardarlos en un objeto "altura_mayor_80"
+
+```{r}
+altura_mayor_80 <- filter(trees, Height > 80)
+altura_mayor_80
+```
+
+

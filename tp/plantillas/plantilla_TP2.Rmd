@@ -1,0 +1,271 @@
+---
+title: "TP2: Probabilidad"
+output: html_document
+---
+
+Cada vez que se inicia la sesión de RStudio debemos leer los paquetes que serán utilizados:
+
+```{r}
+# Paquetes requeridos
+library(rio)
+library(tidyverse)
+library(moments)
+library(estadisticaFcaUnl)
+```
+
+# Probabilidad
+
+## Ejercicio 18
+
+La probabilidad de que un automóvil al que se llena el tanque de gasolina también necesite un cambio de aceite es de 0.25, la probabilidad de que necesite un cambio de filtro de aceite es de 0.40, y la probabilidad de que necesite de aceite y filtro es 0.14. 
+
+```{r}
+P_A <- 0.25 # P(cambio de aceite)
+P_F <- 0.40 # P(cambio de filtro de aceite)
+P_AyF <- 0.14 # P(cambio de aceite y filtro)
+```
+
+a. Si se tiene que cambiar el aceite, ¿Cuál es la probabilidad de que se necesite un nuevo filtro?
+
+La probabilidad de que se necesite un nuevo filtro, si se tiene que cambiar el aceite es P(F|A) = P(AyF) / P(A)
+
+```{r}
+P_AyF / P_A
+```
+
+
+b. Si necesita un nuevo filtro de aceite, ¿Cuál es la probabilidad de que se tenga que cambiar de aceite?
+
+La probabilidad de que se tenga que cambiar de aceite, si necesita un nuevo filtro es P(C|F) = P(FyC) / P(F)
+
+```{r}
+P_AyF / P_F
+```
+
+
+## Ejercicio 19
+
+Se disponen de datos de 320 lotes clasificados por producción de tres grupos de productores (A, B y C). Las clasificaciones se realizaron según el nivel de la producción de cada lote (Alto, Medio y Bajo).
+
+Los datos están en el archivo `productores.xlsx`
+
+Suceso y espacio muestral:
+
+a. ¿Cuál es la Probabilidad de que el un lote sea del Grupo A?
+
+b. ¿Cuál es la Probabilidad de que un lote no sea del Grupo A?
+
+c. ¿Cuál es la probabilidad de que un lote de productores sea del Grupo A o del Grupo B?
+
+d. ¿Cuál es la probabilidad de que un lote de productores sea del Grupo A o Nivel de Producción Medio?
+
+e. ¿Cuál es la probabilidad de que un lote de productores sea del Grupo A **y** Nivel de Producción Medio?
+
+Importar datos:
+```{r}
+# Opción 1: Importar archivo local
+productores <- import("productores.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(productores)
+
+xtabs(Lotes ~ Grupo + Nivel_Produccion, productores) %>%
+    addmargins()
+```
+
+
+a. ¿Cuál es la Probabilidad de que el un lote sea del Grupo A?
+
+```{r}
+P_A <- (20 + 75 + 25) / 320
+P_A # 120/320
+```
+
+b. ¿Cuál es la Probabilidad de que un lote no sea del Grupo A?
+
+```{r}
+P_noA <- 1 - P_A
+P_noA
+```
+
+c. ¿Cuál es la probabilidad de que un lote de productores sea del Grupo A o del Grupo B?
+
+Son sucesos mutuamente excluyentes porque si el lote es del grupo A, no puede ser del grupo B
+
+P(A o B) = P(A) + P(B)
+
+```{r}
+P_A
+
+P_B <- (10 + 62 + 18) / 320
+P_B # 90/320
+
+P_A + P_B
+```
+
+d. ¿Cuál es la probabilidad de que un lote de productores sea del Grupo A o Nivel de Producción Medio?
+
+```{r}
+P_A # 120/320
+P_M <- (25 + 18 + 27) / 320
+P_M # 70/320
+P_AinterseccionM <- 25 / 320
+P_AinterseccionM
+P_A + P_M - P_AinterseccionM
+```
+
+e. ¿Cuál es la probabilidad de que un lote de productores sea del Grupo A **y** Nivel de Producción Medio?
+
+Estos sucesos son o no independientes?
+
+```{r}
+P_A_M <- P_A * P_M
+P_A_M # (120/320) * (70/320)
+P_A_M == P_AinterseccionM
+```
+
+Calculamos la probabilidad de M dado que ocurra A es (condicional):
+
+```{r}
+P_MdadoA <- P_AinterseccionM / P_A
+P_MdadoA # (25/320)/(120/320)
+``` 
+
+Finalmente calculamos la probabilidad de que ocurran A y M a la vez:
+
+```{r}
+P_A * P_MdadoA
+```
+
+
+## Ejercicio 20
+
+En una chacra se extraen al azar hojas de distintas plantas correspondientes a diversas especies y con todas ellas se conforma una muestra en la cual se contabiliza el n°de hojas sanas y el n° de hojas enfermas. La información se resume en la siguiente tabla: 
+
+Vamos a hallar las siguientes probabilidades:
+
+a. La probabilidad de que al elegir una hoja al azar de la muestra ea de peral y esté enferma.
+b. La probabilidad de que, al extraer una hoja de la muestra, esta sea de manzano.
+c. La probabilidad de que, si se extrajo hoja de manzano, esta esté enferma.
+d. La probabilidad de que, si se extrajo una hoja enferma, esta sea de duraznero. 
+
+Importamos los datos:
+```{r}
+# Opción 1: Importar archivo local
+especies <- import("especies.xlsx")
+
+# Opción 2: Cargar desde la librería de la cátedra
+data(especies)
+```
+
+Se calculan las frecuencias marginales (son los totales por filas y por columnas):
+
+```{r}
+# primero modificamos nuestra tabla, para que sea de doble entrada
+especies <- xtabs(Número ~ Especie + Hojas, especies)
+
+# agregamos los margenes a las filas y a las columnas
+addmargins(especies)
+```
+
+a. La probabilidad de que al elegir una hoja al azar de la muestra sea de peral y esté enferma.
+
+La Probabilidad que sea Peral y esté enferma
+
+```{r}
+P_peral_enferma <- 58 / 300
+```
+
+b. La probabilidad de que, al extraer una hoja de la muestra, esta sea de manzano.
+
+```{r}
+P_manzano <- (55 + 65) / 300
+P_manzano
+```
+
+c. La probabilidad de que, si se extrajo hoja de manzano, esta esté enferma.
+
+```{r}
+# probabilidad que manzano enfermo
+P_manzano_enfermo <- 55 / 300
+```
+
+Por lo tanto la probabilidad $P(E|M)$ es:
+
+```{r}
+P_manzano_enfermo / P_manzano
+```
+
+d. La probabilidad de que, si se extrajo una hoja enferma, esta sea de duraznero.
+
+```{r}
+# probabilidad que esté enferma
+P_enferma <- 123 / 300
+```
+
+
+```{r}
+# probabilidad hoja enferma de duraznero
+P_durazno_enfermo <- 10 / 300
+```
+
+Por lo tanto la probabilidad $P(E|M)$ es:
+
+```{r}
+P_durazno_enfermo / P_enferma
+```
+
+## Ejercicio 21
+
+Se conoce que en una colmena existen aproximadamente 50 abejas macho y 300 abejas hembra. Si se eligen 3 abejas sin reposición hallar las siguientes probabilidades:
+
+a. que las tres sean hembras
+b. que las dos primeras sean machos y la tercera sea hembra
+c. que por lo menos una sea hembra 
+
+
+Datos:
+
+- Cantidad de hembras (H): 300
+- Cantidad de machos (M): 50
+- Total de abejas: 350
+
+```{r}
+P_H <- 300 / 350
+P_M <- 50 / 350
+```
+
+a. Si se eligen 3 abejas sin reposición, la probabilidad que las tres sean hembras
+
+P(HyHyH) = 300/350 * 299/349 * 298/348
+
+```{r}
+P_HyHyH <- P_H * 299 / 349 * 298 / 348
+P_HyHyH
+```
+
+
+b. que las dos primeras sean machos y la tercera sea hembra
+
+P(MyMyH) = 50/350 * 49/349 * 300/348
+
+```{r}
+P_MyMyH <- P_M * 49 / 349 * 300 / 348
+P_MyMyH
+```
+
+c. que por lo menos una sea hembra
+
+_Ya no importa el orden si al menos hay una hembra, pude haber mas_
+
+_Por lo tanto busco todas las alternativas posibles y las sumo o por medio del suceso complementario, a 1 le resto la probabilidad que todos sean machos_
+
+P(MyMyM) = 50/350 * 49/349 * 48/348
+
+```{r}
+P_MyMyM <- P_M * 49 / 349 * 48 / 348
+
+1 - P_MyMyM
+```
+
+P(al menos una sea Hembra) = 0.99723
