@@ -9,7 +9,6 @@ Cada vez que se inicia la sesion de RStudio debemos leer los paquetes que serán
 # Paquetes requeridos
 library(tidyverse)
 library(moments)
-library(estadisticaFcaUnl)
 ```
 
 # Distribución Binomial
@@ -52,7 +51,7 @@ x
 **Paso 3:** Ingresamos todos los argumentos en la función:
 
 ```{r}
-dbinom(x = x, size = n, prob = p)
+dbinom(x = 170, size = 200, prob = 0.85)
 ```
 
 **Respuesta:** `7.88%` es la probabilidad de que si se siembran 200 semillas germine exactamente el 85%.
@@ -77,8 +76,7 @@ n <- 500 # 500 semillas en éste ítem
 Queremos calcular los valores mayores a 400 semillas pero incluyéndolo, entonces el valor de `q` va a ser 399 para que usando el complemento o `lower.tail` = F, la probabilidad se calcule a partir de 400.
 
 ```{r}
-q <- 400 - 1
-pbinom(q = q, size = n, prob = p, lower.tail = F)
+pbinom(q = 399, size = 500, prob = 0.85, lower.tail = F)
 ```
 
 **Respuesta:** `99.9%` es la probabilidad de que si siembro 500 de esas semillas germine el 80% o más de ellas.
@@ -101,9 +99,9 @@ n <- 500 # igual que el ítem anterior
 Ya que queremos calcular probabilidades menores o iguales al valor indicado usamos `lower.tail = T`
 
 ```{r}
-q <- 200
-pbinom(q = q, size = n, prob = p, lower.tail = T)
+pbinom(q = 200, size = 500, prob = 0.85, lower.tail = T)
 ```
+
 **Respuesta:** `2.9*e-115%` es la probabilidad de que si siembro 500 de esas semillas germinen 200 o menos de ellas.
 
 ## Item (d).
@@ -125,14 +123,19 @@ Definimos los límites superior (`q2`) e inferior (`q1`) de modo tal de incluir 
 q1 <- 799
 q2 <- 899
 
-P_799 <- pbinom(q = q1, size = n, prob = p) # lower.tail = T, por defecto
-P_899 <- pbinom(q = q2, size = n, prob = p) # lower.tail = T, por defecto
+P_799 <- pbinom(q = 799, size = 1000, prob = 0.85) # lower.tail = T, por defecto
+P_899 <- pbinom(q = 899, size = 1000, prob = 0.85) # lower.tail = T, por defecto
 
 P_899 - P_799 # valor mayor - menor
-
-sum(dbinom(c(800:899), size = n, p = p))
 ```
-**Respuesta:** `99.9%` es la probabilidad de que si siembro 1000 de esas semillas ggerminen al menos 800 y no más de 900 de ellas.
+
+**Tambien podemos sumar las probabilidades en el punto.**
+
+```{r}
+sum(dbinom(800:899, size = 1000, p = 0.85))
+```
+
+**Respuesta:** `99.9%` es la probabilidad de que si siembro 1000 de esas semillas germinen al menos 800 y no más de 900 de ellas.
 
 ## Ejercicio 2
 
@@ -221,9 +224,8 @@ x <- 2
 Ingresamos todos los argumentos en la función:
 
 ```{r}
-dhyper(x = x, m = N1, n = N - N1, k = n)
+dhyper(x = 2, m = 80, n = 120 - 80, k = 5)
 ```
-
 
 ## Item (b).
 
@@ -247,14 +249,10 @@ Para definir `q`, tener en cuenta que no quiero incluir el valor 5 y que quiero 
 
 Cuando `lower.tail = T` incluye el valor de `q`, por lo tanto para que no tome el valor 5, se pone un valor inmediato menor, en éste caso, el valor 4
 
-```{r}
-q <- 4
-```
-
 Ingresamos todos los argumentos en la función:
 
 ```{r}
-phyper(q = q, m = N1, n = N - N1, k = n)
+phyper(q = 4, m = 40, n = 120 - 40, k = 10)
 
 # lower.tail=T por defecto, no hace falta aclararlo
 ```
@@ -281,14 +279,10 @@ Para definir `q`, tener en cuenta que no quiero incluir el valor 5 y que quiero 
 
 Cuando `lower.tail = F` NO incluye el valor de `q`, por lo tanto si coloco el valor `q`=5, no lo incluirá.
 
-```{r}
-q <- 5
-```
-
 Ingresamos todos los argumentos en la función:
 
 ```{r}
-phyper(q = q, m = N1, n = N - N1, k = n, lower.tail = F)
+phyper(q = 5, m = 40, n = 120 - 40, k = 10, lower.tail = F)
 ```
 
 ## Item (d).
@@ -304,7 +298,7 @@ n <- 50 # tamaño de la muestra
 N <- 120 # cámaras de germinación totales
 N1 <- 80 # cámaras bien calibradas
 
-Esperanza <- n * N1 / N
+Esperanza <- 50 * 80 / 120
 Esperanza
 
 round(Esperanza, 0) # redondeo a 0 decimales
@@ -384,14 +378,10 @@ lambda <- 450 # camiones por día
 
 Si utilizo `lower.tail = F`, no incluye el valor que pongamos en `q`, en éste caso no queremos que incluya a 350
 
-```{r}
-q <- 350
-```
-
 Ingresamos todos los argumentos en la función:
 
 ```{r}
-ppois(q = q, lambda = lambda, lower.tail = F)
+ppois(q = 350, lambda = 450, lower.tail = F)
 ```
 
 ## Item (b).
@@ -405,7 +395,8 @@ Utilizaremos la función `ppois()` porque queremos calcular la probabilidad acum
 Definimos los parámetros de la distribución Poisson:
 
 ```{r}
-lambda <- 900 # 450 camiones por día * 2 días
+lambda <- 450 * 2 # 450 camiones por día * 2 días
+lambda
 ```
 
 Queremos calcular valores mayores o iguales a 1000, utilizamos `lower.tail = F`, no incluye el valor que pongamos en `q`, en éste caso queremos que incluya a 1000 por lo cual `q` = 999
@@ -417,7 +408,7 @@ q <- 999
 Ingresamos todos los argumentos en la función:
 
 ```{r}
-ppois(q = q, lambda = lambda, lower.tail = F)
+ppois(q = 999, lambda = 900, lower.tail = F)
 ```
 
 ## Item (c).
@@ -432,6 +423,7 @@ Definimos los parámetros de la distribución Poisson:
 
 ```{r}
 lambda <- 450 / 2 # se divide por dos porque la pregunta es por medio día
+lambda
 ```
 
 Tenemos en cuenta que utilizaremos `lower.tail = T`, que incluye el valor que pongamos en `q`, en éste caso: - no queremos que incluya a 100, por lo cual `q1` = 100 - queremos que incluya a 200, por lo cual `q2` = 200
@@ -446,8 +438,8 @@ Ingresamos todos los argumentos en la función, podemos hacerlo de 2 maneras:
 Alternativa 1: restando probabilidades acumuladas, calculándolas por separado
 
 ```{r}
-P_100 <- ppois(q = q1, lambda = lambda) # lower.tail = T, por defecto
-P_200 <- ppois(q = q2, lambda = lambda)
+P_100 <- ppois(q = 100, lambda = 225) # lower.tail = T, por defecto
+P_200 <- ppois(q = 200, lambda = 225)
 
 P_200 - P_100 # valor mayor - menor  de 100 a 200 inclusive
 ```
@@ -455,7 +447,7 @@ P_200 - P_100 # valor mayor - menor  de 100 a 200 inclusive
 Alternativa 2: usando la función `diff()` para calcular diferencias (resta)
 
 ```{r}
-diff(ppois(q = c(q1, q2), lambda = lambda))
+diff(ppois(q = c(100, 200), lambda = 225))
 
 # en el vector q = c(q1, q2), primero el valor menor y luego el mayor
 ```
