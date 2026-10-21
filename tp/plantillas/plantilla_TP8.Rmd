@@ -92,19 +92,6 @@ Se rechaza $H_0$
 
 La siguiente tabla da la clasificación de 1282 plantas de algodón según color de corola y forma de hoja. ¿Existe asociación entre ambas características?.
 
-```{r}
-txt <- textConnection(
-    "corola  hoja    frec
-  amarilla ancha   717
-  amarilla angosta 249
-  blanca   ancha   236
-  blanca   angosta 80"
-)
-algodon <- read.table(txt, header = T)
-xtabs(frec ~ corola + hoja, algodon)
-# writexl::write_xlsx(algodon, "algodon.xlsx")
-```
-
 Los datos se encuentran en el archivo "algodon.xlsx"
 
 
