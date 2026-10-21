@@ -2330,13 +2330,13 @@ esp</code></pre>
 chi_calc</code></pre>
 <pre><code>[1] 0.470024</code></pre>
 <p>Valor crítico</p>
-<pre class="r"><code>df &lt;- nrow(obs) - 1
+<pre class="r"><code>df &lt;- length(obs) - 1
 chi_crit &lt;- qchisq(p = 1 - 0.05, df = df)
 chi_crit</code></pre>
-<pre><code>numeric(0)</code></pre>
+<pre><code>[1] 7.814728</code></pre>
 <p>Valor p</p>
 <pre class="r"><code>pchisq(q = chi_calc, df = df, lower.tail = F)</code></pre>
-<pre><code>numeric(0)</code></pre>
+<pre><code>[1] 0.9254259</code></pre>
 <p>Con chisq.test()</p>
 <pre class="r"><code>chisq.test(obs, p = prob)</code></pre>
 <pre><code>
