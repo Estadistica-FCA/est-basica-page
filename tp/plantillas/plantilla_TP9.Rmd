@@ -11,37 +11,16 @@ library(tidyverse)
 library(moments)
 library(estadisticaFcaUnl)
 ```
-## Ejercicio 1
-
-Los siguientes datos representan la cantidad de agua aplicada (cm^3^) y el rendimiento de una especie forrajera (tn MS ha^-1^), en un establecimiento de la provincia de Santa Fe.
-
-Los datos se encuentran en el archivo [agua_forrajera.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/agua_forrajera.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-
-a.  Hacer un diagrama de dispersión ¿como es la relación entre las variables?
-b.  Hallar la recta de regresión del rendimiento en función del agua. Representar gráficamente. Interpretar los parámetros.
-c.  ¿Es estadísticamente significativo el coeficiente de regresión?
-d.  Interpretar la bondad de ajuste del modelo.
-e.  Estimar los intervalos de confianza de los parámetros del modelo.
-f.  Predecir cual será el rendimiento del forraje si se aplican 20 cm^3^.
-## Ejercicio 2
-
-A continuación se detallan los datos de una muestra de 12 explotaciones agrícolas donde se registra el tamaño de las mismas y el área sembrada con trigo:
-
-Los datos se encuentran en el archivo [area_trigo.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/area_trigo.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-
-a.  Explorar gráficamente la relación entre la superficie total de la explotación y la superficie destinada al cultivo de trigo.
-b.  Calcular e interpretar el coeficiente de correlación.
-c.  Determinar si la correlación observada es estadísticamente significatvia 5%.
-
 
 ## Ejercicio 3
 
 Los siguientes datos proceden de un estudio de pérdida de agua en el coleóptero de la harina (*Tribolium confusum*). Se pesaron 9 lotes de 25 coleópteros cada uno, se guardaron a diferente humedad relativa y se pesaron nuevamente a los 6 días. Se calculó la pérdida de peso (mg) para cada lote:
 
-Los datos se encuentran en el archivo [coleoptero.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/coleoptero.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+Los datos se encuentran en el archivo "coleoptero.xlsx"
 
+```{r}
+data(coleoptero)
+```
 
 a.  Hace un gráfico de dispersión. ¿como es la relación entre la humedad relativa y la pérdida de peso?
 b.  Obtener la recta de regresión lineal.
@@ -50,126 +29,28 @@ d.  Estimar con un 95% de confianza los límites del intervalo que contiene a la
 e.  Estimar con un 95% de confianza los límites del intervalo que contiene a la verdadera perdida de peso cuando la humedad relativa es 0%.
 f.  ¿Que propoción de variabilidad de la perdida de peso no es explicada por el modelo?
 
-
-## Ejercicio 4
-
-Se realizó un experimento para determinar la relación entre la cantidad de P inorgánico en el suelo (ppm) al inicio del cultivo de maiz y la cantidad de P que es recuperada por la planta (en ppm) a los 30 días. Para ello se prepararon macetas con distintas concentraciones de P inicial a las cuales se les sembró el mismo híbrido de maiz y luego de 30 días se determinó el contenido de P en planta. Los resultados fueron:
-
-Los datos se encuentran en el archivo [P_maiz.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/P_maiz.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-a.  Graficar la relación entre `P_suelo` y `P_planta`.
-b.  Asumiendo que el valor de P_suelo se mide sin error, estimar los parámetros de un modelo lineal que relacione ambas variables.
-c.  Estimar con un 95% de confianza el intervalo que contenga el aumento del `P_planta` por cada unidad de `P_suelo`.
-d.  Estimar el contenido de `P_planta` si en el suelo hay 20 ppm de fósforo.
-
-
-## Ejercicio 5
-
-Los siguientes datos representan el rendimiento en toneladas de forraje y la lluvia caída en mm, durante los meses de julio y agosto en 10 establecimientos elegidos al azar, en una determinada región.
-
-Los datos se encuentran en el archivo [lluvia_forraje.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/lluvia_forraje.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-
-a.  Grafique la relación entre ambas variables.
-b.  ¿Se podría postular que la lluvia caida durante los meses de julio y agosto tiene una relación lineal con la producción de forraje?
-c.  Con un 95% de confianza, ¿entre que valores se encuentra la tasa de producción de pasto por milímetro de lluvia caido?
-d.  Si la lluvia caída fue de 20 mm, predecir cuál será el rendimiento de forraje.
-
-
-## Ejercicio 6
-
-Un estudio sobre maiz busca determinar la relación entre el peso de la espiga y el número de hileras de grano.
-
-Los datos se encuentran en el archivo [hileras_maiz.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/hileras_maiz.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-
-a.  Estime el coeficiente de correlación entre las variables.
-b.  Estime los parámetros del modelo, y sus intervalos de confianza 95%
-c.  Mediante el ANOVA pruebe si la pendiente es significativa.
-
-
-## Ejercicio 7
-
-La siguiente tabla detalla las calificaciones en Física y Matemática de una muestra de 12 alumnos
-
-
-Los datos se encuentran en el archivo [calificaciones.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/calificaciones.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-a.  Explorar la relación entre las variables mediante un gráfico.
-b.  Calcular e interpretar el coeficiente de correlación lineal.
-c.  Verificar si existe correlación estidisticamente significativa entre las calificaciones.
-
-
 ## Ejercicio 8
 
 Con el objeto de indentificar variables asociadas con las diferencias de peso de semillas de trigo diploide (*Triticum monococcum*), Jing et al. (2007) estudiaron varios caracteres de (peso, longitud, diámetro, dureza) de 190 semillas obtenidas a azar.
 
-Los datos se encuentran en el archivo [semilla_trigo.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/semilla_trigo.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-
-¿Existe asociación entre el peso y la longitud de la semilla? ¿Y entre el peso y la dureza del endosperma? Interprete el resultado de la prueba de hipótesis y la magnitud de la correlación obtenida.
-
-### Respuestas
+Los datos se encuentran en el archivo "semilla_trigo.xlsx"
 
 ```{r}
-# Opción 1: Importar archivo local
-semilla_trigo <- import("semilla_trigo.xlsx")
-
-# Opción 2: Cargar desde la librería de la cátedra
 data(semilla_trigo)
 ```
 
-```{r}
-# Matriz de correlación
-cor(semilla_trigo)
-```
+¿Existe asociación entre el peso y la longitud de la semilla? ¿Y entre el peso y la dureza del endosperma? Interprete el resultado de la prueba de hipótesis y la magnitud de la correlación obtenida.
 
-Prueba hipotesis
-
-$$ H_0: ρ = 0 \\ H_1: ρ \ne 0  $$
-
-```{r}
-cor.test(semilla_trigo$Peso, semilla_trigo$Long)
-```
-
-Existen evidencias suficientes para rechazar H0, la correlación entre Peso y Longitud de la semilla es significativa (p\<0.0001). El coeficiente de correlación ($r$ 0.8826) indica que la correlación es positiva y alta entre las variables mencionadas. Es decir, a medida que aumenta la longitud de la semilla, aumenta el peso de la semilla, o vice versa.
-
-```{r}
-cor.test(semilla_trigo$Peso, semilla_trigo$Dureza)
-```
-
-Existen evidencias suficientes para rechazar H0, la correlación entre Peso y Dureza del endosperma es significativa (p=0.004). El coeficiente de correlación ($r$ -0.207) indica que la correlación es negativa y muy baja entre las variables mencionadas.
-
-
-
-## Ejercicio 9
-
-En un estudio sobre el éxito reproductivo de langostas, un entomólogo busca ajustar modelar la relación entre el peso de las hembras y el número de huevos que produce. Para ello selecciona 30 langostas de de diferentes pesos (en gramos) y registra el número de huevos que producen.
-
-Los datos se encuentran en el archivo [huevos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/huevos.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-a.  Grafique los datos
-b.  Calcule e interprete el coeficiente de correlación de estos datos.
-c.  ¿Qué proporción de variación del número de huevos explicaría el modelo lineal en función del peso de las langostas?
-
-
-## Ejercicio 10
-
-Un investigador condujo un experimento para modelar la relación entre la ganancia de peso en pollos cuyas dietas fueron suplementadas con distintas cantidades de lisina (aminoácido) y la cantidad de lisina consumida. Dado que el porcentaje de lisina del alimento es conocido, la cantidad de lisina consumida se estima a partir de la cantidad de alimento consumida. Se seleccionó una muestra aleatoria de 12 pollos los cuales fueron alojados en jaulas individuales y alimentados a voluntad con el alimento más el suplemento.
-
-Los datos se encuentran en el archivo [pollos.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/pollos.xlsx?forcedownload=1) `r fontawesome::fa("download")`
-
-a.  Grafique los datos
-b.  Estime los parámtros del modelo lineal.
-c.  ¿Qué proporción de la variación de la ganancia de peso es explicada por modelo en función de la lisina?
-d.  Si un pollo consumiera 0.20 g de lisina, ¿cual es el aumento de peso esperado? Estime con un 95% de confianza el intervalo de predicción para dicho aumento de peso.
 
 ## Ejercicio 11
 
 Se desea probar la efectividad de un nuevo fungicida para el control de roya en trigo. Se probaron distintas dosis en gramos de principio activo por ha (gr.p.a./ha) en 13 parcelas de 100 plantas cada una. A los 15 días de la aplicación se realizó una evaluación del daño, como el tamaño promedio de las machas en hoja bandera.
 
+Los datos se encuentran en el archivo "fungicida.xlsx"
 
-Los datos se encuentran en el archivo [fungicida.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/fungicida.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+```{r}
+data(fungicida)
+```
 
 a.  Estime los parámetros del un modelo de regresión lineal.
 b.  Pruebe la significancia de la pendiente e interprete. Utilice $\alpha=0.05$. Calcule su intervalo de confianza del 95%.
@@ -181,8 +62,11 @@ e.  Predecir el daño (tamaño promedio de las manchas) que se hallará si se ap
 
 Los datos se refieren al contenido de proteína bruta (PB) y caseína (CA) en leche en una muestra de 23 tambos de la cuenca lechera del centro del país.
 
-Los datos se encuentran en el archivo [proteina_caseina.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/proteina_caseina.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+Los datos se encuentran en el archivo "proteina_caseina.xlsx"
 
+```{r}
+data(proteina_caseina)
+```
 
 Indique y pruebe la significancia de la relación entre las variables. Utilice $\alpha=0.05$.
 
@@ -193,7 +77,7 @@ Se realizó un análisis de crecimiento de tomate en invernadero y se midieron d
 
 Las plantas fueron establecidas en macetas, se utilizó un sistema de riego dirigido y se les aplicó diferentes dosis de fertilizante. Al momento de cosecha se contabilizaron los tallos y se pesaron los frutos.
 
-Los datos se encuentran en el archivo [dosis_tomate.xlsx](https://servicios.unl.edu.ar/aulavirtual/fca/pluginfile.php/46592/mod_folder/content/0/dosis_tomate.xlsx?forcedownload=1) `r fontawesome::fa("download")`
+Los datos se encuentran en el archivo "dosis_tomate.xlsx"
 
 
 Se desea determinar el grado de correlación existente entre los diferentes órganos de la planta evaluados (fruto y tallos) y la ecuación que represente la relación entre el nivel de fertilizante utilizado y el rendimiento del fruto.
@@ -263,17 +147,11 @@ Alternativa 2: haciendo la raíz cuadrada al $R^2$ de la salida del `summary()`
 
 ```{r}
 m0 <- lm(fruto ~ tallo, dosis_tomate)
-summary(m0)$r.squared
-
-sqrt(0.9184216)
-```
-
-```{r}
-sum <- summary(m0)
 r2 <- summary(m0)$r.squared
+sqrt(r2)
 ```
 
-Por lo tanto, el coeficiente de correlación de las variables tallo y fruto es `r round(sqrt(r2),4)` o `r round(sqrt(r2),2)*100`%. Éste valor indica que la correlación entre las variables es alta y positiva, es decir que a medida que una variable aumenta, la otra también.
+Por lo tanto, el coeficiente de correlación de las variables tallo y fruto es `0.9554` o `95.54%`. Éste valor indica que la correlación entre las variables es alta y positiva, es decir que a medida que una variable aumenta, la otra también.
 
 
 
@@ -297,15 +175,10 @@ Utilizando la función `cor.test()` del paquete base de R
 cor.test(dosis_tomate$fruto, dosis_tomate$tallo)
 ```
 
-```{r, echo=F}
-cor <- cor.test(dosis_tomate$fruto, dosis_tomate$tallo)
-cor
-```
 
 Existe evidencia suficiente para rechazar la H0, dado que el valor p (4.602e-06) es menor al nivel de significancia (α=0.01), por lo tanto la correlación es estadísticamente significativa.
 
 El intervalo de confianza del 95%, con límites inferior XXXX y superior XXXX, contienen al verdadero valor de correlación ρ, entre las variables fruto y tallo de tomate.
-
 
 
 Item (c).
